@@ -8,10 +8,12 @@ const PresentationSection = () => {
         
         <div className="mb-16">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-            <div className="h-48 rounded-lg" style={{ backgroundColor: '#163030' }}></div>
+            <div className="rounded-lg" style={{ width: '550px', height: '363px', backgroundColor: '#163030', borderRadius: '10px' }}></div>
             <div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">Apresentação</h2>
-              <p className="text-gray-700 text-sm leading-relaxed">
+              <h2 className="text-gray-900 mb-4" style={{ fontFamily: 'DM Sans', fontWeight: 600, fontSize: '67.05px' }}>
+                Apresentação
+              </h2>
+              <p className="text-gray-700 leading-relaxed" style={{ fontFamily: 'DM Sans', fontSize: '18.26px' }}>
                 Texto de apresentação da empresa seguindo o protótipo.
               </p>
             </div>
@@ -21,11 +23,13 @@ const PresentationSection = () => {
         <div className="mb-16">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
             <div className="lg:order-2">
-              <div className="h-48 rounded-lg" style={{ backgroundColor: '#163030' }}></div>
+              <div className="rounded-lg" style={{ width: '550px', height: '363px', backgroundColor: '#163030', borderRadius: '10px' }}></div>
             </div>
             <div className="lg:order-1">
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">Apresentação</h2>
-              <p className="text-gray-700 text-sm leading-relaxed">
+              <h2 className="text-gray-900 mb-4" style={{ fontFamily: 'DM Sans', fontWeight: 600, fontSize: '67.05px' }}>
+                Apresentação
+              </h2>
+              <p className="text-gray-700 leading-relaxed" style={{ fontFamily: 'DM Sans', fontSize: '18.26px' }}>
                 Texto de apresentação da empresa seguindo o protótipo.
               </p>
             </div>
@@ -35,23 +39,29 @@ const PresentationSection = () => {
         <div className="mb-16">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="text-left">
-              <div className="h-40 rounded-lg mb-4" style={{ backgroundColor: '#163030' }}></div>
-              <h3 className="text-lg font-bold text-gray-900 mb-2">Apresentação</h3>
-              <p className="text-gray-700 text-sm leading-relaxed">
+              <div className="rounded-lg mb-4" style={{ width: '550px', height: '363px', backgroundColor: '#163030', borderRadius: '10px' }}></div>
+              <h3 className="text-gray-900 mb-2" style={{ fontFamily: 'DM Sans', fontWeight: 600, fontSize: '67.05px' }}>
+                Apresentação
+              </h3>
+              <p className="text-gray-700 leading-relaxed" style={{ fontFamily: 'DM Sans', fontSize: '18.26px' }}>
                 Texto breve do card.
               </p>
             </div>
             <div className="text-left">
-              <div className="h-40 rounded-lg mb-4" style={{ backgroundColor: '#163030' }}></div>
-              <h3 className="text-lg font-bold text-gray-900 mb-2">Apresentação</h3>
-              <p className="text-gray-700 text-sm leading-relaxed">
+              <div className="rounded-lg mb-4" style={{ width: '550px', height: '363px', backgroundColor: '#163030', borderRadius: '10px' }}></div>
+              <h3 className="text-gray-900 mb-2" style={{ fontFamily: 'DM Sans', fontWeight: 600, fontSize: '67.05px' }}>
+                Apresentação
+              </h3>
+              <p className="text-gray-700 leading-relaxed" style={{ fontFamily: 'DM Sans', fontSize: '18.26px' }}>
                 Texto breve do card.
               </p>
             </div>
             <div className="text-left">
-              <div className="h-40 rounded-lg mb-4" style={{ backgroundColor: '#163030' }}></div>
-              <h3 className="text-lg font-bold text-gray-900 mb-2">Apresentação</h3>
-              <p className="text-gray-700 text-sm leading-relaxed">
+              <div className="rounded-lg mb-4" style={{ width: '550px', height: '363px', backgroundColor: '#163030', borderRadius: '10px' }}></div>
+              <h3 className="text-gray-900 mb-2" style={{ fontFamily: 'DM Sans', fontWeight: 600, fontSize: '67.05px' }}>
+                Apresentação
+              </h3>
+              <p className="text-gray-700 leading-relaxed" style={{ fontFamily: 'DM Sans', fontSize: '18.26px' }}>
                 Texto breve do card.
               </p>
             </div>
