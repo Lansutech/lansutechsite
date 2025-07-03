@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from './ui/carousel';
 
 const ColoredCardsSection = () => {
   return (
@@ -12,13 +13,29 @@ const ColoredCardsSection = () => {
           </div>
         </div>
 
-        {/* Carousel container with Figma specifications */}
-        <div className="mx-auto" style={{ width: '1237px', height: '485px', paddingLeft: '56px', paddingRight: '56px' }}>
-          <div className="flex gap-6 h-full">
-            <div className="rounded-lg flex-1" style={{ backgroundColor: '#B85450', borderRadius: '10px' }}></div>
-            <div className="rounded-lg flex-1" style={{ backgroundColor: '#D4D4D4', borderRadius: '10px' }}></div>
-            <div className="rounded-lg flex-1" style={{ backgroundColor: '#6FAFB0', borderRadius: '10px' }}></div>
-          </div>
+        {/* Carousel container */}
+        <div className="mx-auto relative" style={{ width: '1237px', height: '485px', paddingLeft: '56px', paddingRight: '56px' }}>
+          <Carousel className="w-full h-full">
+            <CarouselContent className="h-full">
+              <CarouselItem className="basis-1/3 h-full px-3">
+                <div className="rounded-lg h-full" style={{ backgroundColor: '#B85450', borderRadius: '10px' }}></div>
+              </CarouselItem>
+              <CarouselItem className="basis-1/3 h-full px-3">
+                <div className="rounded-lg h-full" style={{ backgroundColor: '#D4D4D4', borderRadius: '10px' }}></div>
+              </CarouselItem>
+              <CarouselItem className="basis-1/3 h-full px-3">
+                <div className="rounded-lg h-full" style={{ backgroundColor: '#6FAFB0', borderRadius: '10px' }}></div>
+              </CarouselItem>
+              <CarouselItem className="basis-1/3 h-full px-3">
+                <div className="rounded-lg h-full" style={{ backgroundColor: '#B85450', borderRadius: '10px' }}></div>
+              </CarouselItem>
+              <CarouselItem className="basis-1/3 h-full px-3">
+                <div className="rounded-lg h-full" style={{ backgroundColor: '#D4D4D4', borderRadius: '10px' }}></div>
+              </CarouselItem>
+            </CarouselContent>
+            <CarouselPrevious className="left-4" />
+            <CarouselNext className="right-4" />
+          </Carousel>
         </div>
 
         <div className="text-center mt-12">
