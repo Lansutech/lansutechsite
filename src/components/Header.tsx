@@ -9,7 +9,7 @@ const Header = () => {
           {/* Logo no canto esquerdo */}
           <div className="flex items-center">
             <div className="w-12 h-12">
-              <img src="/imgs/logo.png" alt="Lansutech" className="w-full h-full object-contain" />
+              <img src="/lovable-uploads/13536d53-ed02-40c1-a622-80c8e0c3db7b.png" alt="Lansutech" className="w-full h-full object-contain" />
             </div>
           </div>
           
@@ -80,18 +80,17 @@ const Header = () => {
           </div>
         </div>
         
-        {/* Linha sutil apenas pelos itens principais da navegação */}
-        <div className="mt-4 flex justify-center">
+        {/* Linha mais próxima, preta e mais espessa */}
+        <div className="mt-2 flex justify-center">
           <div 
             className="flex justify-center" 
             style={{ width: '1058px' }}
           >
             <div 
               style={{ 
-                width: '432px', // Largura aproximada para cobrir apenas os 4 botões centrais
-                height: '1px', 
-                backgroundColor: '#163030', 
-                opacity: 0.1 
+                width: '432px',
+                height: '3px', 
+                backgroundColor: '#000000'
               }}
             ></div>
           </div>
