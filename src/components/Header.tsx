@@ -5,11 +5,11 @@ const Header = () => {
   return (
     <header className="py-4" style={{ backgroundColor: '#EAF3F3' }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between" style={{ width: '1200px', margin: '0 auto' }}>
+        <div className="flex items-center justify-between" style={{ width: '1400px', margin: '0 auto' }}>
           {/* Logo no canto esquerdo com mais destaque */}
           <div className="flex items-center">
-            <div className="w-20 h-20">
-              <img src="/lovable-uploads/afca15e9-bc9c-48b4-af8f-297502a2f6e9.png" alt="Lansutech" className="w-full h-full object-contain" />
+            <div className="w-24 h-24">
+              <img src="/lovable-uploads/b4660aca-4ebc-45ae-b0cd-d6bd944f1ab2.png" alt="Lansutech" className="w-full h-full object-contain" />
             </div>
           </div>
           
@@ -63,12 +63,12 @@ const Header = () => {
             </div>
           </nav>
           
-          {/* Botão Sobre nós no canto direito com estilo diferenciado */}
+          {/* Botão Sobre nós no canto direito com cor preta */}
           <div className="flex items-center">
             <button 
               className="text-white px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 hover:bg-gray-800 flex items-center justify-center" 
               style={{ 
-                backgroundColor: '#163030', 
+                backgroundColor: '#000000', 
                 fontFamily: 'DM Sans',
                 width: '103px',
                 height: '31px',
@@ -80,15 +80,15 @@ const Header = () => {
           </div>
         </div>
         
-        {/* Linha mais próxima, preta e com 2px de espessura e maior comprimento */}
-        <div className="mt-2 flex justify-center">
+        {/* Linha mais próxima dos botões e mais ampla */}
+        <div className="mt-1 flex justify-center">
           <div 
             className="flex justify-center" 
-            style={{ width: '1200px' }}
+            style={{ width: '1400px' }}
           >
             <div 
               style={{ 
-                width: '600px',
+                width: '800px',
                 height: '2px', 
                 backgroundColor: '#000000'
               }}
