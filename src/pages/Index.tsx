@@ -6,6 +6,7 @@ import PresentationSection from '../components/PresentationSection';
 import PresentationSectionTwo from '../components/PresentationSectionTwo';
 import PresentationSectionThree from '../components/PresentationSectionThree';
 import ColoredCardsSection from '../components/ColoredCardsSection';
+import SecondaryHeader from '../components/SecondaryHeader';
 import PresentationSectionFour from '../components/PresentationSectionFour';
 import PresentationSectionFive from '../components/PresentationSectionFive';
 import ContentSection from '../components/ContentSection';
@@ -20,6 +21,7 @@ const Index = () => {
       <PresentationSectionTwo />
       <PresentationSectionThree />
       <ColoredCardsSection />
+      <SecondaryHeader />
       <PresentationSectionFour />
       <PresentationSectionFive />
       <ContentSection />

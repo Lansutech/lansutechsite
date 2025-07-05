@@ -59,11 +59,37 @@ const ColoredCardsSection = () => {
           </Carousel>
         </div>
 
-        <div className="text-center mt-12">
-          <h2 className="text-gray-900 mb-6" style={{ fontFamily: 'DM Sans', fontWeight: 600, fontSize: '67.05px' }}>
+        {/* Retângulo vermelho centralizado */}
+        <div className="flex justify-center mt-16 mb-12">
+          <div 
+            className="rounded-lg" 
+            style={{ 
+              width: '1517px', 
+              height: '315px', 
+              backgroundColor: '#B85450',
+              borderRadius: '10px'
+            }}
+          ></div>
+        </div>
+
+        <div className="text-center">
+          <h2 className="text-gray-900 mb-6" style={{ 
+            fontFamily: 'DM Sans', 
+            fontWeight: 600, 
+            fontSize: '67.05px',
+            lineHeight: '100%',
+            letterSpacing: '0%',
+            textAlign: 'center'
+          }}>
             Apresentação
           </h2>
-          <p className="text-gray-700 leading-relaxed max-w-4xl mx-auto" style={{ fontFamily: 'DM Sans', fontSize: '18.26px' }}>
+          <p className="text-gray-700 leading-relaxed max-w-4xl mx-auto" style={{ 
+            fontFamily: 'DM Sans', 
+            fontWeight: 600,
+            fontSize: '18.26px',
+            lineHeight: '100%',
+            letterSpacing: '0%'
+          }}>
             Texto de apresentação seguindo o protótipo.
           </p>
         </div>
