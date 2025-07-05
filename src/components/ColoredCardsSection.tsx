@@ -27,6 +27,24 @@ const ColoredCardsSection = () => {
                 <div className="rounded-lg h-full" style={{ backgroundColor: '#B85450', borderRadius: '10px' }}></div>
               </CarouselItem>
               <CarouselItem className="basis-1/3 h-full px-3">
+                <div className="rounded-lg h-full" style={{ backgroundColor: '#163030', borderRadius: '10px' }}></div>
+              </CarouselItem>
+              <CarouselItem className="basis-1/3 h-full px-3">
+                <div className="rounded-lg h-full" style={{ backgroundColor: '#6FAFB0', borderRadius: '10px' }}></div>
+              </CarouselItem>
+              <CarouselItem className="basis-1/3 h-full px-3">
+                <div className="rounded-lg h-full" style={{ backgroundColor: '#D4D4D4', borderRadius: '10px' }}></div>
+              </CarouselItem>
+              <CarouselItem className="basis-1/3 h-full px-3">
+                <div className="rounded-lg h-full" style={{ backgroundColor: '#B85450', borderRadius: '10px' }}></div>
+              </CarouselItem>
+              <CarouselItem className="basis-1/3 h-full px-3">
+                <div className="rounded-lg h-full" style={{ backgroundColor: '#163030', borderRadius: '10px' }}></div>
+              </CarouselItem>
+              <CarouselItem className="basis-1/3 h-full px-3">
+                <div className="rounded-lg h-full" style={{ backgroundColor: '#6FAFB0', borderRadius: '10px' }}></div>
+              </CarouselItem>
+              <CarouselItem className="basis-1/3 h-full px-3">
                 <div className="rounded-lg h-full" style={{ backgroundColor: '#B85450', borderRadius: '10px' }}></div>
               </CarouselItem>
               <CarouselItem className="basis-1/3 h-full px-3">
