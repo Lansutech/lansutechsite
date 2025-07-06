@@ -9,6 +9,7 @@ import ColoredCardsSection from '../components/ColoredCardsSection';
 import PresentationSectionFour from '../components/PresentationSectionFour';
 import PresentationSectionFive from '../components/PresentationSectionFive';
 import ContentSection from '../components/ContentSection';
+import ContactSection from '../components/ContactSection';
 import Footer from '../components/Footer';
 
 const Index = () => {
@@ -23,6 +24,7 @@ const Index = () => {
       <PresentationSectionFour />
       <PresentationSectionFive />
       <ContentSection />
+      <ContactSection />
       <Footer />
     </div>
   );
