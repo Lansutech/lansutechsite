@@ -95,6 +95,10 @@ All colors MUST be HSL.
 }
 
 @layer base {
+  html, body {
+    @apply m-0 p-0 w-full min-h-screen overflow-x-hidden;
+  }
+
   * {
     @apply border-border;
   }
@@ -102,4 +106,19 @@ All colors MUST be HSL.
   body {
     @apply bg-background text-foreground;
   }
+}
+
+
+/* Classe para aplicar a animação ao header */
+.animate-header-entry {
+  animation: slideInFromRight 0.7s ease-out forwards; /* 0.7s de duração, ease-out, mantém o estado final */
+  opacity: 0; /* Garante que o header esteja invisível antes da animação */
+  /* Se você quiser um pequeno atraso antes da animação começar, descomente a linha abaixo: */
+  /* animation-delay: 0.2s; */
+}
+
+/* Estilo para o botão "selecionado" */
+.btn-selected {
+  /* Estas classes deveriam refletir o estado de 'hover' que você quer fixar */
+  @apply bg-black text-white; /* Usa as mesmas classes do hover */
 }

@@ -14,7 +14,7 @@ import Footer from '../components/Footer';
 
 const Index = () => {
   return (
-    <div className="min-h-screen" style={{ backgroundColor: '#EAF3F3' }}>
+   <div className="w-full min-h-screen bg-[#EAF3F3] overflow-x-hidden">
       <Header />
       <Hero />
       <PresentationSection />
@@ -24,8 +24,8 @@ const Index = () => {
       <PresentationSectionFour />
       <PresentationSectionFive />
       <ContentSection />
-      <ContactSection />
       <Footer />
+      <ContactSection />
     </div>
   );
 };
