@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion, Variants, Transition } from 'framer-motion';
+import { MoveRight } from 'lucide-react';
 
-// ... (containerVariants e itemVariants permanecem inalterados) ...
 const containerVariants: Variants = {
   hidden: { opacity: 0 },
   visible: {
@@ -24,17 +24,16 @@ const itemVariants: Variants = {
     } as Transition,
   },
 };
-// ... (fim das variantes) ...
 
 const Header = () => {
   return (
     <header className="py-4 bg-[#EAF3F3] overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between relative z-10">
 
-          {/* Logo e Texto "Lansutech" - PERMANECEM ESTÁTICOS */}
+          {/* Logo e Texto "Lansutech" */}
           <div className="flex items-center flex-shrink-0">
-            <div className="w-29 h-28">
+            <div className="w-32 h-32 ml-4">
               <img src="/imgs/lansutechlogo.png" alt="Lansutech" className="w-full h-full object-contain" />
             </div>
           </div>
@@ -49,10 +48,9 @@ const Header = () => {
           >
             {/* Navegação centralizada (Botões) */}
             <nav className="flex items-center justify-center space-x-8 w-full">
-              {/* Botão "Sobre nós" com estilo selecionado inicial - CORRIGIDO AQUI */}
+              {/* Botão "Sobre nós" com estilo selecionado inicial */}
               <motion.button
                 variants={itemVariants}
-                // REMOVIDO "text-gray-700" daqui para garantir que "text-white" funcione
                 className="text-sm font-medium px-4 py-2 rounded-full transition-all duration-200 hover:bg-black hover:text-white flex items-center justify-center bg-black text-white"
                 style={{
                   fontFamily: 'DM Sans',
@@ -109,7 +107,7 @@ const Header = () => {
             >
               <div
                 style={{
-                  width: 'calc(4 * 103px + 3 * 35px + 84px)',
+                  width: '900px', // Definindo uma largura fixa para a linha. Ajuste conforme necessário.
                   height: '1px',
                   backgroundColor: '#000000',
                 }}
@@ -117,19 +115,21 @@ const Header = () => {
             </motion.div>
           </motion.div>
 
-          {/* Botão de contato no canto direito - ESTÁTICO */}
+          {/* Botão de contato no canto direito - HOVER AJUSTADO AQUI */}
           <div className="hidden md:flex items-center flex-shrink-0">
             <button
-              className="text-white px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 hover:bg-gray-800 flex items-center justify-center"
+              // ALTERADO: hover:bg-gray-700 (ou outra cor de sua preferência)
+              // ALTERADO: hover:text-white (garante que o texto permaneça branco no hover)
+              className="text-white px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 hover:bg-gray-700 hover:text-white flex items-center justify-center"
               style={{
                 backgroundColor: '#000000',
                 fontFamily: 'DM Sans',
-                width: '103px',
-                height: '31px',
+                width: '120px', // Mantido o tamanho que você informou no input
+                height: '35px', // Mantido o tamanho que você informou no input
                 borderRadius: '20px'
               }}
             >
-              Sobre nós
+              Contate-nos {/* Mantive "Contate-nos" como sugestão */}
             </button>
           </div>
 
