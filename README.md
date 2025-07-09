@@ -1,42 +1,45 @@
 # 🌐 Lansutech – Website Oficial
 
-Este é o repositório do site institucional da **Lansutech**, desenvolvido com foco em apresentação visual limpa, moderna e responsiva.
-
----
-
-## 🎯 Descrição
-
-Projeto criado com o objetivo de representar visualmente a identidade da Lansutech.  
-Foco em uma **experiência elegante**, com **animações suaves**, **design responsivo** e estrutura de código limpa e escalável.
+Este é o repositório do **site institucional da Lansutech**, desenvolvido com foco em uma interface moderna, responsiva e com animações suaves.
 
 ---
 
 ## 🛠️ Tecnologias Utilizadas
 
-- **React**
-- **Vite**
-- **Tailwind CSS**
-- **PostCSS**
-- **Framer Motion**
+![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)
+![TailwindCSS](https://img.shields.io/badge/TailwindCSS-0EA5E9?style=for-the-badge&logo=tailwindcss&logoColor=white)
+![PostCSS](https://img.shields.io/badge/PostCSS-DD3A0A?style=for-the-badge&logo=postcss&logoColor=white)
+![Framer Motion](https://img.shields.io/badge/Framer%20Motion-000000?style=for-the-badge&logo=framer&logoColor=white)
+
+---
+
+## 🎯 Descrição
+
+Projeto focado em apresentar a identidade da Lansutech de forma clara e profissional.  
+A interface foi construída com atenção à responsividade e transições suaves entre os elementos, utilizando **React + TailwindCSS + Framer Motion** como base.
 
 ---
 
 ## 🎨 Design
 
-- UI/UX desenvolvido por **Rhavi** no **Figma**
+- UI/UX criado por **Rhavi Carneiro** utilizando **Figma**
 
 ---
 
 ## 👥 Equipe
 
-- **Guilherme Hojak** – Desenvolvedor Front-End
-- **Rhavi** – Designer de Interface (UI/UX)
+| Nome              | Função                     |
+|-------------------|----------------------------|
+| Guilherme Hojak   | Desenvolvedor Front-End    |
+| Rhavi Carneiro    | Designer UI/UX (Figma)     |
+| Tiago Sversut     | Back-End (a ser iniciado)  |
 
 ---
 
 ## 📌 Observações
 
-Este projeto não possui backend.  
-Será utilizado apenas como **página institucional** e passará por **deploy público** futuramente.
+- O projeto **não possui integração com API ou back-end no momento**, mas a estrutura foi pensada para futura expansão.
+- O site será publicado via **deploy público**.
 
 ---
