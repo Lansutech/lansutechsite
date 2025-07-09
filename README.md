@@ -6,13 +6,11 @@ Este é o repositório do **site institucional da Lansutech**, desenvolvido com 
 
 ## 🛠️ Tecnologias Utilizadas
 
-<p align="left">
-  <a href="https://reactjs.org"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" height="30" alt="React" /></a>
-  <a href="https://vitejs.dev"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vite/vite-original.svg" height="30" alt="Vite" /></a>
-  <a href="https://tailwindcss.com"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-plain.svg" height="30" alt="TailwindCSS" /></a>
-  <a href="https://postcss.org"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postcss/postcss-plain.svg" height="30" alt="PostCSS" /></a>
-  <a href="https://www.framer.com/motion/"><img src="https://www.svgrepo.com/show/354269/framer.svg" height="30" alt="Framer Motion" /></a>
-</p>
+![React](https://img.shields.io/badge/React-61DAFB?style=flat&logo=react&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-646CFF?style=flat&logo=vite&logoColor=white)
+![TailwindCSS](https://img.shields.io/badge/TailwindCSS-38BDF8?style=flat&logo=tailwindcss&logoColor=white)
+![PostCSS](https://img.shields.io/badge/PostCSS-DD3A0A?style=flat&logo=postcss&logoColor=white)
+![Framer Motion](https://img.shields.io/badge/Framer_Motion-000000?style=flat&logo=framer&logoColor=white)
 
 ---
 
