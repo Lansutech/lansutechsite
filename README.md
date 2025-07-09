@@ -1,73 +1,42 @@
-# Welcome to your Lovable project
+# 🌐 Lansutech – Website Oficial
 
-## Project info
+Este é o repositório do site institucional da **Lansutech**, desenvolvido com foco em apresentação visual limpa, moderna e responsiva.
 
-**URL**: https://lovable.dev/projects/ebe6f43d-dc4a-4b73-95b1-fe323ff7979d
+---
 
-## How can I edit this code?
+## 🎯 Descrição
 
-There are several ways of editing your application.
+Projeto criado com o objetivo de representar visualmente a identidade da Lansutech.  
+Foco em uma **experiência elegante**, com **animações suaves**, **design responsivo** e estrutura de código limpa e escalável.
 
-**Use Lovable**
+---
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/ebe6f43d-dc4a-4b73-95b1-fe323ff7979d) and start prompting.
+## 🛠️ Tecnologias Utilizadas
 
-Changes made via Lovable will be committed automatically to this repo.
+- **React**
+- **Vite**
+- **Tailwind CSS**
+- **PostCSS**
+- **Framer Motion**
 
-**Use your preferred IDE**
+---
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+## 🎨 Design
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+- UI/UX desenvolvido por **Rhavi** no **Figma**
 
-Follow these steps:
+---
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+## 👥 Equipe
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+- **Guilherme Hojak** – Desenvolvedor Front-End
+- **Rhavi** – Designer de Interface (UI/UX)
 
-# Step 3: Install the necessary dependencies.
-npm i
+---
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
+## 📌 Observações
 
-**Edit a file directly in GitHub**
+Este projeto não possui backend.  
+Será utilizado apenas como **página institucional** e passará por **deploy público** futuramente.
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
-
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/ebe6f43d-dc4a-4b73-95b1-fe323ff7979d) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+---
