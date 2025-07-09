@@ -1,11 +1,13 @@
+// src/components/ui/carousel.tsx
+
 import * as React from "react"
 import useEmblaCarousel, {
   type UseEmblaCarouselType,
 } from "embla-carousel-react"
 import { ArrowLeft, ArrowRight } from "lucide-react"
 
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
+import { cn } from "@/lib/utils" // Ensure this path is correct for your project
+import { Button } from "@/components/ui/button" // Ensure this path is correct for your project
 
 type CarouselApi = UseEmblaCarouselType[1]
 type UseCarouselParameters = Parameters<typeof useEmblaCarousel>
@@ -69,7 +71,7 @@ const Carousel = React.forwardRef<
       plugins
     )
     const [canScrollPrev, setCanScrollPrev] = React.useState(false)
-    const [canScrollNext, setCanScrollNext] = React.useState(false)
+    const [canScrollNext, setCanCanScrollNext] = React.useState(false)
 
     const onSelect = React.useCallback((api: CarouselApi) => {
       if (!api) {
@@ -77,7 +79,7 @@ const Carousel = React.forwardRef<
       }
 
       setCanScrollPrev(api.canScrollPrev())
-      setCanScrollNext(api.canScrollNext())
+      setCanCanScrollNext(api.canScrollNext())
     }, [])
 
     const scrollPrev = React.useCallback(() => {
@@ -117,9 +119,12 @@ const Carousel = React.forwardRef<
       onSelect(api)
       api.on("reInit", onSelect)
       api.on("select", onSelect)
+      api.on("init", onSelect);
 
       return () => {
         api?.off("select", onSelect)
+        api?.off("reInit", onSelect)
+        api?.off("init", onSelect)
       }
     }, [api, onSelect])
 
@@ -165,7 +170,7 @@ const CarouselContent = React.forwardRef<
         ref={ref}
         className={cn(
           "flex",
-          orientation === "horizontal" ? "-ml-4" : "-mt-4 flex-col",
+          orientation === "vertical" ? "flex-col" : "",
           className
         )}
         {...props}
@@ -188,8 +193,6 @@ const CarouselItem = React.forwardRef<
       aria-roledescription="slide"
       className={cn(
         "min-w-0 shrink-0 grow-0 basis-full",
-        // >>>>> REMOVA A LINHA ABAIXO!!! <<<<<
-        // orientation === "horizontal" ? "pl-4" : "pt-4",
         className
       )}
       {...props}
@@ -210,7 +213,7 @@ const CarouselPrevious = React.forwardRef<
       variant={variant}
       size={size}
       className={cn(
-        "absolute   h-8 w-8 rounded-full",
+        "absolute h-8 w-8 rounded-full",
         orientation === "horizontal"
           ? "-left-12 top-1/2 -translate-y-1/2"
           : "-top-12 left-1/2 -translate-x-1/2 rotate-90",

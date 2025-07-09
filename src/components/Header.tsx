@@ -50,7 +50,7 @@ const Header = () => {
           <div
             className="absolute"
             style={{
-              top: '25px',
+              top: '25px', // Mantendo o logo onde está, se ele precisar de mais espaço vertical
               left: '25px',
               width: '122px',
               height: '124px',
@@ -62,39 +62,53 @@ const Header = () => {
 
           {/* Container da Navegação e Linha - ANIMADO */}
           <motion.div
-            className="hidden md:flex flex-grow flex-col items-center justify-center"
-            style={{ flexBasis: '50%', flexGrow: 1, marginLeft: 'auto', marginRight: 'auto', paddingTop: '70px' }}
-            variants={containerVariants} // Container controla o stagger e delay dos filhos
+            className="hidden md:flex flex-grow flex-col items-center justify-center absolute"
+            style={{
+              flexBasis: '50%',
+              flexGrow: 1,
+              marginLeft: 'auto',
+              marginRight: 'auto',
+              top: '52.5px', // Mantido o top para alinhar com o "Contate-nos"
+              left: '50%',
+              transform: 'translateX(-50%)',
+              paddingTop: '0px',
+            }}
+            variants={containerVariants}
             initial="hidden"
             animate="visible"
           >
             {/* Navegação centralizada (Botões) */}
             <nav className="flex items-center justify-center space-x-8 w-full">
-              {/* Botões usando buttonItemVariants */}
+              {/* Botão "Sobre nós" com estilo selecionado inicial */}
               <motion.button
-                variants={buttonItemVariants} // Usando buttonItemVariants
-                className="font-medium px-4 py-2 rounded-full transition-all duration-200 flex items-center justify-center bg-black text-white"
+                variants={buttonItemVariants}
+                className="font-medium rounded-full transition-all duration-200 flex items-center justify-center bg-black text-white"
                 style={{
                   fontFamily: 'DM Sans',
                   fontWeight: 500,
                   fontSize: '16px',
-                  lineHeight: '1em',
+                  lineHeight: '100%',
                   letterSpacing: 'normal',
                   width: '103px',
                   height: '31px',
-                  borderRadius: '20px'
+                  borderRadius: '20px',
+                  paddingTop: '7.5px',
+                  paddingBottom: '7.5px',
+                  paddingLeft: 'unset',
+                  paddingRight: 'unset',
                 }}
               >
                 Sobre nós
               </motion.button>
+              {/* Os outros botões permanecem com as mesmas classes de padding px-4 py-2 */}
               <motion.button
-                variants={buttonItemVariants} // Usando buttonItemVariants
+                variants={buttonItemVariants}
                 className="text-gray-700 font-medium px-4 py-2 rounded-full transition-all duration-200 hover:bg-black hover:text-white flex items-center justify-center"
                 style={{
                   fontFamily: 'DM Sans',
                   fontWeight: 500,
                   fontSize: '16px',
-                  lineHeight: '1em',
+                  lineHeight: '100%',
                   letterSpacing: 'normal',
                   width: '103px',
                   height: '31px',
@@ -104,13 +118,13 @@ const Header = () => {
                 Serviços
               </motion.button>
               <motion.button
-                variants={buttonItemVariants} // Usando buttonItemVariants
+                variants={buttonItemVariants}
                 className="text-gray-700 font-medium px-4 py-2 rounded-full transition-all duration-200 hover:bg-black hover:text-white flex items-center justify-center"
                 style={{
                   fontFamily: 'DM Sans',
                   fontWeight: 500,
                   fontSize: '16px',
-                  lineHeight: '1em',
+                  lineHeight: '100%',
                   letterSpacing: 'normal',
                   width: '103px',
                   height: '31px',
@@ -120,13 +134,13 @@ const Header = () => {
                 Contato
               </motion.button>
               <motion.button
-                variants={buttonItemVariants} // Usando buttonItemVariants
+                variants={buttonItemVariants}
                 className="text-gray-700 font-medium px-4 py-2 rounded-full transition-all duration-200 hover:bg-black hover:text-white flex items-center justify-center"
                 style={{
                   fontFamily: 'DM Sans',
                   fontWeight: 500,
                   fontSize: '16px',
-                  lineHeight: '1em',
+                  lineHeight: '100%',
                   letterSpacing: 'normal',
                   width: '103px',
                   height: '31px',
@@ -138,16 +152,15 @@ const Header = () => {
             </nav>
 
             {/* Linha abaixo da navegação - ANIMADA */}
-            {/* A linha agora usa lineVariants para crescer da esquerda */}
             <motion.div
-              variants={lineVariants} // Usando lineVariants
+              variants={lineVariants}
               className="flex justify-center w-full"
               style={{ marginTop: '7px' }}
             >
               <div
                 style={{
                   width: '1058px',
-                  height: '1px',
+                  height: '1.08px',
                   backgroundColor: '#000000',
                 }}
               ></div>
@@ -158,23 +171,31 @@ const Header = () => {
           <div
             className="hidden md:flex items-center absolute"
             style={{
-              top: '70px',
+              top: '52.33px', // Mantido o top para alinhar com a navegação
               right: '25px',
               zIndex: 20,
             }}
           >
             <button
-              className="text-white px-4 py-2 rounded-full font-medium transition-all duration-200 hover:bg-[#1A437C] flex items-center justify-center"
+              // REMOVIDO px-4 py-2 pois width/height fixos já determinam o tamanho
+              // ALTERADO hover:bg-black para hover:bg-[#1A437C] (azul escuro)
+              // Adicionado 'text-white' para garantir que o texto seja branco no hover
+              className="text-white rounded-full font-medium transition-all duration-200 flex items-center justify-center bg-black hover:bg-[#1A437C]"
               style={{
-                backgroundColor: '#000000',
+                // backgroundColor: '#000000', // Já está no className 'bg-black'
                 fontFamily: 'DM Sans',
                 width: '120px',
                 height: '35px',
-                borderRadius: '20px',
+                borderRadius: '20px', // Definido para 20px para um "rectangle arredondado"
                 fontWeight: 500,
                 fontSize: '16px',
-                lineHeight: '1em',
+                lineHeight: '100%',
                 letterSpacing: 'normal',
+                // Adicionado padding vertical para centralizar o texto dentro de 35px de altura
+                paddingTop: '9.5px', // (35 - 16) / 2 = 9.5
+                paddingBottom: '9.5px',
+                paddingLeft: 'unset', // Para garantir que a largura seja apenas 120px
+                paddingRight: 'unset',
               }}
             >
               Contate-nos

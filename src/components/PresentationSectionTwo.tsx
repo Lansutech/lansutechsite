@@ -43,6 +43,7 @@ const PresentationSectionTwo = () => {
               <motion.div
                 className="rounded-lg overflow-hidden"
                 style={{
+                  marginTop: '35px',
                   width: '550px',
                   height: '363px',
                   backgroundColor: '#163030',

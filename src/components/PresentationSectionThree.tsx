@@ -79,7 +79,7 @@ const PresentationSectionThree = () => {
         {/* Título da seção 3 - Envolvido por RevealOnScroll */}
         <RevealOnScroll type="slide" direction="up" delay={0.1} duration={0.7}>
           <h2 className="text-gray-900 mb-8 text-center" style={{ fontFamily: 'DM Sans', fontWeight: 600, fontSize: '67.05px' }}>
-            Mais Projetos Recentes
+            Nossos Projetos
           </h2>
         </RevealOnScroll>
 

@@ -35,7 +35,7 @@ const PresentationSectionFive = () => {
             {/* === COLUNA DA DIREITA: TEXTO "APRESENTAÇÃO" === */}
             <div
               style={{
-                paddingTop: '35px',
+                paddingTop: '6px',
                 paddingLeft: '19px',
               }}
             >
