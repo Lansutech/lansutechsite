@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion, Variants } from 'framer-motion'; // Importar 'Variants' de framer-motion
+import RevealOnScroll from '../components/RevealOnScroll'; 
 
 const Hero = () => {
   // Variantes para a animação do título (fade-in e rise-up)
@@ -21,7 +22,7 @@ const Hero = () => {
     <section className="py-8" style={{ backgroundColor: '#EAF3F3' }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center">
-          <div className="w-48 h-32 mx-auto mb-4 flex items-center justify-center">
+          <div className="w-48 h-32 mx-auSto mb-4 flex items-center justify-center">
             <div className="text-6xl text-gray-400"></div>
           </div>
           

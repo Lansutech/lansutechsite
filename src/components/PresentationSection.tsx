@@ -1,57 +1,62 @@
 import React from 'react';
-import { motion } from 'framer-motion'; // Manter motion caso queira alguma animação na imagem
-import RevealOnScroll from '../components/RevealOnScroll';
+import { motion } from 'framer-motion';
+import RevealOnScroll from './RevealOnScroll';
 
-const PresentationSection = () => {
+const PresentationSectionFive = () => {
   return (
-    <section className="py-16" style={{ backgroundColor: '#EAF3F3' }}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-
-        {/* Primeira seção de apresentação - Layout de "Sobre Nós" */}
-        <div className="mb-16" style={{ width: '1400px', margin: '0 auto' }}>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+    <section style={{ backgroundColor: '#EAF3F3', paddingBottom: '0' }}> {/* Removido py-16, adicionado paddingBottom: 0 */}
+      <div
+        className="relative"
+        style={{
+          maxWidth: 'calc(100vw - 45px - 86px)',
+          marginLeft: '45px',
+          marginRight: '86px',
+        }}
+      >
+        {/* Removido className="mb-16" daqui */}
+        <div style={{ marginBottom: '20px' }}> {/* Adicionado um mb menor para espaçamento interno se precisar, ou remova */}
+          <div className="grid grid-cols-1 lg:grid-cols-[550px_1fr] gap-x-4 items-start">
             
-            {/* === COLUNA DA ESQUERDA: IMAGEM/GIF === */}
-            <motion.div
-              className="flex items-center justify-center rounded-lg overflow-hidden"
+            {/* === COLUNA DA ESQUERDA: IMAGEM/PLACEHOLDER (Card) === */}
+            <RevealOnScroll type="slide" direction="left" delay={0.1} duration={0.8}>
+              <motion.div
+                className="rounded-lg overflow-hidden"
+                style={{
+                  width: '550px',
+                  height: '363px',
+                  backgroundColor: '#163030',
+                  borderRadius: '10px',
+                }}
+              >
+                {/* Image or placeholder content */}
+              </motion.div>
+            </RevealOnScroll>
+            
+            {/* === COLUNA DA DIREITA: TEXTO "APRESENTAÇÃO" === */}
+            <div
               style={{
-                width: '650px', // Mesma largura do card anterior para manter alinhamento
-                height: '363px', // Mesma altura do card anterior
-                backgroundColor: 'transparent', // Fundo transparente ou cor suave
-                borderRadius: '10px'
+                paddingTop: '35px',
+                paddingLeft: '19px',
               }}
-              // Você pode adicionar animações aqui se quiser, por exemplo:
-              initial={{ opacity: 0, x: -50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, ease: "easeOut" }}
             >
-              <img
-                src="/imgs/lansutechsobrenos.png" // >>> CRIE ESTA IMAGEM/GIF NA PASTA PUBLIC/IMG <<<
-                                               // Ex: /imgs/quem-somos-animacao.gif
-                alt="Gráfico de Quem Somos"
-                className="w-full h-full object-contain" // object-contain para manter proporção e não cortar
-                style={{ filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.15))' }} // Adiciona uma leve sombra para "flutuar"
-              />
-            </motion.div>
-
-            {/* === COLUNA DA DIREITA: TEXTO "SOBRE NÓS" === */}
-            <div>
-              <h2 className="text-gray-900 mb-4" style={{ fontFamily: 'DM Sans', fontWeight: 600, fontSize: '67.05px' }}>
-                Quem somos
-              </h2>
-              <p className="text-gray-700 leading-relaxed mb-4" style={{ fontFamily: 'DM Sans', fontSize: '18.26px' }}>
-                Na Lansutech, somos apaixonados por transformar ideias em realidade digital. Somos uma equipe dedicada de especialistas em tecnologia, design e estratégia, comprometidos em criar soluções inovadoras que impulsionam o sucesso de nossos clientes.
-              </p>
-              <p className="text-gray-700 leading-relaxed" style={{ fontFamily: 'DM Sans', fontSize: '18.26px' }}>
-                Com foco em excelência e uma abordagem colaborativa, trabalhamos lado a lado com você para entender suas necessidades, superar desafios e entregar resultados que realmente fazem a diferença. Acreditamos que a tecnologia, quando bem aplicada, tem o poder de otimizar processos, conectar pessoas e abrir novas portas para o crescimento. Juntos, podemos construir o futuro digital do seu negócio.
-              </p>
+              <RevealOnScroll type="slide" direction="up" delay={0.3} duration={0.8}>
+                <h2 className="text-gray-900" style={{ fontFamily: 'DM Sans', fontWeight: 600, fontSize: '67.05px', marginBottom: '7px', color: 'black' }}>
+                  Apresentação
+                </h2>
+              </RevealOnScroll>
+              
+              <RevealOnScroll type="slide" direction="up" delay={0.5} duration={0.9}>
+                <p className="leading-relaxed" style={{ fontFamily: 'DM Sans', fontWeight: 600, fontSize: '18.26px', color: 'black' }}>
+                  Na Lansutech, somos apaixonados por transformar ideias em realidade digital. Somos uma equipe dedicada de especialistas em tecnologia, design e estratégia, comprometidos em criar soluções inovadoras que impulsionam o sucesso de nossos clientes.
+                  Com foco em excelência e uma abordagem colaborativa, trabalhamos lado a lado com você para entender suas necessidades, superar desafios e entregar resultados que realmente fazem a diferença. Acreditamos que a tecnologia, quando bem aplicada, tem o poder de otimizar processos, conectar pessoas e abrir novas portas para o crescimento. Juntos, podemos construir o futuro digital do seu negócio.
+                </p>
+              </RevealOnScroll>
             </div>
           </div>
         </div>
-
       </div>
     </section>
   );
 };
 
-export default PresentationSection;
+export default PresentationSectionFive;

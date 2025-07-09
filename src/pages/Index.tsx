@@ -10,18 +10,19 @@ import PresentationSectionFive from '../components/PresentationSectionFive';
 import ContentSection from '../components/ContentSection';
 import ContactSection from '../components/ContactSection';
 import Footer from '../components/Footer';
-
+import PresentationSectionTwo from '@/components/PresentationSectionTwo';
 
 const Index = () => {
   return (
    <div className="w-full min-h-screen bg-[#EAF3F3] overflow-x-hidden">
-      <Header />
-      <Hero />
-      <PresentationSection />
-      <PresentationSectionThree />
-      <ColoredCardsSection />
-      <PresentationSectionFour />
-      <PresentationSectionFive />
+      <Header/>
+      <Hero/>
+      <PresentationSection/>
+      <PresentationSectionTwo/>
+      <PresentationSectionThree/>
+      <ColoredCardsSection/>
+      <PresentationSectionFour/>
+      <PresentationSectionFive/>
       <ContentSection />
       <Footer />
       <ContactSection />
