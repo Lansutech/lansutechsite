@@ -1,165 +1,134 @@
+// src/components/PresentationSectionThree.tsx
+
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Github } from 'lucide-react'; // Ícone do GitHub do Lucide
+import RevealOnScroll from './RevealOnScroll';
 
-// === NOVOS IMPORTS DE ÍCONES DE TECNOLOGIAS DO REACT-ICONS ===
-import { FaHtml5, FaCss3Alt, FaReact, FaPython, FaNodeJs, FaJava, FaPhp, FaDatabase } from 'react-icons/fa';
-import {
-  SiTailwindcss, SiTypescript, SiJavascript, SiPostgresql, SiMongodb, SiFlask,
-  SiDocker, SiKubernetes, SiGooglecloud, SiFigma
-} from 'react-icons/si';
-// =============================================================
-
-import RevealOnScroll from './RevealOnScroll'; // Importe o componente RevealOnScroll (ajuste o caminho se necessário)
-
-// Função auxiliar para mapear nomes de tecnologia para ícones específicos
-const getTechnologyIcon = (techName: string) => {
-  const IconSize = 24; // Tamanho dos ícones (ajuste conforme necessário)
-  const IconColor = "#cccccc"; // Cor padrão dos ícones (um cinza claro)
-
-  const lowerCaseTech = techName.toLowerCase();
-
-  switch (lowerCaseTech) {
-    case 'html': return <FaHtml5 size={IconSize} color="#E34F26" />;
-    case 'css': return <FaCss3Alt size={IconSize} color="#1572B6" />;
-    case 'tailwindcss': return <SiTailwindcss size={IconSize} color="#06B6D4" />;
-    case 'react': return <FaReact size={IconSize} color="#61DAFB" />;
-    case 'javascript': return <SiJavascript size={IconSize} color="#F7DF1E" />;
-    case 'typescript': return <SiTypescript size={IconSize} color="#3178C6" />;
-    case 'node.js': return <FaNodeJs size={IconSize} color="#339933" />;
-    case 'python': return <FaPython size={IconSize} color="#3776AB" />;
-    case 'flask': return <SiFlask size={IconSize} color="#E26000" />;
-    case 'django': return <FaPython size={IconSize} color="#092E20" />;
-    case 'java': return <FaJava size={IconSize} color="#007396" />;
-    case 'php': return <FaPhp size={IconSize} color="#777BB4" />;
-    case 'postgresql': return <SiPostgresql size={IconSize} color="#336791" />;
-    case 'mongodb': return <SiMongodb size={IconSize} color="#47A248" />;
-    case 'database': return <FaDatabase size={IconSize} color="#666666" />;
-    case 'docker': return <SiDocker size={IconSize} color="#2496ED" />;
-    case 'kubernetes': return <SiKubernetes size={IconSize} color="#326CE5" />;
-    case 'google cloud': return <SiGooglecloud size={IconSize} color="#4285F4" />;
-    case 'figma': return <SiFigma size={IconSize} color="#F24E1E" />;
-    default: return <FaReact size={IconSize} color={IconColor} />;
-  }
-};
-
-// Dados para os três projetos (com imagem, link GitHub e tecnologias)
 const projectData = [
   {
     id: 1,
-    imageSrc: '/imgs/project-placeholder-1.jpg', // Path to your image for card 1
-    githubUrl: 'https://github.com/your-user/project-alpha', // GitHub link for card 1
-    title: 'Sistema Full Stack',
-    description: 'Um projeto completo que demonstra a integração de tecnologias modernas para uma aplicação robusta.',
-    technologies: ['Flask', 'Python', 'React', 'TailwindCSS', 'Docker', 'Database'], // Tecnologias desejadas
+    title: 'Rhavi Carneiro',
+    description: (
+      <>
+        <p><strong>UI/UX Designer</strong> 🎨</p>
+        <p>Focado em acessibilidade, responsividade e identidade visual.</p>
+        <p>Especialista em <strong>Figma</strong> e experiências interativas que conectam produto e usuário.</p>
+        <div className="flex gap-2 mt-2 justify-start">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg" className="w-6 h-6" title="Figma" />
+        </div>
+      </>
+    ),
   },
   {
     id: 2,
-    imageSrc: '/imgs/project-placeholder-2.jpg', // Path to your image for card 2
-    githubUrl: 'https://github.com/your-user/project-beta', // GitHub link for card 2
-    title: 'Desenvolvimento Ágil',
-    description: 'Apresentamos um case de sucesso de desenvolvimento ágil, focado em entrega contínua e feedback.',
-    technologies: ['Python', 'Django', 'MongoDB', 'Docker', 'AWS'],
+    title: 'Thiago Sversut',
+    description: (
+      <>
+        <p><strong>Desenvolvedor Back-end</strong> 🛠️</p>
+        <p>Focado em APIs REST, segurança e escalabilidade.</p>
+        <p>Experiência com <strong>Python</strong> e bancos de dados relacionais.</p>
+        <div className="flex gap-2 mt-2 justify-center">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" className="w-6 h-6" title="Python" />
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" className="w-6 h-6" title="MySQL" />
+        </div>
+      </>
+    ),
   },
   {
     id: 3,
-    imageSrc: '/imgs/project-placeholder-3.jpg', // Path to your image for card 3
-    githubUrl: 'https://github.com/your-user/project-gamma', // GitHub link for card 3
-    title: 'Inovação em Design',
-    description: 'Descubra a arte por trás da interface intuitiva e a experiência de usuário impecável neste projeto.',
-    technologies: ['Figma', 'React', 'TypeScript', 'Firebase', 'Mobile'],
+    title: 'Guilherme Xavier Hojak',
+    description: (
+      <>
+        <p><strong>Front-end Developer</strong> ⚛️</p>
+        <p>Estudante de Engenharia de Software e entusiasta em IA.</p>
+        <p>Focado em <strong>React</strong>, <strong>Tailwind</strong> e boas práticas de UI responsiva.</p>
+        <div className="flex gap-2 mt-2 justify-end">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" className="w-6 h-6" title="React" />
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-plain.svg" className="w-6 h-6" title="Tailwind" />
+        </div>
+      </>
+    ),
   },
 ];
 
 const PresentationSectionThree = () => {
+  const CARD_WIDTH = 470;
+  const CARD_HEIGHT = 300;
+  const GAP_BETWEEN_CARDS = 32;
+  const SIDE_SCREEN_PADDING = 25;
+  const CARD_GROUP_TOP_OFFSET = 75;
+  const GROUP_CONTENT_WIDTH = (CARD_WIDTH * 3) + (GAP_BETWEEN_CARDS * 2);
+  const TEXT_AREA_HEIGHT_ESTIMATE = 130;
+  const FONT_SIZE_TITLE = 30;
+  const FONT_SIZE_SUBTEXT = 18.26;
+
   return (
     <section className="py-16" style={{ backgroundColor: '#EAF3F3' }}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="relative mx-auto" style={{ width: '100%', minHeight: `${CARD_GROUP_TOP_OFFSET + CARD_HEIGHT + TEXT_AREA_HEIGHT_ESTIMATE + 50}px` }}>
+        <div
+          className="absolute flex"
+          style={{
+            top: `${CARD_GROUP_TOP_OFFSET}px`,
+            left: `${SIDE_SCREEN_PADDING}px`,
+            width: `${GROUP_CONTENT_WIDTH}px`,
+            justifyContent: 'space-between',
+          }}
+        >
+          {projectData.map((project, index) => {
+            let textAlignClass = 'text-center';
+            if (index === 0) textAlignClass = 'text-left';
+            else if (index === projectData.length - 1) textAlignClass = 'text-right';
 
-        {/* Título da seção 3 - Envolvido por RevealOnScroll */}
-        <RevealOnScroll type="slide" direction="up" delay={0.1} duration={0.7}>
-          <h2 className="text-gray-900 mb-8 text-center" style={{ fontFamily: 'DM Sans', fontWeight: 600, fontSize: '67.05px' }}>
-            Nossos Projetos
-          </h2>
-        </RevealOnScroll>
-
-        {/* Terceira seção - três cartões com conteúdo de projeto */}
-        {/* CONTAINER RevealOnScroll para os cards, usando staggerChildren */}
-        <RevealOnScroll staggerChildren={0.15} staggerDelay={0.3} type="slide" direction="up" once={true} threshold={0.2}>
-          <div className="mb-16">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-x-12 gap-y-8">
-              {projectData.map((project) => (
-                // Cada card é envolvido por seu próprio RevealOnScroll.
-                // Não precisa de 'delay', 'duration' ou 'direction' aqui,
-                // pois o 'staggerChildren' do RevealOnScroll PARENT já orquestrará a sequência.
-                // Ele usará os valores padrão de 'type' e 'direction' (slide-up) do próprio RevealOnScroll.
-                <RevealOnScroll key={project.id}>
+            return (
+              <RevealOnScroll key={project.id}>
+                <div className="flex flex-col items-center" style={{ width: `${CARD_WIDTH}px` }}>
                   <motion.div
-                    className="rounded-lg overflow-hidden flex flex-col bg-white shadow-lg"
                     style={{
-                      width: '100%',
-                      height: '480px', // Altura ajustada
-                      borderRadius: '10px',
-                      backgroundColor: '#163030',
+                      width: `${CARD_WIDTH}px`,
+                      height: `${CARD_HEIGHT}px`,
+                      background: 'linear-gradient(135deg, #163030, #224444)',
+                      borderRadius: '12px',
+                      boxShadow: '0 10px 20px rgba(0, 0, 0, 0.15)',
+                      padding: '20px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
                     }}
-                    whileHover={{
-                      scale: 1.05,
-                      boxShadow: "0px 10px 20px rgba(0, 0, 0, 0.2)",
-                    }}
-                    transition={{
-                      type: "tween",
-                      duration: 0.3,
-                      ease: "easeOut"
-                    }}
-                  >
-                    {/* Project Image */}
-                    <div className="w-full h-3/5 bg-gray-200 flex items-center justify-center overflow-hidden">
-                      <img
-                        src={project.imageSrc}
-                        alt={`Imagem do ${project.title}`}
-                        className="w-full h-full object-cover"
-                      />
+                    whileHover={{ scale: 1.05 }}
+                    transition={{ type: 'spring', stiffness: 150, damping: 20 }}
+                  ></motion.div>
+
+                  <div className={`mt-4 ${textAlignClass}`} style={{ width: '100%' }}>
+                    <h3
+                      className="text-gray-900"
+                      style={{
+                        fontFamily: 'DM Sans',
+                        fontWeight: 600,
+                        fontSize: `${FONT_SIZE_TITLE}px`,
+                        lineHeight: '100%',
+                      }}
+                    >
+                      {project.title}
+                    </h3>
+                    <div
+                      className="text-gray-600 mt-2"
+                      style={{
+                        fontFamily: 'DM Sans',
+                        fontWeight: 500,
+                        fontSize: `${FONT_SIZE_SUBTEXT}px`,
+                        lineHeight: '120%',
+                        maxWidth: `${CARD_WIDTH}px`,
+                        overflowWrap: 'break-word',
+                      }}
+                    >
+                      {project.description}
                     </div>
-
-                    {/* Project Title, Description, Technologies and GitHub Button */}
-                    <div className="p-4 text-white flex-grow flex flex-col justify-between">
-                      <div>
-                        <h3 className="text-xl font-bold mb-2" style={{ fontFamily: 'DM Sans' }}>
-                          {project.title}
-                        </h3>
-                        <p className="text-sm mb-3" style={{ fontFamily: 'DM Sans', opacity: 0.8 }}>
-                          {project.description}
-                        </p>
-
-                        {/* Tecnologias Usadas - AGORA COM ÍCONES ESPECÍFICOS */}
-                        <div className="flex flex-wrap gap-x-3 gap-y-2 mb-4">
-                          {project.technologies.map((tech, techIndex) => (
-                            <div key={techIndex} className="flex items-center text-gray-400" title={tech}>
-                              {getTechnologyIcon(tech)}
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-
-                      {/* GitHub Button - Centered at the bottom */}
-                      <div className="mt-4 flex justify-center">
-                        <a
-                          href={project.githubUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center justify-center px-6 py-2 bg-white text-gray-900 rounded-full text-sm font-medium transition-all duration-200 hover:bg-gray-200"
-                          style={{ fontFamily: 'DM Sans' }}
-                        >
-                          <Github className="w-4 h-4 mr-2" /> Ver no GitHub
-                        </a>
-                      </div>
-                    </div>
-                  </motion.div>
-                </RevealOnScroll>
-              ))}
-            </div>
-          </div>
-        </RevealOnScroll>
+                  </div>
+                </div>
+              </RevealOnScroll>
+            );
+          })}
+        </div>
       </div>
     </section>
   );
