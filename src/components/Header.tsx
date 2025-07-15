@@ -59,10 +59,11 @@ const Header: React.FC = () => {
                 style={{
                   fontFamily: 'DM Sans',
                   fontWeight: 500,
-                  fontSize: '16px',
+                  fontSize: '18px',
                   width: '103px',
                   height: '31px',
                   borderRadius: '20px',
+                  
                 }}
               >
                 {text}

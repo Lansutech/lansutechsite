@@ -27,12 +27,12 @@ const Hero = () => {
             className="text-gray-900"
             // Se quiser o título ainda mais para cima, pode ajustar o 'py-8' da section para um valor menor,
             // por exemplo, 'py-4' ou 'pt-4' (apenas padding-top)
-            style={{ fontFamily: 'DM Sans', fontWeight: 600, fontSize: '80.05px' }}
+            style={{justifyContent:'center',alignItems:'center',display: 'flex',marginTop: -(65)}}
             variants={titleAnimation}
             initial="hidden"
             animate="visible"
           >
-            Sobre nós
+            <img src='public/imgs/sobrenos.png'></img>
           </motion.h1>
         </div>
       </div>

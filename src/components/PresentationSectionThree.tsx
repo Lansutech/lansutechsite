@@ -54,26 +54,13 @@ const projectData = [
 const PresentationSectionThree = () => {
   const CARD_WIDTH = 470;
   const CARD_HEIGHT = 300;
-  const GAP_BETWEEN_CARDS = 32;
-  const SIDE_SCREEN_PADDING = 25;
-  const CARD_GROUP_TOP_OFFSET = 75;
-  const GROUP_CONTENT_WIDTH = (CARD_WIDTH * 3) + (GAP_BETWEEN_CARDS * 2);
-  const TEXT_AREA_HEIGHT_ESTIMATE = 130;
   const FONT_SIZE_TITLE = 30;
   const FONT_SIZE_SUBTEXT = 18.26;
 
   return (
-    <section className="py-16" style={{ backgroundColor: '#EAF3F3' }}>
-      <div className="relative mx-auto" style={{ width: '100%', minHeight: `${CARD_GROUP_TOP_OFFSET + CARD_HEIGHT + TEXT_AREA_HEIGHT_ESTIMATE + 50}px` }}>
-        <div
-          className="absolute flex"
-          style={{
-            top: `${CARD_GROUP_TOP_OFFSET}px`,
-            left: `${SIDE_SCREEN_PADDING}px`,
-            width: `${GROUP_CONTENT_WIDTH}px`,
-            justifyContent: 'space-between',
-          }}
-        >
+    <section className="py-16 bg-[#EAF3F3]">
+      <div className="max-w-[1440px] mx-auto px-6">
+        <div className="flex justify-center items-start gap-8 flex-nowrap">
           {projectData.map((project, index) => {
             let textAlignClass = 'text-center';
             if (index === 0) textAlignClass = 'text-left';
@@ -81,23 +68,23 @@ const PresentationSectionThree = () => {
 
             return (
               <RevealOnScroll key={project.id}>
-                <div className="flex flex-col items-center" style={{ width: `${CARD_WIDTH}px` }}>
+                <div
+                  className="flex flex-col items-center"
+                  style={{ width: `${CARD_WIDTH}px` }}
+                >
+                  {/* Card */}
                   <motion.div
+                    className="rounded-xl shadow-lg p-6 flex items-center justify-center"
                     style={{
                       width: `${CARD_WIDTH}px`,
                       height: `${CARD_HEIGHT}px`,
                       background: 'linear-gradient(135deg, #163030, #224444)',
-                      borderRadius: '12px',
-                      boxShadow: '0 10px 20px rgba(0, 0, 0, 0.15)',
-                      padding: '20px',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
                     }}
                     whileHover={{ scale: 1.05 }}
                     transition={{ type: 'spring', stiffness: 150, damping: 20 }}
                   ></motion.div>
 
+                  {/* Texto */}
                   <div className={`mt-4 ${textAlignClass}`} style={{ width: '100%' }}>
                     <h3
                       className="text-gray-900"
