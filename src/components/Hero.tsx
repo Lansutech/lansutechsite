@@ -32,7 +32,7 @@ const Hero = () => {
             initial="hidden"
             animate="visible"
           >
-            <img src='public/imgs/sobrenos.png'></img>
+            <img src='/imgs/sobrenos.png'></img>
           </motion.h1>
         </div>
       </div>

@@ -48,7 +48,8 @@ const PresentationSectionTwo = () => {
                   height: '363px',
                   backgroundColor: '#163030',
                   borderRadius: '10px',
-                }}
+                }} whileHover={{ scale: 1.02 }}
+                    transition={{ type: 'spring', stiffness: 150, damping: 20, duration: 0.9}}
               >
                 {/* Image or placeholder content */}
               </motion.div>

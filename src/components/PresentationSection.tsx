@@ -67,7 +67,7 @@ const PresentationSectionFive = () => {
               viewport={{ once: true, amount: 0.4 }}
               whileHover={{
                 scale: 1.02,
-                boxShadow: '0 6px 16px rgba(0, 0, 0, 0.15)'
+                boxShadow: '0 6px 16px rgba(0, 0, 0, 0.15)',
               }}
               transition={{
                 type: 'spring',

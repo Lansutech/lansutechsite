@@ -13,7 +13,7 @@ const projectData = [
         <p><strong>UI/UX Designer</strong> 🎨</p>
         <p>Focado em acessibilidade, responsividade e identidade visual.</p>
         <p>Especialista em <strong>Figma</strong> e experiências interativas que conectam produto e usuário.</p>
-        <div className="flex gap-2 mt-2 justify-start">
+        <div className="flex gap-2 mt-2 justify-center">
           <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg" className="w-6 h-6" title="Figma" />
         </div>
       </>
@@ -42,7 +42,7 @@ const projectData = [
         <p><strong>Front-end Developer</strong> ⚛️</p>
         <p>Estudante de Engenharia de Software e entusiasta em IA.</p>
         <p>Focado em <strong>React</strong>, <strong>Tailwind</strong> e boas práticas de UI responsiva.</p>
-        <div className="flex gap-2 mt-2 justify-end">
+        <div className="flex gap-2 mt-2 justify-center">
           <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" className="w-6 h-6" title="React" />
           <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-plain.svg" className="w-6 h-6" title="Tailwind" />
         </div>
@@ -52,8 +52,8 @@ const projectData = [
 ];
 
 const PresentationSectionThree = () => {
-  const CARD_WIDTH = 470;
-  const CARD_HEIGHT = 300;
+  const CARD_WIDTH = 510;
+  const CARD_HEIGHT = 330;
   const FONT_SIZE_TITLE = 30;
   const FONT_SIZE_SUBTEXT = 18.26;
 
@@ -62,15 +62,12 @@ const PresentationSectionThree = () => {
       <div className="max-w-[1440px] mx-auto px-6">
         <div className="flex justify-center items-start gap-8 flex-nowrap">
           {projectData.map((project, index) => {
-            let textAlignClass = 'text-center';
-            if (index === 0) textAlignClass = 'text-left';
-            else if (index === projectData.length - 1) textAlignClass = 'text-right';
 
             return (
               <RevealOnScroll key={project.id}>
                 <div
                   className="flex flex-col items-center"
-                  style={{ width: `${CARD_WIDTH}px` }}
+                  style={{ width: `${CARD_WIDTH}px`, marginTop: -(-90)}}
                 >
                   {/* Card */}
                   <motion.div
@@ -80,12 +77,12 @@ const PresentationSectionThree = () => {
                       height: `${CARD_HEIGHT}px`,
                       background: 'linear-gradient(135deg, #163030, #224444)',
                     }}
-                    whileHover={{ scale: 1.05 }}
-                    transition={{ type: 'spring', stiffness: 150, damping: 20 }}
+                    whileHover={{ scale: 1.02 }}
+                    transition={{ type: 'spring', stiffness: 150, damping: 20, duration: 0.9}}
                   ></motion.div>
 
                   {/* Texto */}
-                  <div className={`mt-4 ${textAlignClass}`} style={{ width: '100%' }}>
+                  <div className={`mt-4 text-center`} style={{ width: '100%' }}>
                     <h3
                       className="text-gray-900"
                       style={{

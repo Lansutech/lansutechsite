@@ -10,7 +10,7 @@ const lineVariants: Variants = {
   visible: {
     scaleX: 1,
     transition: {
-      duration: 2.2,
+      duration: 1.4,
       ease: [0.25, 0.8, 0.25, 1],
       delay: 0, // começa junto com os botões
     },
@@ -23,7 +23,7 @@ const buttonVariants: Variants = {
   visible: {
     x: 0,
     transition: {
-      duration: 1.8, // mais suave, mais longo
+      duration: 1.2, // mais suave, mais longo
       ease: [0.25, 0.8, 0.25, 1], // igual à linha
       delay: 0, // inicia junto com a linha
     },
@@ -54,15 +54,16 @@ const Header: React.FC = () => {
               <button
                 key={text}
                 className={`${
-                  idx === 0 ? 'bg-black text-white' : 'text-gray-700 hover:bg-black hover:text-white'
+                  idx === 0 ? 'bg-black text-white' : 'text-black hover:bg-black hover:text-white'
                 } font-medium rounded-full transition-all duration-200 flex items-center justify-center`}
                 style={{
                   fontFamily: 'DM Sans',
-                  fontWeight: 500,
+                  fontWeight: 400,
                   fontSize: '18px',
-                  width: '103px',
-                  height: '31px',
-                  borderRadius: '20px',
+                  width: '116px',
+                  height: '33px',
+                  borderRadius: '21px',
+                  letterSpacing: '0.8px'
                   
                 }}
               >
