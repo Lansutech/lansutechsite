@@ -1,5 +1,3 @@
-// src/components/PresentationSectionThree.tsx
-
 import React from 'react';
 import { motion } from 'framer-motion';
 import RevealOnScroll from './RevealOnScroll';
@@ -52,66 +50,57 @@ const projectData = [
 ];
 
 const PresentationSectionThree = () => {
-  const CARD_WIDTH = 510;
-  const CARD_HEIGHT = 330;
-  const FONT_SIZE_TITLE = 30;
-  const FONT_SIZE_SUBTEXT = 18.26;
-
   return (
     <section className="py-16 bg-[#EAF3F3]">
-      <div className="max-w-[1440px] mx-auto px-6">
-        <div className="flex justify-center items-start gap-8 flex-nowrap">
-          {projectData.map((project, index) => {
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8" style={{marginTop: '85px'}}>
+        {/* Container principal dos cards */}
+        {/* Removido 'place-items-center' e adicionado 'items-start' para alinhamento superior */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-start">
+          {projectData.map((project) => (
+            <RevealOnScroll key={project.id}>
+              {/* O card individual terá largura total na coluna da grade, limitada pelo max-w */}
+              <div className="flex flex-col items-center w-full max-w-[510px]">
+                {/* Card */}
+                <motion.div
+                  className="rounded-xl shadow-lg p-6 flex items-center justify-center"
+                  style={{
+                    width: "100%", // Ocupa 100% da largura da coluna da grade
+                    height: "330px", // Altura fixa do card visual
+                    background: 'linear-gradient(135deg, #163030, #224444)',
+                  }}
+                  whileHover={{ scale: 1.02 }}
+                  transition={{ type: 'spring', stiffness: 150, damping: 20, duration: 0.9 }}
+                />
 
-            return (
-              <RevealOnScroll key={project.id}>
-                <div
-                  className="flex flex-col items-center"
-                  style={{ width: `${CARD_WIDTH}px`, marginTop: -(-90)}}
-                >
-                  {/* Card */}
-                  <motion.div
-                    className="rounded-xl shadow-lg p-6 flex items-center justify-center"
+                {/* Texto */}
+                <div className="mt-4 text-center w-full">
+                  <h3
+                    className="text-gray-900"
                     style={{
-                      width: `${CARD_WIDTH}px`,
-                      height: `${CARD_HEIGHT}px`,
-                      background: 'linear-gradient(135deg, #163030, #224444)',
+                      fontFamily: 'DM Sans',
+                      fontWeight: 600,
+                      fontSize: '30px',
+                      lineHeight: '100%',
                     }}
-                    whileHover={{ scale: 1.02 }}
-                    transition={{ type: 'spring', stiffness: 150, damping: 20, duration: 0.9}}
-                  ></motion.div>
-
-                  {/* Texto */}
-                  <div className={`mt-4 text-center`} style={{ width: '100%' }}>
-                    <h3
-                      className="text-gray-900"
-                      style={{
-                        fontFamily: 'DM Sans',
-                        fontWeight: 600,
-                        fontSize: `${FONT_SIZE_TITLE}px`,
-                        lineHeight: '100%',
-                      }}
-                    >
-                      {project.title}
-                    </h3>
-                    <div
-                      className="text-gray-600 mt-2"
-                      style={{
-                        fontFamily: 'DM Sans',
-                        fontWeight: 500,
-                        fontSize: `${FONT_SIZE_SUBTEXT}px`,
-                        lineHeight: '120%',
-                        maxWidth: `${CARD_WIDTH}px`,
-                        overflowWrap: 'break-word',
-                      }}
-                    >
-                      {project.description}
-                    </div>
+                  >
+                    {project.title}
+                  </h3>
+                  <div
+                    className="text-gray-600 mt-2"
+                    style={{
+                      fontFamily: 'DM Sans',
+                      fontWeight: 500,
+                      fontSize: '18.26px',
+                      lineHeight: '120%',
+                      overflowWrap: 'break-word',
+                    }}
+                  >
+                    {project.description}
                   </div>
                 </div>
-              </RevealOnScroll>
-            );
-          })}
+              </div>
+            </RevealOnScroll>
+          ))}
         </div>
       </div>
     </section>
