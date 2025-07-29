@@ -56,7 +56,7 @@ const ServicesSection = () => {
   return (
     <section className="bg-[#EAF3F3] py-24 pl-20 pr-8 overflow-hidden relative"> {/* Adicionado 'relative' para posicionar as setas */}
       <div className="max-w-[1600px] mx-auto">
-        <h2 className="mb-16" style={{ fontFamily: 'Gulzar', fontSize: '96px', color: '#000000' }}>
+        <h2 className="mb-16" style={{ fontFamily: 'DM Sans', fontSize: '86px', color: '#000000' }}>
           Serviços
         </h2>
 

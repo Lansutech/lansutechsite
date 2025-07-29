@@ -1,10 +1,8 @@
 import React from 'react';
-import { motion, Variants } from 'framer-motion'; // Importar 'Variants' de framer-motion
-// import RevealOnScroll from '../components/RevealOnScroll'; // Não usado neste snippet, mas pode ser reintroduzido se necessário
+import { motion, Variants } from 'framer-motion';
 
 const Hero = () => {
   // Variantes para a animação do título (fade-in e rise-up)
-  // Definindo explicitamente o tipo 'Variants' para ajudar o TypeScript
   const titleAnimation: Variants = {
     hidden: { opacity: 0, y: 30 }, // Começa invisível e 30px abaixo
     visible: {
@@ -22,17 +20,15 @@ const Hero = () => {
     <section className="py-8" style={{ backgroundColor: '#EAF3F3' }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center">
-       
+        
           <motion.h1
             className="text-gray-900"
-            // Se quiser o título ainda mais para cima, pode ajustar o 'py-8' da section para um valor menor,
-            // por exemplo, 'py-4' ou 'pt-4' (apenas padding-top)
-            style={{justifyContent:'center',alignItems:'center',display: 'flex',marginTop: -(65)}}
+            style={{ justifyContent:'center', alignItems:'center', display: 'flex', marginTop: -65 }}
             variants={titleAnimation}
             initial="hidden"
-            animate="visible"
+            animate="visible" // Anima assim que o componente é montado
           >
-            <img src='/imgs/sobrenos.png'></img>
+            <h1 style={{ fontFamily: 'DM Sans', fontSize: '86px', color: 'black' }}>Sobre nós</h1>
           </motion.h1>
         </div>
       </div>

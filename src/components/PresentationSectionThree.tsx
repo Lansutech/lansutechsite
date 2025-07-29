@@ -1,6 +1,6 @@
 import React from 'react';
-import { motion } from 'framer-motion';
-import RevealOnScroll from './RevealOnScroll';
+import { motion } from 'framer-motion'; // Manter motion para o whileHover no card visual
+import RevealOnScroll from './RevealOnScroll'; // Importar o componente RevealOnScroll
 
 const projectData = [
   {
@@ -51,16 +51,38 @@ const projectData = [
 
 const PresentationSectionThree = () => {
   return (
+    // A seção inteira pode ter uma animação de entrada (opcional, ou se for a primeira seção visível)
+    // Para esta seção, vamos aplicar o RevealOnScroll no container dos cards para usar staggerChildren.
     <section className="py-16 bg-[#EAF3F3]">
-      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8" style={{marginTop: '85px'}}>
-        {/* Container principal dos cards */}
-        {/* Removido 'place-items-center' e adicionado 'items-start' para alinhamento superior */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-start">
-          {projectData.map((project) => (
-            <RevealOnScroll key={project.id}>
-              {/* O card individual terá largura total na coluna da grade, limitada pelo max-w */}
-              <div className="flex flex-col items-center w-full max-w-[510px]">
-                {/* Card */}
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8" style={{ marginTop: '85px' }}>
+        
+        {/* Usamos RevealOnScroll como CONTAINER para os cards, ativando o staggerChildren */}
+        {/* O 'delay' aqui é o atraso para o container começar a aparecer. */}
+        {/* 'staggerChildren' é o atraso entre CADA card filho. */}
+        {/* 'staggerDelay' é um atraso ADICIONAL antes que os filhos comecem a animar, depois que o container já está visível. */}
+        <RevealOnScroll type="fade" delay={0.2} staggerChildren={0.15} staggerDelay={0.1} threshold={0.3}>
+          {/* Container principal dos cards (agora é um motion.div devido ao RevealOnScroll pai) */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-start">
+            {projectData.map((project) => (
+              // Cada item do mapa DEVE ser um motion.div com suas próprias variantes
+              // para que o `staggerChildren` funcione no pai `RevealOnScroll`.
+              // As variantes `hidden` e `visible` vêm do padrão do `RevealOnScroll`
+              // ou são definidas aqui se quisermos algo diferente para cada item.
+              // Como já estamos usando o RevealOnScroll para gerenciar o staggerChildren no pai,
+              // o child *precisa* ser uma motion.div com as variantes default para herdar o stagger.
+              // O `RevealOnScroll` filho é simplificado, usando apenas o `key`.
+              <motion.div 
+                key={project.id}
+                // As variantes do item (hidden/visible) são necessárias para o stagger funcionar
+                // Elas serão as variantes default do RevealOnScroll: { opacity: 0, y: 75 } -> { opacity: 1, y: 0 }
+                // Ou você pode definir customizadas aqui:
+                variants={{ 
+                    hidden: { opacity: 0, y: 50 }, 
+                    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } } 
+                }}
+                className="flex flex-col items-center w-full max-w-[510px]"
+              >
+                {/* Card visual com efeito de hover (mantido como motion.div) */}
                 <motion.div
                   className="rounded-xl shadow-lg p-6 flex items-center justify-center"
                   style={{
@@ -69,7 +91,7 @@ const PresentationSectionThree = () => {
                     background: 'linear-gradient(135deg, #163030, #224444)',
                   }}
                   whileHover={{ scale: 1.02 }}
-                  transition={{ type: 'spring', stiffness: 150, damping: 20, duration: 0.9 }}
+                  transition={{ type: 'spring', stiffness: 150, damping: 20, duration: 0.9 }} // Duração para o hover
                 />
 
                 {/* Texto */}
@@ -98,10 +120,10 @@ const PresentationSectionThree = () => {
                     {project.description}
                   </div>
                 </div>
-              </div>
-            </RevealOnScroll>
-          ))}
-        </div>
+              </motion.div>
+            ))}
+          </div>
+        </RevealOnScroll>
       </div>
     </section>
   );
