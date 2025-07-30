@@ -1,6 +1,7 @@
 // src/components/Header.tsx
 import React from 'react';
 import { motion, Variants } from 'framer-motion';
+import { FaWhatsapp } from 'react-icons/fa';
 
 const navItems = ['Sobre nós', 'Serviços', 'Contato', 'Projetos'];
 
@@ -12,20 +13,20 @@ const lineVariants: Variants = {
     transition: {
       duration: 1.4,
       ease: [0.25, 0.8, 0.25, 1],
-      delay: 0, // começa junto com os botões
+      delay: 0,
     },
   },
 };
 
-// Variante dos botões com easing suave e sem delay
+// Variante dos botões
 const buttonVariants: Variants = {
   hidden: { x: -300 },
   visible: {
     x: 0,
     transition: {
-      duration: 1.2, // mais suave, mais longo
-      ease: [0.25, 0.8, 0.25, 1], // igual à linha
-      delay: 0, // inicia junto com a linha
+      duration: 1.2,
+      ease: [0.25, 0.8, 0.25, 1],
+      delay: 0,
     },
   },
 };
@@ -64,7 +65,6 @@ const Header: React.FC = () => {
                   height: '33px',
                   borderRadius: '21px',
                   letterSpacing: '0.8px'
-                  
                 }}
               >
                 {text}
@@ -81,10 +81,13 @@ const Header: React.FC = () => {
           />
         </div>
 
-        {/* Botão direito */}
+        {/* Botão direito com ícone WhatsApp */}
         <div className="hidden md:flex items-center absolute top-[52.33px] right-6 z-20">
-          <button className="bg-black text-white hover:bg-[#1A437C] rounded-full px-4 py-1 font-medium transition">
-            Contate-nos
+          <button
+            className="bg-[#4ADE80] text-black hover:bg-[#22c55e] rounded-full p-3 font-medium transition flex items-center justify-center"
+            aria-label="WhatsApp"
+          >
+            <FaWhatsapp size={24} />
           </button>
         </div>
 
