@@ -81,15 +81,21 @@ const Header: React.FC = () => {
           />
         </div>
 
-        {/* Botão direito com ícone WhatsApp */}
-        <div className="hidden md:flex items-center absolute top-[52.33px] right-6 z-20">
-          <button
-            className="bg-[#4ADE80] text-black hover:bg-[#22c55e] rounded-full p-3 font-medium transition flex items-center justify-center"
-            aria-label="WhatsApp"
-          >
-            <FaWhatsapp size={24} />
-          </button>
-        </div>
+        {/* Botão direito com ícone WhatsApp profissional */}
+<div className="hidden md:flex items-center absolute top-[52.33px] right-6 z-20">
+  <a
+    href="https://wa.me/55SEUNUMERO" // Substitua pelo seu número com DDI+DDD
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="WhatsApp"
+    className="bg-[#25D366] text-white rounded-full p-3 shadow-md transition
+      hover:bg-[#1ebe57] hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#25D366]
+      flex items-center justify-center"
+    style={{ width: 44, height: 44 }}
+  >
+    <FaWhatsapp size={24} />
+  </a>
+</div>
 
         {/* Mobile menu */}
         <div className="md:hidden p-4">
