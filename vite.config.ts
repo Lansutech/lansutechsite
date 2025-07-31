@@ -19,4 +19,9 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  // --- ADICIONE ESTA LINHA ---
+  // Substitua 'nome-do-seu-repositorio' pelo nome do seu repositório no GitHub.
+  // Mantenha as barras no início e no final.
+  base: '/lansutechsite/', 
+  // ---------------------------
 }));
