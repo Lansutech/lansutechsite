@@ -38,7 +38,7 @@ const Header: React.FC = () => {
 
         {/* Logo */}
         <div className="absolute top-6 left-6 w-[122px] h-[124px] z-20">
-          <img src="/imgs/lansutechlogo.png" alt="Lansutech" className="w-full h-full object-contain" />
+         <img src={import.meta.env.BASE_URL + 'imgs/lansutechlogo.png'} alt="Lansutech" className="w-full h-full object-contain" />
         </div>
 
         {/* Navegação central + linha */}
