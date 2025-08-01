@@ -97,12 +97,10 @@ const ColoredCardsSection = () => {
 
 
     return (
-        <section className="py-16 bg-[#EAF3F3] flex flex-col items-center justify-start overflow-hidden">
-            <RevealOnScroll type="slide" direction="up" delay={0.1} duration={0.8} threshold={0.5}>
-              <h2 className="text-4xl font-regular text-black mb-12 mt-8" style={{fontFamily: 'DM Sans', fontSize: '86px', marginTop: 52}}>
-                  Nossos Projetos
-              </h2>
-            </RevealOnScroll>
+         <section id="projetos" className="py-16 bg-[#EAF3F3] flex flex-col items-center justify-start overflow-hidden">
+        <RevealOnScroll type="slide" direction="up" delay={0.1} duration={0.8} threshold={0.5}>
+          <h2 className="text-4xl font-regular text-black mb-12 mt-8" style={{fontFamily: 'DM Sans', fontSize: '86px', marginTop: 52}}> Nossos Projetos </h2>
+        </RevealOnScroll>
 
             <RevealOnScroll type="fade" delay={0.3} duration={1.0} threshold={0.3}>
               <div className="relative" style={{ height: `${CARD_HEIGHT_SELECTED}px`, width: '100vw', display: 'flex', justifyContent: 'center' }}>

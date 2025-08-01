@@ -1,22 +1,18 @@
+// src/components/ContactSection.tsx
 import React from 'react';
-import { motion } from 'framer-motion'; // <<< Adicione esta linha
+import { motion } from 'framer-motion';
 import { Input } from './ui/input';
 import { Textarea } from './ui/textarea';
 import { Button } from './ui/button';
 import { Card, CardContent } from './ui/card';
-
-// Importação de Ícones Lucide React
 import { Mail, Phone, MapPin } from 'lucide-react';
-
-// Importar o componente RevealOnScroll
 import RevealOnScroll from './RevealOnScroll';
 
 const ContactSection = () => {
   return (
-    <section className="py-16 md:py-24" style={{ backgroundColor: '#F0F7F7' }}>
+    // Adicionado o ID para o botão "Contato"
+    <section id="contato" className="py-16 md:py-24" style={{ backgroundColor: '#F0F7F7' }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-
-        {/* Header - Revelar como um bloco */}
         <RevealOnScroll type="slide" direction="up" delay={0.1} duration={0.8} threshold={0.4}>
           <div className="text-center mb-12 md:mb-16">
             <h2 className="font-dm-sans text-4xl md:text-5xl font-extrabold text-gray-900 mb-4 tracking-tight">
@@ -27,6 +23,7 @@ const ContactSection = () => {
             </p>
           </div>
         </RevealOnScroll>
+        
 
         {/* Contact Grid - Cada coluna animando separadamente */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start">

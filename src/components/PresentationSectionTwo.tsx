@@ -6,7 +6,7 @@ import { FaBullseye, FaHandsHelping, FaUsers, FaChartLine } from 'react-icons/fa
 
 const PresentationSectionTwo = () => {
   return (
-    <section className="bg-[#EAF3F3] pb-0">
+    <section id="sobre-nos" className="bg-[#EAF3F3] pb-0">
       <div
         className="relative mx-[45px] mr-[86px]"
         style={{ maxWidth: 'calc(100vw - 45px - 86px)' }}

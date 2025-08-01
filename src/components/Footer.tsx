@@ -54,11 +54,9 @@ const ServicesSection = () => {
   const activeServiceForContent = services[currentIndex];
 
   return (
-    <section className="bg-[#EAF3F3] py-24 pl-20 pr-8 overflow-hidden relative"> {/* Adicionado 'relative' para posicionar as setas */}
+    <section id="servicos" className="bg-[#EAF3F3] py-24 pl-20 pr-8 overflow-hidden relative">
       <div className="max-w-[1600px] mx-auto">
-        <h2 className="mb-16" style={{ fontFamily: 'DM Sans', fontSize: '86px', color: '#000000' }}>
-          Serviços
-        </h2>
+        <h2 className="mb-16" style={{ fontFamily: 'DM Sans', fontSize: '86px', color: '#000000' }}> Serviços </h2>
 
         {/* Container que gerencia a rolagem horizontal para os cards */}
         <div className="flex items-end mb-12 relative overflow-hidden" style={{ height: CARD_HEIGHT_ACTIVE + 20 }}>
