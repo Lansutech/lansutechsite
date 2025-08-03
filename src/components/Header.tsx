@@ -5,9 +5,9 @@ import { FaWhatsapp } from 'react-icons/fa';
 
 const navItems = [
   { name: 'Sobre nós', id: 'sobre-nos' },
+  { name: 'Projetos', id: 'projetos' },
   { name: 'Serviços', id: 'servicos' },
   { name: 'Contato', id: 'contato' },
-  { name: 'Projetos', id: 'projetos' }
 ];
 
 const lineVariants: Variants = {

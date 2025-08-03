@@ -69,15 +69,7 @@ const ContactSection = () => {
                   className="flex items-start space-x-6"
                   variants={{ hidden: { opacity: 0, x: -50 }, visible: { opacity: 1, x: 0 } }} // Animação customizada para o stagger
                 >
-                  <div className="w-14 h-14 bg-rose-50 text-rose-600 rounded-full flex items-center justify-center shadow-md flex-shrink-0">
-                    <MapPin className="w-7 h-7" />
-                  </div>
-                  <div>
-                    <h4 className="font-dm-sans font-semibold text-lg text-gray-900 mb-1">Localização</h4>
-                    <p className="font-dm-sans text-gray-700 text-base">
-                      Av. Tecnologia Avançada, 456, InovaPark, Curitiba - PR, Brasil
-                    </p>
-                  </div>
+                  
                 </motion.div>
               </div>
             </div>

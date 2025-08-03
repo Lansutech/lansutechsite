@@ -22,14 +22,23 @@ const Hero = () => {
         <div className="text-center">
         
           <motion.h1
-            className="text-gray-900"
-            style={{ justifyContent:'center', alignItems:'center', display: 'flex', marginTop: -65 }}
-            variants={titleAnimation}
-            initial="hidden"
-            animate="visible" // Anima assim que o componente é montado
-          >
-            <h1 style={{ fontFamily: 'DM Sans', fontSize: '86px', color: 'black' }}>Sobre nós</h1>
-          </motion.h1>
+  className="text-gray-900"
+  style={{
+    justifyContent: 'center',
+    alignItems: 'center',
+    display: 'flex',
+    marginTop: -65,
+    fontFamily: 'DM Sans',
+    fontSize: '86px',
+    color: 'black'
+  }}
+  variants={titleAnimation}
+  initial="hidden"
+  animate="visible"
+>
+  Sobre nós
+</motion.h1>
+
         </div>
       </div>
     </section>
