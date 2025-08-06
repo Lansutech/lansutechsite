@@ -79,8 +79,16 @@ const ContactSection = () => {
           <RevealOnScroll type="slide" direction="right" delay={0.4} duration={0.8} threshold={0.3}>
             <Card className="bg-white rounded-xl shadow-xl border border-gray-100 p-6 md:p-8">
               <CardContent className="p-0">
-                <form className="space-y-6">
-                  {/* Inputs do Formulário - Podem ter seu próprio stagger se quiser, mas por enquanto como um bloco */}
+                <form
+                  className="space-y-6"
+                  action="https://formsubmit.co/AdicioneAqui@gmail.com"
+                  method="POST"
+                >
+                  {/* Campos ocultos de controle do FormSubmit */}
+                  <input type="hidden" name="_captcha" value="false" />
+                  <input type="hidden" name="_next" value="os emails só é enviado se tiver o link de uma página estática aqui" />
+                  <input type="hidden" name="_honey" style={{ display: 'none' }} />
+
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <label htmlFor="nome" className="font-dm-sans text-sm font-medium text-gray-700 mb-2 block">
@@ -88,7 +96,9 @@ const ContactSection = () => {
                       </label>
                       <Input
                         id="nome"
+                        name="name"
                         placeholder="Seu nome completo"
+                        required
                         className="font-dm-sans border border-gray-300 focus:border-blue-500 focus:ring-blue-500 rounded-md px-4 py-2 text-base shadow-sm"
                       />
                     </div>
@@ -99,7 +109,9 @@ const ContactSection = () => {
                       <Input
                         id="email"
                         type="email"
+                        name="email"
                         placeholder="seu@empresa.com"
+                        required
                         className="font-dm-sans border border-gray-300 focus:border-blue-500 focus:ring-blue-500 rounded-md px-4 py-2 text-base shadow-sm"
                       />
                     </div>
@@ -111,7 +123,9 @@ const ContactSection = () => {
                     </label>
                     <Input
                       id="assunto"
+                      name="subject"
                       placeholder="Assunto da mensagem"
+                      required
                       className="font-dm-sans border border-gray-300 focus:border-blue-500 focus:ring-blue-500 rounded-md px-4 py-2 text-base shadow-sm"
                     />
                   </div>
@@ -122,8 +136,10 @@ const ContactSection = () => {
                     </label>
                     <Textarea
                       id="mensagem"
+                      name="message"
                       placeholder="Descreva suas necessidades ou dúvidas aqui..."
                       rows={6}
+                      required
                       className="font-dm-sans border border-gray-300 focus:border-blue-500 focus:ring-blue-500 rounded-md px-4 py-2 resize-y text-base shadow-sm"
                     />
                   </div>
