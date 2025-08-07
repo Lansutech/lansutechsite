@@ -22,22 +22,18 @@ const Hero = () => {
         <div className="text-center">
         
           <motion.h1
-  className="text-gray-900"
-  style={{
-    justifyContent: 'center',
-    alignItems: 'center',
-    display: 'flex',
-    marginTop: -65,
-    fontFamily: 'DM Sans',
-    fontSize: '86px',
-    color: 'black'
-  }}
-  variants={titleAnimation}
-  initial="hidden"
-  animate="visible"
->
-  Sobre nós
-</motion.h1>
+            // CLASSES DE RESPONSIVIDADE ADICIONADAS AQUI
+            style={{ fontFamily: 'DM Sans' }} // Mantendo o font-family
+            className="flex items-center justify-center
+                       text-4xl md:text-6xl lg:text-[86px]
+                       text-black font-regular tracking-tight
+                       mt-0 md:mt-[-65px]"
+            variants={titleAnimation}
+            initial="hidden"
+            animate="visible"
+          >
+            Sobre nós
+          </motion.h1>
 
         </div>
       </div>

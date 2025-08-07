@@ -7,19 +7,18 @@ const PresentationSectionFive = () => {
   return (
     <section className="bg-[#EAF3F3] pb-0">
       <div
-        className="relative mx-[45px] mr-[86px]"
-        style={{ maxWidth: 'calc(100vw - 45px - 86px)' }}
+        className="relative mx-4 md:mx-[45px] mr-4 md:mr-[86px] my-10"
       >
         <div className="mb-5">
-          <div className="grid grid-cols-1 lg:grid-cols-[550px_1fr] gap-x-4 items-start">
+          {/* ALTERADO: Revertido para a definição de grid original para desktops */}
+          <div className="grid grid-cols-1 lg:grid-cols-[550px_1fr] gap-8 lg:gap-x-4 items-start">
 
             {/* Card com texto aprimorado */}
             <RevealOnScroll type="slide" direction="up" delay={0.2} duration={0.8} threshold={0.4}>
               <motion.div
-                className="rounded-lg overflow-hidden shadow-md cursor-pointer p-10 flex flex-col justify-center border-l-4 border-[#4ADE80]"
+                // ALTERADO: Removida a altura fixa e a largura para que o grid controle o tamanho
+                className="rounded-lg overflow-hidden shadow-md cursor-pointer p-6 md:p-10 flex flex-col justify-center border-l-4 border-[#4ADE80]"
                 style={{
-                  width: '550px',
-                  height: '363px',
                   backgroundColor: '#163030',
                   borderRadius: '10px',
                   color: '#E0F2F1',
@@ -51,24 +50,24 @@ const PresentationSectionFive = () => {
                     zIndex: 0,
                   }}
                 />
-                <h3 className="relative z-10 text-4xl font-semibold mb-8 tracking-tight">
+                <h3 className="relative z-10 text-2xl md:text-4xl font-semibold mb-4 md:mb-8 tracking-tight">
                   Por que escolher a Lansutech?
                 </h3>
-                <ul className="relative z-10 space-y-5 text-xl font-medium leading-relaxed">
-                  <li className="flex items-center gap-4">
-                    <FaCheckCircle className="text-[#4ADE80] w-6 h-6 flex-shrink-0" />
+                <ul className="relative z-10 space-y-3 md:space-y-5 text-sm md:text-xl font-medium leading-relaxed">
+                  <li className="flex items-center gap-2 md:gap-4">
+                    <FaCheckCircle className="text-[#4ADE80] w-5 h-5 md:w-6 md:h-6 flex-shrink-0" />
                     Soluções simples e eficientes
                   </li>
-                  <li className="flex items-center gap-4">
-                    <FaBolt className="text-[#4ADE80] w-6 h-6 flex-shrink-0" />
+                  <li className="flex items-center gap-2 md:gap-4">
+                    <FaBolt className="text-[#4ADE80] w-5 h-5 md:w-6 md:h-6 flex-shrink-0" />
                     Foco em resultados reais
                   </li>
-                  <li className="flex items-center gap-4">
-                    <FaUsers className="text-[#4ADE80] w-6 h-6 flex-shrink-0" />
+                  <li className="flex items-center gap-2 md:gap-4">
+                    <FaUsers className="text-[#4ADE80] w-5 h-5 md:w-6 md:h-6 flex-shrink-0" />
                     Time dedicado e colaborativo
                   </li>
-                  <li className="flex items-center gap-4">
-                    <FaLightbulb className="text-[#4ADE80] w-6 h-6 flex-shrink-0" />
+                  <li className="flex items-center gap-2 md:gap-4">
+                    <FaLightbulb className="text-[#4ADE80] w-5 h-5 md:w-6 md:h-6 flex-shrink-0" />
                     Tecnologia que facilita o dia a dia
                   </li>
                 </ul>
@@ -76,11 +75,11 @@ const PresentationSectionFive = () => {
             </RevealOnScroll>
 
             {/* Coluna de texto Quem Somos */}
-            <div className="pt-[6px] pl-[19px] relative w-full">
+            <div className="pt-4 md:pt-[6px] pl-0 lg:pl-[19px] relative w-full">
               <RevealOnScroll type="slide" direction="up" delay={0.4} duration={0.8} threshold={0.4}>
                 <h2
-                  className="text-black font-semibold relative z-10"
-                  style={{ fontFamily: 'DM Sans', fontSize: '67.05px', marginBottom: 7 }}
+                  className="text-black font-semibold relative z-10 text-4xl lg:text-[67.05px] mb-2 md:mb-7"
+                  style={{ fontFamily: 'DM Sans' }}
                 >
                   Quem Somos?
                 </h2>
@@ -88,8 +87,8 @@ const PresentationSectionFive = () => {
 
               <RevealOnScroll type="slide" direction="up" delay={0.6} duration={0.8} threshold={0.4}>
                 <p
-                  className="text-black leading-relaxed"
-                  style={{ fontFamily: 'DM Sans', fontWeight: 600, fontSize: '18.26px' }}
+                  className="text-black leading-relaxed text-sm md:text-[18.26px]"
+                  style={{ fontFamily: 'DM Sans', fontWeight: 600 }}
                 >
                   Somos um grupo apaixonado por tecnologia e por resolver problemas de verdade.
                   Nosso foco está em criar soluções que funcionem de forma simples, eficiente e que realmente façam diferença no dia a dia de quem usa.
