@@ -11,9 +11,9 @@ export interface ApiResponse {
 
 // Configuração do EmailJS
 const EMAILJS_CONFIG = {
-  SERVICE_ID: 'service_qzk9btw', // Substitua pelo seu Service ID
-  TEMPLATE_ID: 'template_2p6aq9i', // Substitua pelo seu Template ID
-  PUBLIC_KEY: 'K8KUO_iCUg83k_Pqh', // Substitua pela sua Public Key
+  SERVICE_ID: 'service_bgy59cg', // Substitua pelo seu Service ID
+  TEMPLATE_ID: 'template_6ghchgh', // Substitua pelo seu Template ID
+  PUBLIC_KEY: 'BUCwJkUnvWYhAxAn5', // Substitua pela sua Public Key
 };
 
 // Função para enviar o formulário de contato via EmailJS
