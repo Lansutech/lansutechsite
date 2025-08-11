@@ -19,12 +19,13 @@ const projectData = [
   },
   {
     id: 2,
-    title: 'Thiago Sversut',
+    title: 'Tiago Sversut',
     description: (
       <>
         <p><strong>Desenvolvedor Back-end</strong> 🛠️</p>
-        <p>Focado em APIs REST, segurança e escalabilidade.</p>
-        <p>Experiência com <strong>Python</strong> e bancos de dados relacionais.</p>
+        <p>Focado em APIs REST, desenvolver soluções, automações e desenvolvimento de Bots</p>
+        <p>Experiência com <strong>Python</strong>, <strong>SQL</strong>, <strong>PHP<strong>, <strong>JAVA</strong>.</p>
+        <p>Conhecimento em banco de dados relacionais como PostgresSQL, MySQL e Oracle DB</p>
         <div className="flex gap-2 mt-2 justify-center">
           <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" className="w-6 h-6" title="Python" />
           <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" className="w-6 h-6" title="MySQL" />
