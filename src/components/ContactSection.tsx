@@ -55,7 +55,7 @@ const ContactSection = () => {
                   </div>
                   <div>
                     <h4 className="font-dm-sans font-semibold text-lg text-gray-900 mb-1">Email</h4>
-                    <p className="font-dm-sans text-gray-700 text-base break-words">contato@lansutech.com</p>
+                    <p className="font-dm-sans text-gray-700 text-base break-words">lansutech@gmail.com</p>
                   </div>
                 </motion.div>
 
@@ -69,7 +69,7 @@ const ContactSection = () => {
                   </div>
                   <div>
                     <h4 className="font-dm-sans font-semibold text-lg text-gray-900 mb-1">Telefone / WhatsApp</h4>
-                    <p className="font-dm-sans text-gray-700 text-base">+55 (44) 99999-9999</p>
+                    <p className="font-dm-sans text-gray-700 text-base">+55 (44) 99741-5544</p>
                   </div>
                 </motion.div>
 

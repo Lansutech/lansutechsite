@@ -13,6 +13,7 @@ const PresentationSectionTwo = () => {
       >
         <div className="mb-5">
           {/* AJUSTADO: Aumentado o gap entre as colunas para dar mais largura ao texto */}
+          {/* O grid se mantém, e o card interno será responsivo */}
           <div className="grid grid-cols-1 md:grid-cols-[1fr_550px] gap-8 md:gap-x-32 items-start">
 
             {/* Coluna texto esquerda */}
@@ -42,21 +43,19 @@ const PresentationSectionTwo = () => {
 
             {/* Card estilizado */}
             <RevealOnScroll type="slide" direction="left" delay={0.1} duration={0.8} threshold={0.4}>
-                    
               <motion.div
-                className="rounded-lg overflow-hidden shadow-md cursor-pointer p-6 md:p-10 flex flex-col justify-center border-l-4 border-[#4ADE80] md:-ml-8"
+                className="rounded-lg overflow-hidden shadow-md cursor-pointer p-6 md:p-10 flex flex-col justify-center border-l-4 border-[#4ADE80] md:-ml-8
+                           w-full max-w-sm mx-auto md:max-w-[550px] md:w-auto
+                           min-h-[300px] md:min-h-[363px]" /* AJUSTADO: Altura mínima responsiva para o card */
                 style={{
-                  width: '550px',
-                  height: '363px',
+                  // minHeight: "363px", /* REMOVIDO: A altura mínima agora é definida pelas classes do Tailwind */
                   backgroundColor: '#163030',
-                  borderRadius: '10px',
                   color: '#E0F2F1',
                   fontFamily: 'DM Sans',
                   textShadow: '0 1px 2px rgba(0,0,0,0.5)',
                   position: 'relative',
                   overflow: 'hidden',
                 }}
-
                 whileHover={{
                   scale: 1.02,
                   boxShadow: '0 8px 20px rgba(0, 0, 0, 0.3)',
@@ -81,25 +80,25 @@ const PresentationSectionTwo = () => {
                   }}
                 />
 
-                <h3 className="relative z-10 text-2xl md:text-4xl font-semibold mb-4 md:mb-8 tracking-tight">
+                <h3 className="relative z-10 text-xl sm:text-2xl md:text-4xl font-semibold mb-4 md:mb-8 tracking-tight text-center"> {/* AJUSTADO: Fonte responsiva e centralizado */}
                   Valores que nos guiam
                 </h3>
 
-                <ul className="relative z-10 space-y-3 md:space-y-5 text-sm md:text-xl font-medium leading-relaxed">
+                <ul className="relative z-10 space-y-3 md:space-y-5 text-sm md:text-xl font-medium leading-relaxed px-4"> {/* AJUSTADO: Fonte responsiva e padding */}
                   <li className="flex items-center gap-2 md:gap-4">
-                    <FaBullseye className="text-[#4ADE80] w-5 h-5 md:w-6 md:h-6 flex-shrink-0" />
+                    <FaBullseye className="text-[#4ADE80] w-4 h-4 md:w-6 md:h-6 flex-shrink-0" /> {/* AJUSTADO: Tamanho do ícone */}
                     Foco em inovação e qualidade técnica
                   </li>
                   <li className="flex items-center gap-2 md:gap-4">
-                    <FaHandsHelping className="text-[#4ADE80] w-5 h-5 md:w-6 md:h-6 flex-shrink-0" />
+                    <FaHandsHelping className="text-[#4ADE80] w-4 h-4 md:w-6 md:h-6 flex-shrink-0" /> {/* AJUSTADO: Tamanho do ícone */}
                     Transparência e ética no atendimento
                   </li>
                   <li className="flex items-center gap-2 md:gap-4">
-                    <FaUsers className="text-[#4ADE80] w-5 h-5 md:w-6 md:h-6 flex-shrink-0" />
+                    <FaUsers className="text-[#4ADE80] w-4 h-4 md:w-6 md:h-6 flex-shrink-0" /> {/* AJUSTADO: Tamanho do ícone */}
                     Trabalho colaborativo e comprometido
                   </li>
                   <li className="flex items-center gap-2 md:gap-4">
-                    <FaChartLine className="text-[#4ADE80] w-5 h-5 md:w-6 md:h-6 flex-shrink-0" />
+                    <FaChartLine className="text-[#4ADE80] w-4 h-4 md:w-6 md:h-6 flex-shrink-0" /> {/* AJUSTADO: Tamanho do ícone */}
                     Melhoria contínua e resultados reais
                   </li>
                 </ul>

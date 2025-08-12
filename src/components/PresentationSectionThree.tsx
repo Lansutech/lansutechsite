@@ -1,126 +1,131 @@
 import React from 'react';
-import { motion } from 'framer-motion'; // Manter motion para o whileHover no card visual
-import RevealOnScroll from './RevealOnScroll'; // Importar o componente RevealOnScroll
+import { motion } from 'framer-motion';
+import RevealOnScroll from './RevealOnScroll';
+import { Github, Linkedin } from 'lucide-react'; // Importando ícones para links
 
-const projectData = [
+// Dados dos colaboradores com nova estrutura
+const teamData = [
   {
     id: 1,
-    title: 'Rhavi Carneiro',
-    description: (
-      <>
-        <p><strong>UI/UX Designer</strong> 🎨</p>
-        <p>Focado em acessibilidade, responsividade e identidade visual.</p>
-        <p>Especialista em <strong>Figma</strong> e experiências interativas que conectam produto e usuário.</p>
-        <div className="flex gap-2 mt-2 justify-center">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg" className="w-6 h-6" title="Figma" />
-        </div>
-      </>
-    ),
+    name: 'Gabriel Peicher',
+    role: 'Back-end Developer',
+    area: 'Apaixonado por programação, dados e resolver problemas. Foco em Python, SQL, Análise de Dados e Machine Learning.',
+    technologies: ['Python', 'SQL', 'Análise de Dados', 'Machine Learning', 'Jupyter', 'HTML', 'CSS', 'Git'],
+    githubUrl: 'https://github.com/gabrielpeicher', // Link real do Gabriel
+    linkedinUrl: 'https://www.linkedin.com/in/gabriel-peicher-b59b80233/', // Link real do Gabriel
   },
   {
     id: 2,
-    title: 'Tiago Sversut',
-    description: (
-      <>
-        <p><strong>Desenvolvedor Back-end</strong> 🛠️</p>
-        <p>Focado em APIs REST, desenvolver soluções, automações e desenvolvimento de Bots</p>
-        <p>Experiência com <strong>Python</strong>, <strong>SQL</strong>, <strong>PHP<strong>, <strong>JAVA</strong>.</p>
-        <p>Conhecimento em banco de dados relacionais como PostgresSQL, MySQL e Oracle DB</p>
-        <div className="flex gap-2 mt-2 justify-center">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" className="w-6 h-6" title="Python" />
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" className="w-6 h-6" title="MySQL" />
-        </div>
-      </>
-    ),
+    name: 'Tiago Sversut',
+    role: 'Back-end Developer',
+    area: 'Focado em APIs REST, automações e desenvolvimento de Bots. Experiência com Python, SQL, PHP e Java, e bancos de dados relacionais.',
+    technologies: ['Python','Flask','Django', 'SQL', 'PHP','Laravel', 'Java','Spring Boot', 'PostgreSQL', 'MySQL', 'Oracle DB'],
+    githubUrl: 'https://github.com/Suttiago', // Link real do Tiago
+    linkedinUrl: 'https://www.linkedin.com/in/tiago-sversut', // Link real do Tiago
   },
   {
     id: 3,
-    title: 'Guilherme Xavier Hojak',
-    description: (
-      <>
-        <p><strong>Front-end Developer</strong> ⚛️</p>
-        <p>Estudante de Engenharia de Software e entusiasta em IA.</p>
-        <p>Focado em <strong>React</strong>, <strong>Tailwind</strong> e boas práticas de UI responsiva.</p>
-        <div className="flex gap-2 mt-2 justify-center">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" className="w-6 h-6" title="React" />
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-plain.svg" className="w-6 h-6" title="Tailwind" />
-        </div>
-      </>
-    ),
+    name: 'Guilherme X. Hojak',
+    role: 'Front-end Developer',
+    area: 'Focado no Design e Criação de Sites e Apps da Lansutech, com boas práticas de UI responsiva.',
+    technologies: ['React', 'TailwindCSS', 'JavaScript', 'TypeScript', 'Framer Motion', 'Vite', 'C', 'C++', 'Java'],
+    githubUrl: 'https://github.com/guihojak', // Link real do Guilherme
+    linkedinUrl: 'https://www.linkedin.com/in/guilherme-xavier-hojak-694b79300/', // Link real do Guilherme
   },
+  // Adicione mais membros da equipe se necessário
 ];
 
 const PresentationSectionThree = () => {
   return (
-    // A seção inteira pode ter uma animação de entrada (opcional, ou se for a primeira seção visível)
-    // Para esta seção, vamos aplicar o RevealOnScroll no container dos cards para usar staggerChildren.
     <section className="py-16 bg-[#EAF3F3]">
-      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8" style={{ marginTop: '85px' }}>
-        
-        {/* Usamos RevealOnScroll como CONTAINER para os cards, ativando o staggerChildren */}
-        {/* O 'delay' aqui é o atraso para o container começar a aparecer. */}
-        {/* 'staggerChildren' é o atraso entre CADA card filho. */}
-        {/* 'staggerDelay' é um atraso ADICIONAL antes que os filhos comecem a animar, depois que o container já está visível. */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-10 md:mt-[85px]">
         <RevealOnScroll type="fade" delay={0.2} staggerChildren={0.15} staggerDelay={0.1} threshold={0.3}>
-          {/* Container principal dos cards (agora é um motion.div devido ao RevealOnScroll pai) */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-start">
-            {projectData.map((project) => (
-              // Cada item do mapa DEVE ser um motion.div com suas próprias variantes
-              // para que o `staggerChildren` funcione no pai `RevealOnScroll`.
-              // As variantes `hidden` e `visible` vêm do padrão do `RevealOnScroll`
-              // ou são definidas aqui se quisermos algo diferente para cada item.
-              // Como já estamos usando o RevealOnScroll para gerenciar o staggerChildren no pai,
-              // o child *precisa* ser uma motion.div com as variantes default para herdar o stagger.
-              // O `RevealOnScroll` filho é simplificado, usando apenas o `key`.
-              <motion.div 
-                key={project.id}
-                // As variantes do item (hidden/visible) são necessárias para o stagger funcionar
-                // Elas serão as variantes default do RevealOnScroll: { opacity: 0, y: 75 } -> { opacity: 1, y: 0 }
-                // Ou você pode definir customizadas aqui:
-                variants={{ 
-                    hidden: { opacity: 0, y: 50 }, 
-                    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } } 
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch justify-items-center"> {/* Adicionado justify-items-center para centralizar cards */}
+            {teamData.map((member) => (
+              <motion.div
+                key={member.id}
+                variants={{
+                  hidden: { opacity: 0, y: 50 },
+                  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
                 }}
-                className="flex flex-col items-center w-full max-w-[510px]"
+                className="flex flex-col items-center w-full max-w-sm" /* Adicionado max-w-sm para controlar largura em mobile */
               >
-                {/* Card visual com efeito de hover (mantido como motion.div) */}
+                {/* Card principal */}
                 <motion.div
-                  className="rounded-xl shadow-lg p-6 flex items-center justify-center"
+                  className="rounded-xl shadow-lg p-6 flex flex-col justify-between border-l-4 border-[#4ADE80] flex-grow w-full" /* Adicionado w-full */
                   style={{
-                    width: "100%", // Ocupa 100% da largura da coluna da grade
-                    height: "330px", // Altura fixa do card visual
-                    background: 'linear-gradient(135deg, #163030, #224444)',
+                    minHeight: "330px", // Mantido minHeight conforme sua solicitação
+                    backgroundColor: '#163030',
+                    color: '#E0F2F1',
+                    fontFamily: 'DM Sans',
+                    textShadow: '0 1px 2px rgba(0,0,0,0.5)',
+                    position: 'relative',
+                    overflow: 'hidden',
                   }}
-                  whileHover={{ scale: 1.02 }}
-                  transition={{ type: 'spring', stiffness: 150, damping: 20, duration: 0.9 }} // Duração para o hover
-                />
-
-                {/* Texto */}
-                <div className="mt-4 text-center w-full">
-                  <h3
-                    className="text-gray-900"
-                    style={{
-                      fontFamily: 'DM Sans',
-                      fontWeight: 600,
-                      fontSize: '30px',
-                      lineHeight: '100%',
-                    }}
-                  >
-                    {project.title}
-                  </h3>
+                  whileHover={{ scale: 1.02, boxShadow: '0 8px 20px rgba(0, 0, 0, 0.3)' }}
+                  transition={{ type: 'spring', stiffness: 150, damping: 20, duration: 0.9 }}
+                >
+                  {/* Fundo gráfico decorativo */}
                   <div
-                    className="text-gray-600 mt-2"
                     style={{
-                      fontFamily: 'DM Sans',
-                      fontWeight: 500,
-                      fontSize: '18.26px',
-                      lineHeight: '120%',
-                      overflowWrap: 'break-word',
+                      position: 'absolute',
+                      top: -30,
+                      right: -30,
+                      width: 120,
+                      height: 120,
+                      borderRadius: '50%',
+                      backgroundColor: 'rgba(74, 222, 128, 0.15)',
+                      zIndex: 0,
                     }}
-                  >
-                    {project.description}
+                  />
+
+                  <div className="relative z-10 flex flex-col items-center text-center">
+                    <h3 className="text-2xl sm:text-3xl md:text-4xl font-semibold mb-2 leading-tight"> {/* Ajuste de fonte responsivo */}
+                      {member.name}
+                    </h3>
+                    <p className="text-lg sm:text-xl md:text-2xl font-medium text-[#4ADE80] mb-4"> {/* Ajuste de fonte responsivo */}
+                      {member.role}
+                    </p>
+
+                    <p className="text-sm sm:text-base text-gray-200 mb-4 px-2"> {/* Ajuste de fonte responsivo */}
+                      {member.area}
+                    </p>
+
+                    <div className="flex flex-wrap gap-2 justify-center mt-2 mb-4">
+                      {member.technologies.map(tech => (
+                        <span key={tech} className="bg-gray-700/60 text-white text-xs px-3 py-1 rounded-full">
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
                   </div>
-                </div>
+
+                  {/* Links de Mídias Sociais */}
+                  <div className="relative z-10 flex justify-center gap-4 mt-auto">
+                    {member.githubUrl && (
+                      <a
+                        href={member.githubUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="p-2 bg-gray-700/80 hover:bg-gray-600 rounded-full transition-colors flex items-center justify-center text-white"
+                        aria-label={`GitHub de ${member.name}`}
+                      >
+                        <Github size={20} />
+                      </a>
+                    )}
+                    {member.linkedinUrl && (
+                      <a
+                        href={member.linkedinUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="p-2 bg-blue-700/80 hover:bg-blue-600 rounded-full transition-colors flex items-center justify-center text-white"
+                        aria-label={`LinkedIn de ${member.name}`}
+                      >
+                        <Linkedin size={20} />
+                      </a>
+                    )}
+                  </div>
+                </motion.div>
               </motion.div>
             ))}
           </div>
