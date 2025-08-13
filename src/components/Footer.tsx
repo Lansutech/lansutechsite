@@ -1,5 +1,98 @@
-import React, { useState, useCallback } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { motion, AnimatePresence, Variants, useMotionValue } from 'framer-motion';
+import { Github, ExternalLink } from 'lucide-react'; // Mantido para compatibilidade, embora não usado diretamente neste componente.
+
+// Componente RevealOnScroll incluído diretamente para resolver qualquer erro de importação
+const RevealOnScroll: React.FC<{
+  children: React.ReactNode;
+  type?: "fade" | "slide";
+  direction?: "up" | "down" | "left" | "right";
+  delay?: number;
+  duration?: number;
+  threshold?: number;
+  staggerChildren?: number;
+  staggerDelay?: number;
+}> = ({
+  children,
+  type = "fade",
+  direction = "up",
+  delay = 0,
+  duration = 0.5,
+  threshold = 0.5,
+  staggerChildren = 0,
+  staggerDelay = 0,
+}) => {
+  const ref = useRef<HTMLDivElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.unobserve(entry.target); // Stop observing once visible
+        }
+      },
+      { threshold }
+    );
+
+    if (ref.current) {
+      observer.observe(ref.current);
+    }
+
+    return () => {
+      if (ref.current) {
+        observer.unobserve(ref.current);
+      }
+    };
+  }, [threshold]);
+
+  const getVariants = (): Variants => {
+    if (type === "fade") {
+      return {
+        hidden: { opacity: 0 },
+        visible: { opacity: 1, transition: { duration, delay } },
+      };
+    } else if (type === "slide") {
+      let initial = {};
+      let animate = { opacity: 1, x: 0, y: 0 };
+      if (direction === "up") initial = { opacity: 0, y: 50 };
+      if (direction === "down") initial = { opacity: 0, y: -50 };
+      if (direction === "left") initial = { opacity: 0, x: -50 };
+      if (direction === "right") initial = { opacity: 0, x: 50 };
+      return {
+        hidden: initial,
+        visible: { ...animate, transition: { duration, delay } },
+      };
+    }
+    return {};
+  };
+
+  const containerVariants: Variants = {
+    hidden: {},
+    visible: {
+      transition: {
+        staggerChildren: staggerChildren,
+        delayChildren: staggerDelay,
+      },
+    },
+  };
+
+  return (
+    <motion.div
+      ref={ref}
+      initial="hidden"
+      animate={isVisible ? "visible" : "hidden"}
+      variants={containerVariants}
+      className="w-full" // Garante que a div de RevealOnScroll ocupe a largura total
+    >
+      <motion.div variants={getVariants()} className="w-full">
+        {children}
+      </motion.div>
+    </motion.div>
+  );
+};
+
 
 const services = [
   {
@@ -43,7 +136,7 @@ const services = [
     imageUrl: 'https://images.unsplash.com/photo-1676573408178-a5f280c3a320?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8Q2hhdEJvdHxlbnwwfHwwfHx8Mg%3D%3D', // Imagem de robô/atendimento
   },
   {
-    id: 6,  
+    id: 6,
     title: 'Landing Pages',
     description: 'Crie páginas de alta conversão para suas campanhas de marketing digital.',
     longDescription: 'Criamos landing pages focadas em resultados, projetadas para converter visitantes em leads ou clientes. Com design atraente, mensagens claras e calls-to-action estratégicos, garantimos que suas campanhas de marketing digital alcancem seu potencial máximo de conversão.',
@@ -52,39 +145,146 @@ const services = [
   },
 ];
 
-const CARD_SPACING = 32; // Espaçamento entre os cards
-const LARGE_CARD_WIDTH = 580; // Largura do card ativo
-const SMALL_CARD_WIDTH = 360; // Largura dos cards inativos
-const CARD_HEIGHT_ACTIVE = 360; // Altura do card ativo
-const CARD_HEIGHT_INACTIVE = CARD_HEIGHT_ACTIVE * 0.8; // Altura dos cards inativos
+// Constantes para desktop
+const CARD_SPACING_DESKTOP = 32; // Espaçamento entre os cards
+const LARGE_CARD_WIDTH_DESKTOP = 580; // Largura do card ativo
+const SMALL_CARD_WIDTH_DESKTOP = 360; // Largura dos cards inativos
+const CARD_HEIGHT_ACTIVE_DESKTOP = 360; // Altura do card ativo
+const CARD_HEIGHT_INACTIVE_DESKTOP = CARD_HEIGHT_ACTIVE_DESKTOP * 0.8; // Altura dos cards inativos
 
-const CAROUSEL_DURATION = 0.6; // Duração da transição do carrossel
-
+// ALTERADO: Transição de carrossel mais suave com tipo "spring"
 const carouselTransition = {
-  type: "tween",
-  ease: [0.4, 0, 0.2, 1],
-  duration: CAROUSEL_DURATION,
+  type: "spring", // Alterado de "tween" para "spring"
+  stiffness: 150, // Menor rigidez para um movimento mais "solto"
+  damping: 30,    // Amortecimento para evitar oscilações excessivas
+  mass: 1,        // Massa padrão
+  // ease: [0.4, 0, 0.2, 1], // Removido pois não é usado com type: "spring"
+  // duration: CAROUSEL_DURATION, // Não é mais primário com type: "spring"
 } as const;
+
 
 const ServicesSection = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+  const carouselRef = useRef<HTMLDivElement>(null); // Ref para o container do carrossel
+  const dragX = useMotionValue(0); // MotionValue para controlar o arrasto no mobile
+  const dragBuffer = 50; // Buffer em pixels para o snap no mobile
 
-  // Calcula o offset (posição X) para que o card ativo fique alinhado à esquerda
-  const calculateOffset = useCallback(() => {
+  // Refs para medir a largura real de cada card no mobile
+  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth <= 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  // Calcula constraints para limitar o drag no mobile
+  const [constraints, setConstraints] = useState({ left: 0, right: 0 });
+  
+  useEffect(() => {
+    if (isMobile && carouselRef.current && services.length > 0) {
+      // Precisamos garantir que os refs dos cards estejam populados antes de calcular as larguras
+      const containerWidth = carouselRef.current.offsetWidth;
+      const gapWidth = 16; // gap-4 no tailwindcss
+      
+      let totalContentWidth = 0;
+      cardRefs.current.forEach((cardEl, index) => {
+        if (cardEl) {
+          totalContentWidth += cardEl.offsetWidth + gapWidth;
+        }
+      });
+      // Remove o último gap, já que não há card depois dele
+      if (totalContentWidth > 0) {
+        totalContentWidth -= gapWidth; 
+      }
+
+      // O padding horizontal de 16px (px-4) no container pai afeta o espaço visível
+      const visibleViewportContentWidth = window.innerWidth - (2 * 16); 
+
+      // Se o conteúdo total for menor que a viewport visível, não há necessidade de arrastar
+      if (totalContentWidth <= visibleViewportContentWidth) {
+        setConstraints({ left: 0, right: 0 });
+      } else {
+        const maxDragLeft = -(totalContentWidth - visibleViewportContentWidth);
+        setConstraints({ left: maxDragLeft, right: 0 });
+      }
+    } else if (!isMobile) {
+      // Reset constraints for desktop if not mobile
+      setConstraints({ left: 0, right: 0 });
+    }
+  }, [isMobile, services.length, carouselRef.current, cardRefs.current]);
+
+
+  // Calcula o offset (posição X) para que o card ativo fique alinhado à esquerda no desktop
+  const calculateOffsetDesktop = useCallback(() => {
     let offset = 0;
     // Soma a largura de todos os cards ANTERIORES ao currentIndex
     for (let i = 0; i < currentIndex; i++) {
-      offset += SMALL_CARD_WIDTH + CARD_SPACING; 
+      offset += SMALL_CARD_WIDTH_DESKTOP + CARD_SPACING_DESKTOP;
     }
     return offset;
   }, [currentIndex]);
 
-  // Função para ir para o próximo card
+  // Calcula o target X para o carrossel mobile para centralizar o card ativo
+  const getMobileCarouselTargetX = useCallback(() => {
+    if (!isMobile || !carouselRef.current || !cardRefs.current[currentIndex]) return 0;
+
+    const viewportWidth = window.innerWidth;
+    const parentPadding = 16; // px-4
+    const visibleViewportContentWidth = viewportWidth - (2 * parentPadding);
+
+    const cardWidth = cardRefs.current[currentIndex]?.offsetWidth || 0;
+    const gapWidth = 16; // gap-4
+
+    let cumulativeWidthBeforeActive = 0;
+    for (let i = 0; i < currentIndex; i++) {
+        const prevCardWidth = cardRefs.current[i]?.offsetWidth || 0;
+        cumulativeWidthBeforeActive += prevCardWidth + gapWidth;
+    }
+
+    // Centro do card ativo relativo ao início do container arrastável (excluindo padding do pai)
+    const activeCardCenterRelativeToDraggableContainerStart = cumulativeWidthBeforeActive + (cardWidth / 2);
+
+    // Posição X desejada para o container arrastável: centralizar o card ativo na área visível
+    const targetX = (visibleViewportContentWidth / 2) - activeCardCenterRelativeToDraggableContainerStart;
+    
+    // Aplica as constraints para garantir que não arraste para fora dos limites
+    const { left, right } = constraints;
+    return Math.max(Math.min(targetX, right), left);
+
+  }, [currentIndex, isMobile, constraints, services.length]);
+
+
+  // Função para snap ao soltar drag no mobile
+  const handleDragEnd = useCallback((_event: any, info: any) => {
+    const offset = info.offset.x;
+    const velocity = info.velocity.x;
+    
+    if (carouselRef.current && cardRefs.current[currentIndex]) {
+      const cardWidth = cardRefs.current[currentIndex]?.offsetWidth || 0;
+      const snapThreshold = cardWidth * 0.4; // 40% da largura do card para snap
+      
+      let newIndex = currentIndex;
+
+      if (offset < -snapThreshold || velocity < -200) { // Arrasta para a esquerda (próximo card)
+        newIndex = Math.min(currentIndex + 1, services.length - 1);
+      } else if (offset > snapThreshold || velocity > 200) { // Arrasta para a direita (card anterior)
+        newIndex = Math.max(currentIndex - 1, 0);
+      }
+      
+      setCurrentIndex(newIndex);
+    }
+  }, [currentIndex, services.length, dragBuffer]);
+
+
+  // Função para ir para o próximo card (usada pelos botões de navegação)
   const goToNext = useCallback(() => {
     setCurrentIndex((prev) => Math.min(prev + 1, services.length - 1));
-  }, []);
+  }, [services.length]);
 
-  // Função para ir para o card anterior
+  // Função para ir para o card anterior (usada pelos botões de navegação)
   const goToPrev = useCallback(() => {
     setCurrentIndex((prev) => Math.max(prev - 1, 0));
   }, []);
@@ -93,8 +293,6 @@ const ServicesSection = () => {
   const canGoNext = currentIndex < services.length - 1;
   const canGoPrev = currentIndex > 0;
 
-  // O card ativo é simplesmente o serviço no currentIndex
-  const activeServiceForContent = services[currentIndex];
 
   return (
     <section id="servicos" className="bg-[#EAF3F3] py-16 md:py-24 px-4 sm:px-6 lg:px-8 relative">
@@ -105,85 +303,171 @@ const ServicesSection = () => {
         </h2>
 
         {/* Container que gerencia a rolagem horizontal para os cards */}
-        <div className="flex items-end mb-12 relative overflow-hidden" style={{ height: CARD_HEIGHT_ACTIVE + 20 }}>
-          <motion.div
-            className="flex flex-nowrap items-end"
-            animate={{ x: -calculateOffset() }}
-            transition={carouselTransition}
-          >
-            {services.map((service, index) => {
-              const isActive = index === currentIndex;
-              const zIndex = isActive ? 3 : (index > currentIndex ? 2 : 1);
+        {isMobile ? (
+          // ----- MOBILE CARROSSEL COM FRAMER MOTION PARA DRAG E SNAP -----
+          <div ref={carouselRef} className="w-full overflow-hidden"> {/* Removido px-4 aqui, já está no section */}
+            <motion.div
+              className="flex gap-4 cursor-grab active:cursor-grabbing"
+              drag="x"
+              dragConstraints={constraints}
+              dragElastic={0.2} // Elasticidade para sensação natural
+              style={{ x: dragX }} // Drag control by MotionValue
+              animate={{ x: getMobileCarouselTargetX() }} // Anima para centralizar o card ativo
+              // ALTERADO: Transição de carrossel mais suave para mobile
+              transition={carouselTransition} 
+              onDragEnd={handleDragEnd}
+            >
+              {services.map((service, index) => {
+                const isActive = index === currentIndex;
+                const zIndex = isActive ? 3 : (index > currentIndex ? 2 : 1);
 
-              return (
-                <motion.div
-                  key={service.id}
-                  // Adicionado 'group' para hover effects e ajuste na sombra
-                  className="rounded-xl shadow-xl hover:shadow-2xl cursor-pointer flex-shrink-0 relative overflow-hidden group"
-                  onClick={() => setCurrentIndex(index)}
-                  animate={{
-                    width: isActive ? LARGE_CARD_WIDTH : SMALL_CARD_WIDTH,
-                    height: isActive ? CARD_HEIGHT_ACTIVE : CARD_HEIGHT_INACTIVE,
-                    marginRight: CARD_SPACING,
-                    zIndex: zIndex,
-                  }}
-                  transition={carouselTransition}
-                  style={{ bottom: 0 }}
-                >
-                  {/* IMAGEM DE FUNDO E OVERLAY */}
-                  <div
-                    className="absolute inset-0 bg-cover bg-center rounded-xl"
-                    style={{ backgroundImage: `url(${service.imageUrl})` }}
-                  ></div>
-                  <div
-                    // Opacidade ajustada para 70% e transição suave no hover
-                    className="absolute inset-0 rounded-xl opacity-70 group-hover:opacity-80 transition-opacity duration-300"
-                    style={{ backgroundColor: service.color }}
-                  ></div>
+                return (
+                  <motion.div
+                    key={service.id}
+                    ref={(el) => { cardRefs.current[index] = el; }} // Atribuir ref para cada card
+                    // Ajustes para mobile: w-[90vw] para largura e h-[580px] para altura fixa vertical
+                    className="flex-shrink-0 w-[90vw] h-[580px] bg-white rounded-xl shadow-xl hover:shadow-2xl cursor-pointer relative overflow-hidden group"
+                    onClick={() => setCurrentIndex(index)}
+                    animate={{
+                      scale: isActive ? 1 : 0.95,
+                      opacity: isActive ? 1 : 0.8,
+                    }}
+                    transition={{ duration: 0.3 }} // Transição para escala e opacidade do card
+                    style={{ zIndex: zIndex }}
+                  >
+                    {/* IMAGEM DE FUNDO E OVERLAY */}
+                    <div
+                      className="absolute inset-0 bg-cover bg-center rounded-xl"
+                      style={{ backgroundImage: `url(${service.imageUrl})` }}
+                    ></div>
+                    <div
+                      className="absolute inset-0 rounded-xl opacity-70 group-hover:opacity-80 transition-opacity duration-300"
+                      style={{ backgroundColor: service.color }}
+                    ></div>
 
-                  {/* CONTEÚDO DO CARD */}
-                  <div className="p-6 text-white flex flex-col justify-end h-full relative z-10">
-                    <AnimatePresence initial={false} mode="wait">
-                      {/* AJUSTADO: Usando transição 'spring' para a animação do texto */}
-                      <motion.div
-                        key={`${service.id}-${isActive ? '_active' : '_inactive'}`} // Key para AnimatePresence
-                        initial={{ opacity: 0, y: 20 }} // Começa um pouco abaixo
-                        animate={{ opacity: 1, y: 0 }} // Desliza para a posição normal
-                        exit={{ opacity: 0, y: -20 }} // Sai deslizando para cima
-                        transition={{ 
-                            type: "spring", // Usar transição tipo "mola" (spring) para fluidez
-                            stiffness: 250, // Rigidez da mola (quanto mais alto, mais "dura")
-                            damping: 25,    // Amortecimento (quanto mais alto, mais rápido a mola se estabiliza)
-                            mass: 1         // Massa do objeto (influencia a inércia)
-                        }}
-                      >
-                        <h3 
-                          className="font-semibold text-3xl md:text-4xl lg:text-[48px] leading-tight mb-2" 
-                          style={{ fontFamily: 'DM Sans', textShadow: '0 1px 2px rgba(0,0,0,0.7)' }} // Adicionado text-shadow
+                    {/* CONTEÚDO DO CARD */}
+                    <div className="p-6 text-white flex flex-col justify-end h-full relative z-10">
+                      <AnimatePresence initial={false} mode="wait">
+                        <motion.div
+                          key={`${service.id}-${isActive ? '_active' : '_inactive'}`} // Key para AnimatePresence
+                          initial={{ opacity: 0, y: 20 }} // Começa um pouco abaixo
+                          animate={{ opacity: 1, y: 0 }} // Desliza para a posição normal
+                          exit={{ opacity: 0, y: -20 }} // Sai deslizando para cima
+                          // ALTERADO: Transição de conteúdo interno mais suave
+                          transition={{ 
+                              type: "spring", // Usar transição tipo "mola" (spring) para fluidez
+                              stiffness: 180, // Ligeiramente menos rígida
+                              damping: 28,    // Ligeiramente mais amortecida
+                              mass: 1         // Massa padrão
+                          }}
                         >
-                          {service.title}
-                        </h3>
-                        {isActive && (
-                          <motion.p
-                            // A animação do parágrafo pode ter um pequeno atraso para efeito cascata
-                            initial={{ opacity: 0, y: 10 }} // Começa um pouco abaixo do título
-                            animate={{ opacity: 1, y: 0 }} // Desliza para a posição normal
-                            exit={{ opacity: 0, y: -10 }} // Sai deslizando para cima
-                            transition={{ duration: 0.3, delay: 0.1 }} // Mantém uma pequena duração e atraso
-                            className="font-semibold text-base md:text-lg lg:text-[18.26px] leading-relaxed" 
+                          <h3 
+                            className="font-semibold text-3xl md:text-4xl lg:text-[48px] leading-tight mb-2" 
                             style={{ fontFamily: 'DM Sans', textShadow: '0 1px 2px rgba(0,0,0,0.7)' }} // Adicionado text-shadow
                           >
-                            {service.longDescription} {/* Exibe a descrição detalhada */}
-                          </motion.p>
-                        )}
-                      </motion.div>
-                    </AnimatePresence>
-                  </div>
-                </motion.div>
-              );
-            })}
-          </motion.div>
-        </div>
+                            {service.title}
+                          </h3>
+                          {isActive && (
+                            <motion.p
+                              initial={{ opacity: 0, y: 10 }} // Começa um pouco abaixo do título
+                              animate={{ opacity: 1, y: 0 }} // Desliza para a posição normal
+                              exit={{ opacity: 0, y: -10 }} // Sai deslizando para cima
+                              // ALTERADO: Transição do parágrafo mais suave
+                              transition={{ duration: 0.4, delay: 0.15 }} // Duração ligeiramente maior, atraso para efeito cascata
+                              className="font-semibold text-base md:text-lg lg:text-[18.26px] leading-relaxed" 
+                              style={{ fontFamily: 'DM Sans', textShadow: '0 1px 2px rgba(0,0,0,0.7)' }} // Adicionado text-shadow
+                            >
+                              {service.longDescription} {/* Exibe a descrição detalhada */}
+                            </motion.p>
+                          )}
+                        </motion.div>
+                      </AnimatePresence>
+                    </div>
+                  </motion.div>
+                );
+              })}
+            </motion.div>
+          </div>
+        ) : (
+          // ----- DESKTOP (mantido o comportamento original, mas com a nova carouselTransition) -----
+          <div className="flex items-end mb-12 relative overflow-hidden" style={{ height: CARD_HEIGHT_ACTIVE_DESKTOP + 20 }}>
+            <motion.div
+              className="flex flex-nowrap items-end"
+              animate={{ x: -calculateOffsetDesktop() }}
+              transition={carouselTransition} // Aplicada a nova transição de mola
+            >
+              {services.map((service, index) => {
+                const isActive = index === currentIndex;
+                const zIndex = isActive ? 3 : (index > currentIndex ? 2 : 1);
+
+                return (
+                  <motion.div
+                    key={service.id}
+                    className="rounded-xl shadow-xl hover:shadow-2xl cursor-pointer flex-shrink-0 relative overflow-hidden group"
+                    onClick={() => setCurrentIndex(index)}
+                    animate={{
+                      width: isActive ? LARGE_CARD_WIDTH_DESKTOP : SMALL_CARD_WIDTH_DESKTOP,
+                      height: isActive ? CARD_HEIGHT_ACTIVE_DESKTOP : CARD_HEIGHT_INACTIVE_DESKTOP,
+                      marginRight: CARD_SPACING_DESKTOP,
+                      zIndex: zIndex,
+                    }}
+                    transition={carouselTransition} // Aplicada a nova transição de mola
+                    style={{ bottom: 0 }}
+                  >
+                    {/* IMAGEM DE FUNDO E OVERLAY */}
+                    <div
+                      className="absolute inset-0 bg-cover bg-center rounded-xl"
+                      style={{ backgroundImage: `url(${service.imageUrl})` }}
+                    ></div>
+                    <div
+                      className="absolute inset-0 rounded-xl opacity-70 group-hover:opacity-80 transition-opacity duration-300"
+                      style={{ backgroundColor: service.color }}
+                    ></div>
+
+                    {/* CONTEÚDO DO CARD */}
+                    <div className="p-6 text-white flex flex-col justify-end h-full relative z-10">
+                      <AnimatePresence initial={false} mode="wait">
+                        <motion.div
+                          key={`${service.id}-${isActive ? '_active' : '_inactive'}`}
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -20 }}
+                          // ALTERADO: Transição de conteúdo interno mais suave para desktop
+                          transition={{ 
+                              type: "spring",
+                              stiffness: 180,
+                              damping: 28,
+                              mass: 1
+                          }}
+                        >
+                          <h3 
+                            className="font-semibold text-3xl md:text-4xl lg:text-[48px] leading-tight mb-2" 
+                            style={{ fontFamily: 'DM Sans', textShadow: '0 1px 2px rgba(0,0,0,0.7)' }}
+                          >
+                            {service.title}
+                          </h3>
+                          {isActive && (
+                            <motion.p
+                              initial={{ opacity: 0, y: 10 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              exit={{ opacity: 0, y: -10 }}
+                              // ALTERADO: Transição do parágrafo mais suave para desktop
+                              transition={{ duration: 0.4, delay: 0.15 }}
+                              className="font-semibold text-base md:text-lg lg:text-[18.26px] leading-relaxed" 
+                              style={{ fontFamily: 'DM Sans', textShadow: '0 1px 2px rgba(0,0,0,0.7)' }}
+                            >
+                              {service.longDescription}
+                            </motion.p>
+                          )}
+                        </motion.div>
+                      </AnimatePresence>
+                    </div>
+                  </motion.div>
+                );
+              })}
+            </motion.div>
+          </div>
+        )}
 
         {/* Botões de Navegação */}
         <div className="flex justify-start items-center mt-12 gap-4">
