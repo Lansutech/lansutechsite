@@ -1,98 +1,9 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { motion, AnimatePresence, Variants, useMotionValue } from 'framer-motion';
-import { Github, ExternalLink } from 'lucide-react'; // Mantido para compatibilidade, embora não usado diretamente neste componente.
+import React, { useState, useEffect, useRef, useCallback } from "react";
+import { motion, AnimatePresence, Variants, useMotionValue } from "framer-motion";
+import { Github, ExternalLink } from "lucide-react"; // Mantido para compatibilidade, embora não usado diretamente neste componente.
 
-// Componente RevealOnScroll incluído diretamente para resolver qualquer erro de importação
-const RevealOnScroll: React.FC<{
-  children: React.ReactNode;
-  type?: "fade" | "slide";
-  direction?: "up" | "down" | "left" | "right";
-  delay?: number;
-  duration?: number;
-  threshold?: number;
-  staggerChildren?: number;
-  staggerDelay?: number;
-}> = ({
-  children,
-  type = "fade",
-  direction = "up",
-  delay = 0,
-  duration = 0.5,
-  threshold = 0.5,
-  staggerChildren = 0,
-  staggerDelay = 0,
-}) => {
-  const ref = useRef<HTMLDivElement>(null);
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.unobserve(entry.target); // Stop observing once visible
-        }
-      },
-      { threshold }
-    );
-
-    if (ref.current) {
-      observer.observe(ref.current);
-    }
-
-    return () => {
-      if (ref.current) {
-        observer.unobserve(ref.current);
-      }
-    };
-  }, [threshold]);
-
-  const getVariants = (): Variants => {
-    if (type === "fade") {
-      return {
-        hidden: { opacity: 0 },
-        visible: { opacity: 1, transition: { duration, delay } },
-      };
-    } else if (type === "slide") {
-      let initial = {};
-      let animate = { opacity: 1, x: 0, y: 0 };
-      if (direction === "up") initial = { opacity: 0, y: 50 };
-      if (direction === "down") initial = { opacity: 0, y: -50 };
-      if (direction === "left") initial = { opacity: 0, x: -50 };
-      if (direction === "right") initial = { opacity: 0, x: 50 };
-      return {
-        hidden: initial,
-        visible: { ...animate, transition: { duration, delay } },
-      };
-    }
-    return {};
-  };
-
-  const containerVariants: Variants = {
-    hidden: {},
-    visible: {
-      transition: {
-        staggerChildren: staggerChildren,
-        delayChildren: staggerDelay,
-      },
-    },
-  };
-
-  return (
-    <motion.div
-      ref={ref}
-      initial="hidden"
-      animate={isVisible ? "visible" : "hidden"}
-      variants={containerVariants}
-      className="w-full" // Garante que a div de RevealOnScroll ocupe a largura total
-    >
-      <motion.div variants={getVariants()} className="w-full">
-        {children}
-      </motion.div>
-    </motion.div>
-  );
-};
-
+// O componente RevealOnScroll foi completamente removido daqui,
+// pois o objetivo é otimizar a performance removendo essa funcionalidade.
 
 const services = [
   {
@@ -158,8 +69,6 @@ const carouselTransition = {
   stiffness: 150, // Menor rigidez para um movimento mais "solto"
   damping: 30,    // Amortecimento para evitar oscilações excessivas
   mass: 1,        // Massa padrão
-  // ease: [0.4, 0, 0.2, 1], // Removido pois não é usado com type: "spring"
-  // duration: CAROUSEL_DURATION, // Não é mais primário com type: "spring"
 } as const;
 
 
@@ -295,7 +204,7 @@ const ServicesSection = () => {
 
 
   return (
-    <section id="servicos" className="bg-[#EAF3F3] py-16 md:py-24 px-4 sm:px-6 lg:px-8 relative">
+    <section id="servicos" className="py-16 md:py-24 px-4 sm:px-6 lg:px-8 relative">
       <div className="max-w-[1600px] mx-auto">
         {/* TÍTULO RESPONSIVO */}
         <h2 className="mb-8 md:mb-16 text-4xl md:text-6xl lg:text-[86px] text-black" style={{ fontFamily: 'DM Sans' }}>
