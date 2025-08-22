@@ -89,7 +89,7 @@ const textContentContainerVariants: Variants = {
       staggerChildren: 0.15, // Atraso entre o título e a descrição
     },
   },
-  exit: { opacity: 0, y: -20, transition: { duration: 0.3 } }, // Saída suave para cima
+  exit: { opacity: 0, y: -20, transition: { duration: 0.2 } }, // Saída suave para cima
 };
 
 const individualTextElementVariants: Variants = {
@@ -105,7 +105,7 @@ const ServiceCard = React.memo<ServiceCardProps>(({ service, isActive, onClick, 
       ref={cardRef}
       key={service.id}
       onClick={onClick}
-      className={`rounded-xl shadow-xl hover:shadow-2xl cursor-pointer relative overflow-hidden group ${isMobile ? "flex-shrink-0 w-[90vw] h-[580px]" : "flex-shrink-0"}`}
+      className={`rounded-xl shadow-xl hover:shadow-2xl cursor-pointer relative overflow-hidden group flex-shrink-0 ${isMobile ? "w-[90vw] min-h-[400px] max-h-[calc(100vh-180px)]" : ""}`}
       animate={animate}
       transition={transition}
       style={{ ...style, backgroundColor: service.color }}
@@ -119,7 +119,7 @@ const ServiceCard = React.memo<ServiceCardProps>(({ service, isActive, onClick, 
         style={{ backgroundColor: service.color }}
       ></div>
 
-      <div className="p-6 text-white flex flex-col justify-end h-full relative z-10">
+      <div className="p-6 text-white flex flex-col justify-end h-full relative z-10 overflow-y-auto">
         <AnimatePresence initial={false} mode="wait">
           {isActive && ( // Renderiza o conteúdo do texto apenas quando o card está ativo
             <motion.div
@@ -154,7 +154,8 @@ const ServiceCard = React.memo<ServiceCardProps>(({ service, isActive, onClick, 
 const ServicesSection = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
-  const carouselRef = useRef<HTMLDivElement>(null);
+  const carouselRef = useRef<HTMLDivElement>(null); // Ref para o container com overflow-hidden
+  const draggableContentRef = useRef<HTMLDivElement>(null); // Ref para o conteúdo arrastável dentro do carouselRef
   const dragX: MotionValue<number> = useMotionValue(0);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
 
@@ -165,8 +166,7 @@ const ServicesSection = () => {
     mass: 1,
   }) as const, []);
 
-  const [constraints, setConstraints] = useState<{ left: number; right: number }>({ left: 0, right: 0 });
-
+  // UseEffect para detectar mobile
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth <= 768);
     checkMobile();
@@ -174,62 +174,51 @@ const ServicesSection = () => {
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
-  const calculateConstraints = useCallback(() => {
-    if (isMobile && carouselRef.current && cardRefs.current.length > 0 && cardRefs.current[0]) {
-      const gapWidth = 16; // gap-4 no tailwindcss
-      let totalContentWidth = 0;
-      cardRefs.current.forEach((cardEl) => {
-        if (cardEl) {
-          totalContentWidth += cardEl.offsetWidth + gapWidth;
-        }
-      });
-      if (totalContentWidth > 0) totalContentWidth -= gapWidth;
-
-      const visibleViewportContentWidth = window.innerWidth - (2 * 16); // px-4 no section pai
-      const maxDragLeft = Math.min(0, -(totalContentWidth - visibleViewportContentWidth));
-      setConstraints({ left: maxDragLeft, right: 0 });
-    } else {
-      setConstraints({ left: 0, right: 0 });
-    }
-  }, [isMobile]);
-
-  useEffect(() => {
-    calculateConstraints();
-    // Re-calcula as constraints quando os refs estiverem prontos
-    // e também em caso de resize (já coberto pelo event listener)
-  }, [calculateConstraints, isMobile, services.length, carouselRef.current]); // Adicionado dependências
-
+  // Calcula o alvo X para centralizar o card ativo no carrossel mobile
   const getMobileCarouselTargetX = useCallback(() => {
-    if (!isMobile || !carouselRef.current || !cardRefs.current[currentIndex]) return 0;
+    if (!isMobile || !carouselRef.current || !draggableContentRef.current || !cardRefs.current[currentIndex]) return 0;
 
-    const viewportWidth = window.innerWidth;
-    const parentPadding = 16; // px-4
-    const visibleViewportContentWidth = viewportWidth - (2 * parentPadding);
+    const currentCard = cardRefs.current[currentIndex];
+    if (!currentCard) return 0; // Garantia de que o card existe
 
-    const cardWidth = cardRefs.current[currentIndex]?.offsetWidth || 0;
-    const gapWidth = 16; // gap-4
+    const carouselViewportWidth = carouselRef.current.offsetWidth; // Largura do viewport visível do carrossel
+    const gapWidth = 16; // gap-4 no tailwindcss
 
     let cumulativeWidthBeforeActive = 0;
+    // Soma a largura dos cards anteriores + os gaps entre eles
     for (let i = 0; i < currentIndex; i++) {
-      const prevCardWidth = cardRefs.current[i]?.offsetWidth || 0;
-      cumulativeWidthBeforeActive += prevCardWidth + gapWidth;
+        const prevCard = cardRefs.current[i];
+        if (prevCard) {
+            cumulativeWidthBeforeActive += prevCard.offsetWidth;
+        }
+        cumulativeWidthBeforeActive += gapWidth;
     }
 
-    const activeCardCenterRelativeToDraggableContainerStart = cumulativeWidthBeforeActive + (cardWidth / 2);
-    const targetX = (visibleViewportContentWidth / 2) - activeCardCenterRelativeToDraggableContainerStart;
-    const { left, right } = constraints;
-    return Math.max(Math.min(targetX, right), left);
-  }, [currentIndex, isMobile, constraints]);
+    // Calcula a posição do centro do card ativo em relação ao início do conteúdo arrastável
+    const activeCardCenterRelativeToDraggableStart = cumulativeWidthBeforeActive + currentCard.offsetWidth / 2;
 
+    // O alvo X é a posição que centraliza o card ativo no viewport do carrossel
+    const targetX = (carouselViewportWidth / 2) - activeCardCenterRelativeToDraggableStart;
+
+    // Calcular os limites reais do arrasto para garantir que o alvo X não ultrapasse
+    const draggableContentWidth = draggableContentRef.current.scrollWidth; // Largura total do conteúdo arrastável
+    const maxDragLeft = -(draggableContentWidth - carouselViewportWidth); // Limite máximo para arrastar para a esquerda
+    
+    // Garantir que o targetX esteja dentro dos limites válidos [maxDragLeft, 0]
+    return Math.max(Math.min(targetX, 0), maxDragLeft);
+
+  }, [currentIndex, isMobile, services.length]); // Adicionadas dependências importantes
+
+  // Lida com o fim do arrasto para "snap" o carrossel para o card mais próximo ou para o próximo/anterior
   const handleDragEnd = useCallback((_event: MouseEvent | TouchEvent | PointerEvent, info: { offset: { x: number }; velocity: { x: number } }) => {
     const offset = info.offset.x;
     const velocity = info.velocity.x;
-    const dragBuffer = 50;
+    const dragBuffer = 50; // Quantidade de pixels para considerar um "swipe"
 
     let newIndex = currentIndex;
-    if (offset < -dragBuffer || velocity < -200) {
+    if (offset < -dragBuffer || velocity < -200) { // Arrasta para a esquerda (próximo card)
       newIndex = Math.min(currentIndex + 1, services.length - 1);
-    } else if (offset > dragBuffer || velocity > 200) {
+    } else if (offset > dragBuffer || velocity > 200) { // Arrasta para a direita (card anterior)
       newIndex = Math.max(currentIndex - 1, 0);
     }
     setCurrentIndex(newIndex);
@@ -276,11 +265,12 @@ const ServicesSection = () => {
         </h2>
 
         {isMobile ? (
-          <div ref={carouselRef} className="w-full overflow-hidden">
+          <div ref={carouselRef} className="w-full overflow-hidden"> {/* O container que esconde o overflow */}
             <motion.div
+              ref={draggableContentRef} 
               className="flex gap-4 cursor-grab active:cursor-grabbing"
               drag="x"
-              dragConstraints={constraints}
+              dragConstraints={carouselRef} 
               dragElastic={0.2}
               style={{ x: dragX }}
               animate={{ x: getMobileCarouselTargetX() }}
@@ -298,7 +288,7 @@ const ServicesSection = () => {
                     isMobile={true}
                     cardRef={(el) => (cardRefs.current[index] = el)}
                     animate={{ scale: isActive ? 1 : 0.95, opacity: isActive ? 1 : 0.8 }}
-                    transition={{ duration: 0.3 } as Transition} // Casting para Transition
+                    transition={{ duration: 0.3 } as Transition}
                   />
                 );
               })}
@@ -336,7 +326,7 @@ const ServicesSection = () => {
         )}
 
         {/* Botões de Navegação */}
-        <div className="flex justify-start items-center mt-12 gap-4">
+        <div className="flex justify-center md:justify-start items-center mt-12 gap-4">
           <button
             onClick={goToPrev}
             disabled={!canGoPrev}
