@@ -2,29 +2,40 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/lansutechsite/imgs/lansutechlogo.png" />
+    <!-- Favicon otimizado: Crie uma versão menor (ex: 48x48px) em WebP -->
+    <link rel="icon" type="image/webp" href="/lansutechsite/imgs/lansutechlogo.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Lansutech</title>
 
-    <!-- Pré-conexões para reduzir latência -->
+    <!-- Pré-conexões para reduzir latência ao carregar recursos externos -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <!-- Fontes com display=block para evitar troca visual -->
+    <!-- Pré-carregamento do CSS principal para dar prioridade ao download -->
+    <!-- ATENÇÃO: Substitua 'index-[HASH].css' pelo nome real do arquivo CSS gerado pelo Vite após o build (ex: index-gy7NC-Pu.css) -->
+    <link rel="preload" href="/assets/index-[HASH].css" as="style">
+
+    <!-- Fontes com display=swap para evitar bloqueio de renderização (FOIT) -->
+    <!-- O navegador exibirá uma fonte padrão e depois "trocará" pela personalizada -->
     <link 
-      href="https://fonts.googleapis.com/css2?family=Gulzar&display=block" 
+      href="https://fonts.googleapis.com/css2?family=Gulzar&display=swap" 
       rel="stylesheet"
     >
     <link 
-      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=block" 
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" 
       rel="stylesheet"
     >
-    <script type="module" crossorigin src="/lansutechsite/assets/index-DZjka6X-.js"></script>
+    
+    <!-- Link para o CSS principal gerado pelo Vite (mantenha como está) -->
+    <!-- Este link deve vir DEPOIS dos preloads e links de fontes -->
+    <link rel="stylesheet" href="/assets/index-[HASH].css"> 
+    <script type="module" crossorigin src="/lansutechsite/assets/index-Djasgedd.js"></script>
     <link rel="modulepreload" crossorigin href="/lansutechsite/assets/vendor-BlG6C1Jp.js">
     <link rel="modulepreload" crossorigin href="/lansutechsite/assets/lucide-D7ha8V_g.js">
-    <link rel="stylesheet" crossorigin href="/lansutechsite/assets/index-gy7NC-Pu.css">
+    <link rel="stylesheet" crossorigin href="/lansutechsite/assets/index-BKDLVM1n.css">
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root"></div>
+    <!-- Script principal do seu aplicativo React -->
   </body>
 </html>
