@@ -1,7 +1,8 @@
 import React from 'react';
 import { motion, Variants } from 'framer-motion';
 // import RevealOnScroll from './RevealOnScroll'; // Removido, pois não é mais necessário
-import { FaCheckCircle, FaBolt, FaUsers, FaLightbulb } from 'react-icons/fa';
+// Importação dos ícones como SVGs inline para otimização, evitando dependências
+// import { FaCheckCircle, FaBolt, FaUsers, FaLightbulb } from 'react-icons/fa';
 
 const PresentationSectionFive = () => {
   // Variantes para a animação do título (fade-in e rise-up) - Mantidas pois são animações diretas do Framer Motion
@@ -9,10 +10,11 @@ const PresentationSectionFive = () => {
     hidden: { opacity: 0, y: 30 }, // Começa invisível e 30px abaixo
     visible: {
       opacity: 1, // Torna-se visível
-      y: 0,       // Sobe para a posição original
+      y: 0,       // Sobe para a posição original
       transition: { // 'transition' é uma propriedade direta de 'visible'
-        duration: 0.8, // Duração da animação
-        ease: "easeOut", // Efeito de easing
+        type: "spring" as const, // AJUSTADO: Usando transição "spring" para maior suavidade e para evitar erros de tipagem
+        stiffness: 100, // Rigidez da mola para controle da velocidade
+        damping: 20,    // Amortecimento para controle da oscilação
         delay: 0.3, // Um pequeno atraso antes de começar a animação
       },
     },
@@ -68,19 +70,37 @@ const PresentationSectionFive = () => {
               </h3>
               <ul className="relative z-10 space-y-3 md:space-y-5 text-sm md:text-xl font-medium leading-relaxed">
                 <li className="flex items-center gap-2 md:gap-4">
-                  <FaCheckCircle className="text-[#4ADE80] w-5 h-5 md:w-6 md:h-6 flex-shrink-0" />
+                  {/* Ícone de Check Circle em SVG inline */}
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-[#4ADE80] w-5 h-5 md:w-6 md:h-6 flex-shrink-0">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-8.91"></path>
+                    <path d="M22 4L12 14.01l-3-3"></path>
+                  </svg>
                   Soluções simples e eficientes
                 </li>
                 <li className="flex items-center gap-2 md:gap-4">
-                  <FaBolt className="text-[#4ADE80] w-5 h-5 md:w-6 md:h-6 flex-shrink-0" />
+                  {/* Ícone de Bolt em SVG inline */}
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-[#4ADE80] w-5 h-5 md:w-6 md:h-6 flex-shrink-0">
+                    <path d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                  </svg>
                   Foco em resultados reais
                 </li>
                 <li className="flex items-center gap-2 md:gap-4">
-                  <FaUsers className="text-[#4ADE80] w-5 h-5 md:w-6 md:h-6 flex-shrink-0" />
+                  {/* Ícone de Users em SVG inline */}
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-[#4ADE80] w-5 h-5 md:w-6 md:h-6 flex-shrink-0">
+                    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="9" cy="7" r="4"></circle>
+                    <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                  </svg>
                   Time dedicado e colaborativo
                 </li>
                 <li className="flex items-center gap-2 md:gap-4">
-                  <FaLightbulb className="text-[#4ADE80] w-5 h-5 md:w-6 md:h-6 flex-shrink-0" />
+                  {/* Ícone de Lightbulb em SVG inline */}
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-[#4ADE80] w-5 h-5 md:w-6 md:h-6 flex-shrink-0">
+                    <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"></path>
+                    <path d="M9 18h6"></path>
+                    <path d="M10 22h4"></path>
+                  </svg>
                   Tecnologia que facilita o dia a dia
                 </li>
               </ul>

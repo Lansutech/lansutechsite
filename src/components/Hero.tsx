@@ -9,8 +9,9 @@ const Hero = () => {
       opacity: 1, // Torna-se visível
       y: 0,       // Sobe para a posição original
       transition: { // 'transition' é uma propriedade direta de 'visible'
-        duration: 0.8, // Duração da animação
-        ease: "easeOut", // Efeito de easing
+        type: "spring" as const, // AJUSTADO: Usando transição "spring" para maior suavidade e para evitar erros de tipagem
+        stiffness: 100, // Rigidez da mola para controle da velocidade
+        damping: 20,    // Amortecimento para controle da oscilação
         delay: 0.3, // Um pequeno atraso antes de começar a animação
       },
     },
@@ -18,15 +19,16 @@ const Hero = () => {
 
   return (
     <section className="py-8" style={{ backgroundColor: '#EAF3F3' }}>
+      {/* AJUSTADO: Corrigido o typo 'max-w-7xla' para 'max-w-7xl' */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center">
         
           <motion.h1
-            // CLASSES DE RESPONSIVIDADE ADICIONADAS AQUI
+            // AJUSTADO: Removido 'flex items-center justify-center' pois o pai já centraliza o texto
+            // AJUSTADO: 'font-regular' alterado para 'font-normal' (convenção Tailwind)
             style={{ fontFamily: 'DM Sans' }} // Mantendo o font-family
-            className="flex items-center justify-center
-                       text-4xl md:text-6xl lg:text-[86px]
-                       text-black font-regular tracking-tight
+            className="text-4xl md:text-6xl lg:text-[86px]
+                       text-black font-normal tracking-tight
                        mt-0 md:mt-[-65px]"
             variants={titleAnimation}
             initial="hidden"
