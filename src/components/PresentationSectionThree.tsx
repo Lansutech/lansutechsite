@@ -7,15 +7,6 @@ import { Github, Linkedin } from 'lucide-react';
 const teamData = [
   {
     id: 1,
-    name: 'Gabriel Peicher',
-    role: 'Back-end Developer',
-    area: 'Apaixonado por programação, dados e resolver problemas. Foco em Python, SQL, Análise de Dados e Machine Learning.',
-    technologies: ['Python', 'SQL', 'Análise de Dados', 'Machine Learning', 'Jupyter', 'HTML', 'CSS', 'Git'],
-    githubUrl: 'https://github.com/gabrielpeicher',
-    linkedinUrl: 'https://www.linkedin.com/in/gabriel-peicher-b59b80233/',
-  },
-  {
-    id: 2,
     name: 'Tiago Sversut',
     role: 'Back-end Developer',
     area: 'Focado em APIs REST, automações e desenvolvimento de Bots. Experiência com Python, SQL, PHP e Java, e bancos de dados relacionais.',
@@ -24,11 +15,11 @@ const teamData = [
     linkedinUrl: 'https://www.linkedin.com/in/tiago-sversut',
   },
   {
-    id: 3,
+    id: 2,
     name: 'Guilherme X. Hojak',
     role: 'Front-end Developer',
     area: 'Focado no Design e Criação de Sites e Apps da Lansutech, com boas práticas de UI responsiva.',
-    technologies: ['React', 'TailwindCSS', 'JavaScript', 'TypeScript', 'Framer Motion', 'Vite', 'C', 'C++', 'Java'],
+    technologies: ['Angular','React', 'TailwindCSS', 'JavaScript', 'TypeScript', 'C', 'C++', 'Java'],
     githubUrl: 'https://github.com/guihojak',
     linkedinUrl: 'https://www.linkedin.com/in/guilherme-xavier-hojak-694b79300/',
   },
@@ -108,7 +99,7 @@ const PresentationSectionThree = () => {
   return (
     <section className="py-16 bg-[#EAF3F3]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-10 md:mt-[85px]">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch justify-items-center">
+        <div className="flex flex-wrap gap-8 items-stretch justify-center">
           {teamData.map(member => (
             <TeamMemberCard key={member.id} member={member} />
           ))}
