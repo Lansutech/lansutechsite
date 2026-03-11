@@ -203,7 +203,7 @@ const ContactSection = () => {
         <div className="border-t border-gray-200 mt-16 pt-8 text-center">
           <div className="text-sm text-gray-500 flex items-center justify-center">
             <div className="w-7 h-7 mr-2 flex-shrink-0">
-              <img src={import.meta.env.BASE_URL + 'imgs/lansutechlogo.png'} alt="Lansutech" className="w-full h-full object-contain" />
+              <img src={import.meta.env.BASE_URL + 'imgs/lansutech-logo.webp'} alt="Lansutech" className="w-full h-full object-contain" />
             </div>
             © {new Date().getFullYear()} Lansutech. Todos os direitos reservados.
           </div>

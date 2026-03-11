@@ -73,7 +73,7 @@ const Header: React.FC = () => {
         <div className="absolute top-4 md:top-6 left-4 md:left-6 w-auto h-12 md:w-[122px] md:h-[124px] z-20">
           <img 
             // AJUSTADO: Usando caminho relativo direto para resolver erro de compilação
-            src={'./imgs/lansutechlogo.png'} 
+            src={'./imgs/lansutech-logo.webp'} 
             alt="Lansutech"
             className="w-full h-full object-contain" 
           />

@@ -64,7 +64,7 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
-  base: '/lansutechsite/', 
+  base: '/', 
   build: {
     minify: 'esbuild', // Padrão do Vite, mas explicitado para clareza
     sourcemap: false,  // Desabilita sourcemaps em produção
