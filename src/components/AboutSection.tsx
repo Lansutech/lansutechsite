@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion, Variants } from 'framer-motion';
+import trofeu from '../assets/elementos_graficos/sobrenos_trofeu.png'
 
 const AboutSection = () => {
   const whoWeAreText =
@@ -30,13 +31,13 @@ const AboutSection = () => {
         
         {/* Seção Title Badge */}
         <motion.div
-          className="mb-8 sm:mb-12 md:mb-16 flex justify-start"
+          className="mb-8 sm:mb-12 md:mb-8 md:-mt-10 flex justify-start"
           variants={fadeUp}
           initial="hidden"
           animate="visible"
         >
-          <div className="rounded-full bg-[#ff914d]/80 px-4 sm:px-6 md:px-8 py-2 sm:py-3 md:py-4 lg:px-10">
-            <h2 className="text-[24px] sm:text-[28px] md:text-[32px] lg:text-[43px] font-regular text-black leading-none">
+          <div className="rounded-full bg-[#ff914d]/80 px-4 sm:px-6 md:px-8 py-2 sm:py-3 md:py-4 lg:px-3 lg:py-1">
+            <h2 className="text-[24px] sm:text-[28px] md:text-[32px] lg:text-[52px] font-normal text-black leading-none">
               Sobre nós
             </h2>
           </div>
@@ -45,7 +46,7 @@ const AboutSection = () => {
         {/* Quem Somos Section */}
         <div className="mb-14 sm:mb-18 md:mb-22 lg:mb-20">
           <motion.h3
-            className="text-[20px] sm:text-[24px] md:text-[28px] lg:text-[32px] font-semibold text-black mb-4 sm:mb-6 md:mb-8 lg:mb-6"
+            className="text-[20px] sm:text-[24px] md:text-[28px] lg:text-[32px] font-normal text-black mb-4 sm:mb-6 md:mb-8 lg:mb-2"
             variants={fadeUp}
             initial="hidden"
             animate="visible"
@@ -56,7 +57,7 @@ const AboutSection = () => {
 
           <div className="grid grid-cols-1 lg:grid-cols-[740px_1fr] gap-6 sm:gap-8 md:gap-10 lg:gap-14 items-start">
             <motion.div
-              className="rounded-2xl bg-[#F2F0A8] px-4 sm:px-6 md:px-8 lg:px-10 py-5 sm:py-6 md:py-8 lg:py-0 w-full min-h-[170px] md:min-h-[200px] lg:h-[190px] lg:flex lg:items-center"
+              className="rounded-2xl bg-[#ffde59]/55 px-4 sm:px-6 md:px-8 lg:px-10 py-5 sm:py-6 md:py-8 lg:py-0 w-full min-h-[170px] md:min-h-[200px] lg:h-[190px] lg:flex lg:items-center"
               variants={fadeUp}
               initial="hidden"
               animate="visible"
@@ -70,7 +71,7 @@ const AboutSection = () => {
             </motion.div>
 
             <motion.div
-              className="hidden lg:flex h-[300px] w-full max-w-[420px] justify-self-end rounded-2xl bg-gradient-to-br from-[#D4A574] to-[#E8B88F] items-center justify-center"
+              className="hidden lg:flex h-[300px] w-full max-w-[420px] justify-self-end rounded-2xl  items-center justify-center lg:-mt-36 lg: -mr-8"
               variants={fadeUp}
               initial="hidden"
               animate="visible"
@@ -78,7 +79,11 @@ const AboutSection = () => {
             >
               {/* Placeholder para elemento visual/ícone - a ser preenchido com componente real */}
               <div className="text-center text-black/30">
-                <p className="text-sm">Elemento visual aqui</p>
+                <img
+                src={trofeu}
+                alt="Notebook"
+                className="h-full w-full scale-[1.08] object-contain object-left"
+              />
               </div>
             </motion.div>
           </div>
