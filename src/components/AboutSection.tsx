@@ -1,0 +1,133 @@
+import React from 'react';
+import { motion, Variants } from 'framer-motion';
+
+const AboutSection = () => {
+  const whoWeAreText =
+    'A Lansutech nasceu para simplificar processos e transformar desafios operacionais em soluções digitais eficientes. Atuamos com foco em automação, sistemas sob medida e experiência do usuário, sempre adaptando a tecnologia ao contexto real de cada cliente.';
+
+  const missionValuesText =
+    'Nossa missão é entregar valor com tecnologia prática, confiável e escalável. Trabalhamos com transparência, parceria e melhoria contínua para desenvolver produtos que reduzam retrabalho, aumentem produtividade e apoiem o crescimento sustentável dos negócios.';
+
+  const fadeUp: Variants = {
+    hidden: { opacity: 0, y: 24 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.7,
+        ease: [0.22, 1, 0.36, 1],
+      },
+    },
+  };
+
+  return (
+    <section
+      id="sobre-nos"
+      className="relative bg-[#EAF3F3] "
+      style={{ fontFamily: 'DM Sans' }}
+    >
+      <div className="mx-auto w-full max-w-[1240px] px-4 sm:px-6 md:px-8 lg:px-8 py-12 sm:py-16 md:py-20">
+        
+        {/* Seção Title Badge */}
+        <motion.div
+          className="mb-8 sm:mb-12 md:mb-16 flex justify-start"
+          variants={fadeUp}
+          initial="hidden"
+          animate="visible"
+        >
+          <div className="rounded-full bg-[#ff914d]/80 px-4 sm:px-6 md:px-8 py-2 sm:py-3 md:py-4 lg:px-10">
+            <h2 className="text-[24px] sm:text-[28px] md:text-[32px] lg:text-[43px] font-regular text-black leading-none">
+              Sobre nós
+            </h2>
+          </div>
+        </motion.div>
+
+        {/* Quem Somos Section */}
+        <div className="mb-14 sm:mb-18 md:mb-22 lg:mb-20">
+          <motion.h3
+            className="text-[20px] sm:text-[24px] md:text-[28px] lg:text-[32px] font-semibold text-black mb-4 sm:mb-6 md:mb-8 lg:mb-6"
+            variants={fadeUp}
+            initial="hidden"
+            animate="visible"
+            transition={{ delay: 0.08 }}
+          >
+            Quem somos?
+          </motion.h3>
+
+          <div className="grid grid-cols-1 lg:grid-cols-[740px_1fr] gap-6 sm:gap-8 md:gap-10 lg:gap-14 items-start">
+            <motion.div
+              className="rounded-2xl bg-[#F2F0A8] px-4 sm:px-6 md:px-8 lg:px-10 py-5 sm:py-6 md:py-8 lg:py-0 w-full min-h-[170px] md:min-h-[200px] lg:h-[190px] lg:flex lg:items-center"
+              variants={fadeUp}
+              initial="hidden"
+              animate="visible"
+              transition={{ delay: 0.12 }}
+            >
+              <p
+                className="mx-auto w-full max-w-[620px] text-center text-[16px] sm:text-[17px] md:text-[18px] lg:text-[20px] leading-relaxed sm:leading-[1.6] md:leading-[1.65] lg:leading-[1.6] text-black [overflow-wrap:anywhere] [text-wrap:pretty]"
+              >
+                {whoWeAreText}
+              </p>
+            </motion.div>
+
+            <motion.div
+              className="hidden lg:flex h-[300px] w-full max-w-[420px] justify-self-end rounded-2xl bg-gradient-to-br from-[#D4A574] to-[#E8B88F] items-center justify-center"
+              variants={fadeUp}
+              initial="hidden"
+              animate="visible"
+              transition={{ delay: 0.16 }}
+            >
+              {/* Placeholder para elemento visual/ícone - a ser preenchido com componente real */}
+              <div className="text-center text-black/30">
+                <p className="text-sm">Elemento visual aqui</p>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+
+        {/* Nossa Missão e Valores Section */}
+        <div className="grid grid-cols-1 lg:grid-cols-[300px_1fr] gap-6 sm:gap-8 md:gap-10 lg:gap-14 items-start">
+          <motion.div
+            className="hidden lg:flex h-[300px] w-full rounded-2xl bg-gradient-to-br from-[#F2E8A0] to-[#F0D68F] items-center justify-center"
+            variants={fadeUp}
+            initial="hidden"
+            animate="visible"
+            transition={{ delay: 0.24 }}
+          >
+            {/* Placeholder para ilustração - a ser preenchido com componente real */}
+            <div className="text-center text-black/30">
+              <p className="text-sm">Ilustração aqui</p>
+            </div>
+          </motion.div>
+
+          <div className="w-full max-w-[760px] justify-self-end">
+            <motion.h3
+              className="text-[20px] sm:text-[24px] md:text-[28px] lg:text-[32px] font-semibold text-black mb-4 sm:mb-6 md:mb-8 lg:mb-6 text-right"
+              variants={fadeUp}
+              initial="hidden"
+              animate="visible"
+              transition={{ delay: 0.20 }}
+            >
+              Nossa Missão e Valores
+            </motion.h3>
+
+            <motion.div
+              className="rounded-2xl bg-[#F2F0A8] px-4 sm:px-6 md:px-8 lg:px-10 py-5 sm:py-6 md:py-8 lg:py-0 w-full min-h-[170px] md:min-h-[200px] lg:h-[190px] lg:flex lg:items-center"
+              variants={fadeUp}
+              initial="hidden"
+              animate="visible"
+              transition={{ delay: 0.28 }}
+            >
+              <p
+                className="mx-auto w-full max-w-[620px] text-center text-[16px] sm:text-[17px] md:text-[18px] lg:text-[20px] leading-relaxed sm:leading-[1.6] md:leading-[1.65] lg:leading-[1.6] text-black [overflow-wrap:anywhere] [text-wrap:pretty]"
+              >
+                {missionValuesText}
+              </p>
+            </motion.div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default AboutSection;

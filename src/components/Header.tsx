@@ -3,9 +3,13 @@ import { motion, Variants, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react'; // Ícones para menu mobile
 
 const navItems = [
-  { name: 'Sobre nós', id: 'sobre-nos' },
   { name: 'Projetos', id: 'projetos' },
   { name: 'Serviços', id: 'servicos' },
+  { name: 'Sobre nós', id: 'sobre-nos' },
+];
+
+const mobileNavItems = [
+  ...navItems,
   { name: 'Contato', id: 'contato' },
 ];
 
@@ -67,23 +71,27 @@ const Header: React.FC = () => {
 
   return (
     <header className="fixed md:static top-0 left-0 right-0 z-50 md:z-auto bg-[#EAF3F3] shadow-lg md:shadow-none">
-      <div className="relative h-[80px] md:h-[174px] max-w-full mx-auto">
+      <div className="relative mx-auto w-full max-w-[1240px] px-4 md:px-6 lg:px-8">
+        <div className="flex h-[76px] md:h-[82px] items-center justify-between gap-4">
+          <button
+            onClick={() => scrollToSection('hero')}
+            aria-label="Ir para o topo"
+            className="flex items-center gap-2 md:gap-2.5"
+          >
+            <img
+              src={'./imgs/logolansutech.svg'}
+              alt="Lansutech"
+              className="h-[34px] w-[34px] md:h-[62px] md:w-[62px] object-contain"
+            />
+            <img
+              src={'./imgs/lansutechlogotitulo.svg'}
+              alt="Lansutech logotipo"
+              className="h-[15px] w-auto md:h-[18px] object-contain"
+            />
+          </button>
 
-        {/* Logo - Tamanho ajustado para mobile */}
-        <div className="absolute top-4 md:top-6 left-4 md:left-6 w-auto h-12 md:w-[122px] md:h-[124px] z-20">
-          <img 
-            // AJUSTADO: Usando caminho relativo direto para resolver erro de compilação
-            src={'./imgs/lansutech-logo.webp'} 
-            alt="Lansutech"
-            className="w-full h-full object-contain" 
-          />
-        </div>
-
-        {/* Navegação central + linha (Desktop) */}
-        <div className="hidden md:flex flex-col items-center justify-center absolute left-1/2 top-[52.5px] -translate-x-1/2 w-full max-w-[1058px]">
-          {/* Botões */}
-          <motion.div
-            className="flex space-x-8"
+          <motion.nav
+            className="hidden md:flex items-center gap-5 lg:gap-7"
             initial="hidden"
             animate="visible"
             variants={buttonVariants}
@@ -91,62 +99,49 @@ const Header: React.FC = () => {
             {navItems.map((item) => (
               <button
                 key={item.id}
-                className="text-black hover:bg-black hover:text-white font-medium rounded-full transition-all duration-200 flex items-center justify-center"
+                className="text-black hover:bg-black hover:text-white rounded-full transition-all duration-200 flex items-center justify-center"
                 style={{
                   fontFamily: 'DM Sans',
                   fontWeight: 400,
                   fontSize: '18px',
                   width: '116px',
                   height: '33px',
-                  borderRadius: '21px',
-                  letterSpacing: '0.8px'
+                  letterSpacing: '0.5px'
                 }}
                 onClick={() => scrollToSection(item.id)}
               >
                 {item.name}
               </button>
             ))}
-          </motion.div>
+          </motion.nav>
 
-          {/* Linha */}
-          <motion.div
-            className="mt-[7px] bg-black h-[1.08px] w-full"
-            initial="hidden"
-            animate="visible"
-            variants={lineVariants}
-          />
-        </div>
-
-        {/* Botão do WhatsApp (Desktop) */}
-        <div className="hidden md:flex items-center absolute top-[52.33px] right-6 z-20">
-          <a
-            href="https://wa.me/55SEUNUMERO"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="WhatsApp"
-            className="bg-[#25D366] text-white rounded-full p-3 shadow-md transition
-              hover:bg-[#1ebe57] hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#25D366]
-              flex items-center justify-center w-11 h-11"
-          >
-            {/* Ícone de WhatsApp em SVG inline */}
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="currentColor"
+          <div className="hidden md:block">
+            <button
+              onClick={() => scrollToSection('contato')}
+              className="rounded-full bg-black px-7 py-2.5 text-[18px] leading-none text-[#EAF3F3] transition-all duration-200 hover:bg-black/85 hover:-translate-y-0.5 hover:shadow-lg"
+              style={{
+                fontFamily: 'DM Sans',
+                fontWeight: 400,
+                letterSpacing: '0.2px'
+              }}
             >
-              <path d="M.057 24l1.687-6.163c-1.041-1.804-1.557-3.842-1.557-5.881 0-5.421 4.417-9.837 9.837-9.837 2.651 0 5.106 1.039 6.981 2.914 1.875 1.876 2.914 4.329 2.914 6.98 0 5.422-4.417 9.838-9.838 9.838l-6.201 1.666zm6.558-4.832l-.466-.276c-1.428-.837-2.476-2.222-2.87-3.953l-.117-.552 1.62-.058c.249-.002.668-.076 1.042.277.375.352.887 1.011 1.011 1.205.124.194.209.288.423.504.214.215.457.291.706.195.249-.096.969-.356 1.841-.989.873-.633 1.459-1.41 1.62-1.666.161-.257.34-.492.518-.621.177-.129.356-.169.518-.088.162.081.821.393 1.011.553.19.16.38.288.541.423.161.135.291.264.423.447.132.182.264.38.356.492.092.112.182.288.182.472 0 .193-.058.423-.088.471-.03.049-.33.224-.621.516-.291.292-.582.551-.937.838-.356.287-.72.536-1.109.721-.389.184-.814.275-1.296.275-.482 0-.964-.075-1.428-.275-.464-.199-.955-.542-1.841-.955z"/>
-            </svg>
-          </a>
+              Entrar em Contato
+            </button>
+          </div>
+
+          <div className="md:hidden flex items-center">
+            <button className="text-gray-700 z-50" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
+              {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
+          </div>
         </div>
 
-        {/* Menu Mobile - Botão e Painel de Navegação */}
-        <div className="md:hidden flex justify-end items-center p-4">
-          <button className="text-gray-700 z-50" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
-            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
-        </div>
+        <motion.div
+          className="hidden md:block bg-black h-[1px] w-full"
+          initial="hidden"
+          animate="visible"
+          variants={lineVariants}
+        />
 
         <AnimatePresence>
           {isMobileMenuOpen && (
@@ -157,7 +152,7 @@ const Header: React.FC = () => {
               animate="visible"
               exit="exit"
             >
-              {navItems.map((item) => (
+              {mobileNavItems.map((item) => (
                 <motion.button
                   key={item.id}
                   variants={mobileNavItemVariants}
