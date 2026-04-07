@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef, useCallback, useMemo } from "react"
 import { motion, AnimatePresence, Variants } from "framer-motion";
 import { Github, ExternalLink } from "lucide-react";
 
-// Definições de tipos
 interface ProjectData {
   id: number;
   image: string;
@@ -17,7 +16,6 @@ interface ProjectCardProps {
   card: ProjectData;
   isActive: boolean;
   onClick: () => void;
-  // Props de animação para desktop, passadas pelo componente pai
   animate: any;
   style: React.CSSProperties;
   transition: any;
@@ -61,10 +59,9 @@ const contentContainerVariants: Variants = {
 
 const contentItemVariants: Variants = {
   hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 80, damping: 15 } },
+  visible: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 100, damping: 20 } },
 };
 
-// Componente isolado e memoizado para o Card, recebe as props de animação
 const ProjectCard = React.memo<ProjectCardProps>(({ card, isActive, onClick, ...props }) => {
   return (
     <motion.div
@@ -141,7 +138,6 @@ const ColoredCardsSection = () => {
   const [isMobile, setIsMobile] = useState<boolean>(false);
   const carouselRef = useRef<HTMLDivElement>(null);
 
-  // Removendo a lógica de drag no mobile, focando em otimização para desktop
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth <= 768);
     checkMobile();
@@ -176,7 +172,6 @@ const ColoredCardsSection = () => {
     };
   }, []);
 
-  // Função para calcular as propriedades de animação de cada card
   const getCardProps = useCallback((index: number) => {
     const isActive = index === activeCardIndex;
     let cardAnimateProps: any = {};
@@ -213,11 +208,10 @@ const ColoredCardsSection = () => {
       zIndex = 5;
     }
 
-    // Retorna um objeto com todas as props de animação
     return {
       animate: { ...cardAnimateProps, opacity, zIndex },
       style: { cursor },
-      transition: { type: "spring", stiffness: 60, damping: 15, mass: 1.2 },
+      transition: { type: "spring", stiffness: 80, damping: 18, mass: 1 },
       whileHover: !isActive ? { scale: 1.05, y: VERTICAL_ALIGN_OFFSET - 10 } : {},
     };
   }, [activeCardIndex, CARD_WIDTH_SELECTED, CARD_WIDTH_SIDE, CARD_HEIGHT_SELECTED, CARD_HEIGHT_SIDE, VISIBLE_GAP_BETWEEN_CARDS, VERTICAL_ALIGN_OFFSET, TOTAL_STAGE_WIDTH]);
@@ -232,7 +226,6 @@ const ColoredCardsSection = () => {
       </h2>
 
       {isMobile ? (
-        // Versão para mobile (sem drag, mantendo a responsividade básica)
         <div ref={carouselRef} className="w-full overflow-x-auto px-4">
           <div className="flex gap-4">
             {presentationData.map((card) => (
@@ -283,7 +276,6 @@ const ColoredCardsSection = () => {
           </div>
         </div>
       ) : (
-        // Versão para desktop
         <div
           className="relative"
           style={{

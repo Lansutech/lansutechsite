@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { motion, AnimatePresence, Variants, useMotionValue, MotionValue, Transition } from "framer-motion";
-import { Github, ExternalLink } from "lucide-react";
 
-// Definição de tipos para garantir a segurança do TypeScript
 interface ServiceData {
   id: number;
   title: string;
@@ -74,7 +72,6 @@ const services: ServiceData[] = [
   },
 ];
 
-// NOVAS VARIANTS para o container de texto e elementos individuais
 const textContentContainerVariants: Variants = {
   hidden: { opacity: 0, y: 20 },
   visible: {
@@ -82,23 +79,22 @@ const textContentContainerVariants: Variants = {
     y: 0,
     transition: {
       type: "spring",
-      stiffness: 180,
-      damping: 28,
-      mass: 1,
-      when: "beforeChildren", // Orquestra a animação dos filhos antes do pai finalizar
-      staggerChildren: 0.15, // Atraso entre o título e a descrição
+      stiffness: 120,
+      damping: 25,
+      mass: 0.8,
+      when: "beforeChildren",
+      staggerChildren: 0.08,
     },
   },
-  exit: { opacity: 0, y: -20, transition: { duration: 0.2 } }, // Saída suave para cima
+  exit: { opacity: 0, y: -20, transition: { duration: 0.15 } },
 };
 
 const individualTextElementVariants: Variants = {
   hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 100, damping: 20 } },
-  exit: { opacity: 0, y: -10, transition: { duration: 0.2 } }, // Saída suave para cima para cada elemento
+  visible: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 120, damping: 22 } },
+  exit: { opacity: 0, y: -10, transition: { duration: 0.15 } },
 };
 
-// Componente separado e memoizado para o Card
 const ServiceCard = React.memo<ServiceCardProps>(({ service, isActive, onClick, isMobile, cardRef, animate, style, transition }) => {
   return (
     <motion.div
@@ -121,9 +117,9 @@ const ServiceCard = React.memo<ServiceCardProps>(({ service, isActive, onClick, 
 
       <div className="p-6 text-white flex flex-col justify-end h-full relative z-10 overflow-y-auto">
         <AnimatePresence initial={false} mode="wait">
-          {isActive && ( // Renderiza o conteúdo do texto apenas quando o card está ativo
+          {isActive && (
             <motion.div
-              key={service.id} // Chave para AnimatePresence funcionar corretamente
+              key={service.id}
               variants={textContentContainerVariants}
               initial="hidden"
               animate="visible"
@@ -154,19 +150,18 @@ const ServiceCard = React.memo<ServiceCardProps>(({ service, isActive, onClick, 
 const ServicesSection = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
-  const carouselRef = useRef<HTMLDivElement>(null); // Ref para o container com overflow-hidden
-  const draggableContentRef = useRef<HTMLDivElement>(null); // Ref para o conteúdo arrastável dentro do carouselRef
+  const carouselRef = useRef<HTMLDivElement>(null);
+  const draggableContentRef = useRef<HTMLDivElement>(null);
   const dragX: MotionValue<number> = useMotionValue(0);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   const carouselTransition = useMemo(() => ({
     type: "spring",
-    stiffness: 150,
-    damping: 30,
-    mass: 1,
+    stiffness: 120,
+    damping: 28,
+    mass: 0.9,
   }) as const, []);
 
-  // UseEffect para detectar mobile
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth <= 768);
     checkMobile();
@@ -174,18 +169,16 @@ const ServicesSection = () => {
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
-  // Calcula o alvo X para centralizar o card ativo no carrossel mobile
   const getMobileCarouselTargetX = useCallback(() => {
     if (!isMobile || !carouselRef.current || !draggableContentRef.current || !cardRefs.current[currentIndex]) return 0;
 
     const currentCard = cardRefs.current[currentIndex];
     if (!currentCard) return 0; // Garantia de que o card existe
 
-    const carouselViewportWidth = carouselRef.current.offsetWidth; // Largura do viewport visível do carrossel
-    const gapWidth = 16; // gap-4 no tailwindcss
+    const carouselViewportWidth = carouselRef.current.offsetWidth;
+    const gapWidth = 16;
 
     let cumulativeWidthBeforeActive = 0;
-    // Soma a largura dos cards anteriores + os gaps entre eles
     for (let i = 0; i < currentIndex; i++) {
         const prevCard = cardRefs.current[i];
         if (prevCard) {
@@ -194,31 +187,24 @@ const ServicesSection = () => {
         cumulativeWidthBeforeActive += gapWidth;
     }
 
-    // Calcula a posição do centro do card ativo em relação ao início do conteúdo arrastável
     const activeCardCenterRelativeToDraggableStart = cumulativeWidthBeforeActive + currentCard.offsetWidth / 2;
 
-    // O alvo X é a posição que centraliza o card ativo no viewport do carrossel
     const targetX = (carouselViewportWidth / 2) - activeCardCenterRelativeToDraggableStart;
-
-    // Calcular os limites reais do arrasto para garantir que o alvo X não ultrapasse
-    const draggableContentWidth = draggableContentRef.current.scrollWidth; // Largura total do conteúdo arrastável
-    const maxDragLeft = -(draggableContentWidth - carouselViewportWidth); // Limite máximo para arrastar para a esquerda
-    
-    // Garantir que o targetX esteja dentro dos limites válidos [maxDragLeft, 0]
+    const draggableContentWidth = draggableContentRef.current.scrollWidth;
+    const maxDragLeft = -(draggableContentWidth - carouselViewportWidth);
     return Math.max(Math.min(targetX, 0), maxDragLeft);
 
-  }, [currentIndex, isMobile, services.length]); // Adicionadas dependências importantes
+  }, [currentIndex, isMobile, services.length]);
 
-  // Lida com o fim do arrasto para "snap" o carrossel para o card mais próximo ou para o próximo/anterior
   const handleDragEnd = useCallback((_event: MouseEvent | TouchEvent | PointerEvent, info: { offset: { x: number }; velocity: { x: number } }) => {
     const offset = info.offset.x;
     const velocity = info.velocity.x;
-    const dragBuffer = 50; // Quantidade de pixels para considerar um "swipe"
+    const dragBuffer = 50;
 
     let newIndex = currentIndex;
-    if (offset < -dragBuffer || velocity < -200) { // Arrasta para a esquerda (próximo card)
+    if (offset < -dragBuffer || velocity < -200) {
       newIndex = Math.min(currentIndex + 1, services.length - 1);
-    } else if (offset > dragBuffer || velocity > 200) { // Arrasta para a direita (card anterior)
+    } else if (offset > dragBuffer || velocity > 200) {
       newIndex = Math.max(currentIndex - 1, 0);
     }
     setCurrentIndex(newIndex);
@@ -260,91 +246,97 @@ const ServicesSection = () => {
   return (
     <section id="servicos" className="py-16 md:py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
       <div className="max-w-[1600px] mx-auto">
-        <h2 className="mb-8 md:mb-16 text-4xl md:text-6xl lg:text-[86px] text-black" style={{ fontFamily: 'DM Sans' }}>
-          Serviços
-        </h2>
-
-        {isMobile ? (
-          <div ref={carouselRef} className="w-full overflow-hidden"> {/* O container que esconde o overflow */}
-            <motion.div
-              ref={draggableContentRef} 
-              className="flex gap-4 cursor-grab active:cursor-grabbing"
-              drag="x"
-              dragConstraints={carouselRef} 
-              dragElastic={0.2}
-              style={{ x: dragX }}
-              animate={{ x: getMobileCarouselTargetX() }}
-              transition={carouselTransition}
-              onDragEnd={handleDragEnd}
-            >
-              {services.map((service, index) => {
-                const isActive = index === currentIndex;
-                return (
-                  <ServiceCard
-                    key={service.id}
-                    service={service}
-                    isActive={isActive}
-                    onClick={() => setCurrentIndex(index)}
-                    isMobile={true}
-                    cardRef={(el) => (cardRefs.current[index] = el)}
-                    animate={{ scale: isActive ? 1 : 0.95, opacity: isActive ? 1 : 0.8 }}
-                    transition={{ duration: 0.3 } as Transition}
-                  />
-                );
-              })}
-            </motion.div>
-          </div>
-        ) : (
-          <div className="flex items-end mb-12 relative overflow-hidden" style={{ height: CARD_HEIGHT_ACTIVE_DESKTOP + 20 }}>
-            <motion.div
-              className="flex flex-nowrap items-end"
-              animate={{ x: -calculateOffsetDesktop() }}
-              transition={carouselTransition}
-            >
-              {services.map((service, index) => {
-                const isActive = index === currentIndex;
-                return (
-                  <ServiceCard
-                    key={service.id}
-                    service={service}
-                    isActive={isActive}
-                    onClick={() => setCurrentIndex(index)}
-                    isMobile={false}
-                    animate={{
-                      width: isActive ? LARGE_CARD_WIDTH_DESKTOP : SMALL_CARD_WIDTH_DESKTOP,
-                      height: isActive ? CARD_HEIGHT_ACTIVE_DESKTOP : CARD_HEIGHT_INACTIVE_DESKTOP,
-                      marginRight: CARD_SPACING_DESKTOP,
-                      zIndex: isActive ? 3 : (index > currentIndex ? 2 : 1),
-                    }}
-                    transition={carouselTransition}
-                    style={{ bottom: 0 }}
-                  />
-                );
-              })}
-            </motion.div>
-          </div>
-        )}
-
-        {/* Botões de Navegação */}
-        <div className="flex justify-center md:justify-start items-center mt-12 gap-4">
-          <button
-            onClick={goToPrev}
-            disabled={!canGoPrev}
-            className={`p-3 rounded-full bg-white shadow-md transition-all duration-300 ${!canGoPrev ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-100'}`}
+        <div className="flex justify-end mb-8 md:mb-12">
+          <h2
+            className="inline-flex items-center rounded-full px-6 md:px-10 py-2 md:py-3 text-4xl md:text-6xl lg:text-[68px] lg:mt-4 text-black leading-none"
+            style={{ fontFamily: 'DM Sans', backgroundColor: '#F3D44C' }}
           >
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M15 18L9 12L15 6" stroke="#000000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          </button>
-          <button
-            onClick={goToNext}
-            disabled={!canGoNext}
-            className={`p-3 rounded-full bg-white shadow-md transition-all duration-300 ${!canGoNext ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-100'}`}
-          >
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M9 18L15 12L9 6" stroke="#000000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          </button>
+            Serviços
+          </h2>
+        </div>
+
+        <div className="border border-[#E8C532] rounded-[44px] md:rounded-[64px] px-4 sm:px-6 md:px-8 py-8 md:py-12 lg:-mt-4">
+          {isMobile ? (
+            <div ref={carouselRef} className="w-full overflow-hidden"> {/* O container que esconde o overflow */}
+              <motion.div
+                ref={draggableContentRef}
+                className="flex gap-4 cursor-grab active:cursor-grabbing"
+                drag="x"
+                dragConstraints={carouselRef}
+                dragElastic={0.2}
+                style={{ x: dragX }}
+                animate={{ x: getMobileCarouselTargetX() }}
+                transition={carouselTransition}
+                onDragEnd={handleDragEnd}
+              >
+                {services.map((service, index) => {
+                  const isActive = index === currentIndex;
+                  return (
+                    <ServiceCard
+                      key={service.id}
+                      service={service}
+                      isActive={isActive}
+                      onClick={() => setCurrentIndex(index)}
+                      isMobile={true}
+                      cardRef={(el) => (cardRefs.current[index] = el)}
+                      animate={{ scale: isActive ? 1 : 0.95, opacity: isActive ? 1 : 0.8 }}
+                      transition={{ duration: 0.25 } as Transition}
+                    />
+                  );
+                })}
+              </motion.div>
+            </div>
+          ) : (
+            <div className="flex items-end mb-10 relative overflow-hidden" style={{ height: CARD_HEIGHT_ACTIVE_DESKTOP + 20 }}>
+              <motion.div
+                className="flex flex-nowrap items-end"
+                animate={{ x: -calculateOffsetDesktop() }}
+                transition={carouselTransition}
+              >
+                {services.map((service, index) => {
+                  const isActive = index === currentIndex;
+                  return (
+                    <ServiceCard
+                      key={service.id}
+                      service={service}
+                      isActive={isActive}
+                      onClick={() => setCurrentIndex(index)}
+                      isMobile={false}
+                      animate={{
+                        width: isActive ? LARGE_CARD_WIDTH_DESKTOP : SMALL_CARD_WIDTH_DESKTOP,
+                        height: isActive ? CARD_HEIGHT_ACTIVE_DESKTOP : CARD_HEIGHT_INACTIVE_DESKTOP,
+                        marginRight: CARD_SPACING_DESKTOP,
+                        zIndex: isActive ? 3 : (index > currentIndex ? 2 : 1),
+                      }}
+                      transition={carouselTransition}
+                      style={{ bottom: 0 }}
+                    />
+                  );
+                })}
+              </motion.div>
+            </div>
+          )}
+
+          <div className="flex justify-center items-center mt-8 gap-4">
+            <button
+              onClick={goToPrev}
+              disabled={!canGoPrev}
+              className={`p-3 rounded-full bg-white shadow-md transition-all duration-300 ${!canGoPrev ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-100'}`}
+            >
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M15 18L9 12L15 6" stroke="#000000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </button>
+            <button
+              onClick={goToNext}
+              disabled={!canGoNext}
+              className={`p-3 rounded-full bg-white shadow-md transition-all duration-300 ${!canGoNext ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-100'}`}
+            >
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9 18L15 12L9 6" stroke="#000000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </button>
+          </div>
         </div>
       </div>
     </section>

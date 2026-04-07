@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, Variants, AnimatePresence } from 'framer-motion';
-import { Menu, X } from 'lucide-react'; // Ícones para menu mobile
+import { Menu, X } from 'lucide-react';
 
 const navItems = [
   { name: 'Projetos', id: 'projetos' },
@@ -18,7 +18,7 @@ const lineVariants: Variants = {
   visible: {
     scaleX: 1,
     transition: {
-      duration: 1.4,
+      duration: 0.8,
       ease: [0.25, 0.8, 0.25, 1],
       delay: 0,
     },
@@ -30,7 +30,7 @@ const buttonVariants: Variants = {
   visible: {
     x: 0,
     transition: {
-      duration: 1.2,
+      duration: 0.6,
       ease: [0.25, 0.8, 0.25, 1],
       delay: 0,
     },
@@ -44,9 +44,9 @@ const mobileNavVariants: Variants = {
     opacity: 1,
     transition: {
       type: 'spring',
-      stiffness: 100,
-      damping: 20,
-      staggerChildren: 0.1
+      stiffness: 120,
+      damping: 25,
+      staggerChildren: 0.05
     }
   },
   exit: { y: -50, opacity: 0 },
@@ -73,19 +73,17 @@ const Header: React.FC = () => {
     <header className="fixed md:static top-0 left-0 right-0 z-50 md:z-auto bg-[#EAF3F3] shadow-lg md:shadow-none">
       <div className="relative mx-auto w-full max-w-[1240px] px-4 md:px-6 lg:px-8">
         <div className="flex h-[76px] md:h-[82px] items-center justify-between gap-4">
-          <button
-            onClick={() => scrollToSection('hero')}
-            aria-label="Ir para o topo"
-            className="flex items-center gap-2 md:gap-2.5"
-          >
+          <button onClick={() => scrollToSection('hero')} aria-label="Ir para o topo" className="flex items-center gap-2 md:gap-2.5">
             <img
               src={'./imgs/logolansutech.svg'}
               alt="Lansutech"
+              loading="eager"
               className="h-[34px] w-[34px] md:h-[62px] md:w-[62px] object-contain"
             />
             <img
               src={'./imgs/lansutechlogotitulo.svg'}
               alt="Lansutech logotipo"
+              loading="eager"
               className="h-[15px] w-auto md:h-[18px] object-contain"
             />
           </button>
@@ -118,7 +116,7 @@ const Header: React.FC = () => {
           <div className="hidden md:block">
             <button
               onClick={() => scrollToSection('contato')}
-              className="rounded-full bg-black px-7 py-2.5 text-[18px] leading-none text-[#EAF3F3] transition-all duration-200 hover:bg-black/85 hover:-translate-y-0.5 hover:shadow-lg"
+              className="rounded-full bg-black px-7 py-2.5 text-[18px] leading-none text-[#EAF3F3] transition-all duration-200 hover:text-black hover:bg-white/65  hover:shadow-lg"
               style={{
                 fontFamily: 'DM Sans',
                 fontWeight: 400,

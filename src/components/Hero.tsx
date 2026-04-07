@@ -10,7 +10,7 @@ const Hero = () => {
       opacity: 1,
       y: 0,
       transition: {
-        duration: 0.7,
+        duration: 0.5,
         ease: [0.22, 1, 0.36, 1],
       },
     },
@@ -42,7 +42,7 @@ const Hero = () => {
           variants={fadeUp}
           initial="hidden"
           animate="visible"
-          transition={{ delay: 0.08 }}
+          transition={{ delay: 0.05 }}
         >
           de <span className="font-bold italic">Qualidade</span>
         </motion.p>
@@ -53,7 +53,7 @@ const Hero = () => {
             variants={fadeUp}
             initial="hidden"
             animate="visible"
-            transition={{ delay: 0.14 }}
+            transition={{ delay: 0.08 }}
           >
             <div className="h-[560px] w-[720px] max-w-none" aria-hidden="true">
               <img
@@ -69,7 +69,7 @@ const Hero = () => {
             variants={fadeUp}
             initial="hidden"
             animate="visible"
-            transition={{ delay: 0.22 }}
+            transition={{ delay: 0.12 }}
           >
             <div className="flex w-full max-w-[920px] items-center rounded-2xl bg-gradient-to-r from-[#ffde59]/65 to-[#ff914d]/65 px-6 py-7 md:h-[300px] md:px-12 md:py-9 lg:h-[310px]">
               <p

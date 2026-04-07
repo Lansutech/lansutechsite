@@ -66,14 +66,30 @@ export default defineConfig(({ mode }) => ({
   },
   base: '/', 
   build: {
-    minify: 'esbuild', // Padrão do Vite, mas explicitado para clareza
-    sourcemap: false,  // Desabilita sourcemaps em produção
+    minify: 'esbuild',
+    sourcemap: false,
+    cssCodeSplit: true,
     rollupOptions: {
       output: {
-        manualChunks: {
-          vendor: ['react', 'react-dom', 'framer-motion'], // Exemplo de code splitting
-          lucide: ['lucide-react'], // Outro exemplo
+        manualChunks: (id) => {
+          if (id.includes('node_modules/react')) {
+            return 'react-vendor';
+          }
+          if (id.includes('node_modules/framer-motion')) {
+            return 'framer-motion';
+          }
+          if (id.includes('node_modules/lucide-react')) {
+            return 'lucide';
+          }
+          if (id.includes('node_modules/@radix-ui')) {
+            return 'radix-ui';
+          }
         },
+      },
+    },
+    terserOptions: {
+      compress: {
+        drop_console: true,
       },
     },
   },

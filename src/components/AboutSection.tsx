@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion, Variants } from 'framer-motion';
-import trofeu from '../assets/elementos_graficos/sobrenos_trofeu.png'
+import linha from '../assets/elementos_graficos/linha_sobrenos.png'
+import logo from '../assets/elementos_graficos/logo_sobrenos.png'
 
 const AboutSection = () => {
   const whoWeAreText =
@@ -15,7 +16,7 @@ const AboutSection = () => {
       opacity: 1,
       y: 0,
       transition: {
-        duration: 0.7,
+        duration: 0.5,
         ease: [0.22, 1, 0.36, 1],
       },
     },
@@ -46,22 +47,22 @@ const AboutSection = () => {
         {/* Quem Somos Section */}
         <div className="mb-14 sm:mb-18 md:mb-22 lg:mb-20">
           <motion.h3
-            className="text-[20px] sm:text-[24px] md:text-[28px] lg:text-[32px] font-normal text-black mb-4 sm:mb-6 md:mb-8 lg:mb-2"
+            className="text-[20px] sm:text-[24px] md:text-[28px] lg:text-[32px] font-normal text-black mb-4 sm:mb-6 md:mb-8 lg:mb-1"
             variants={fadeUp}
             initial="hidden"
             animate="visible"
-            transition={{ delay: 0.08 }}
+            transition={{ delay: 0.04 }}
           >
             Quem somos?
           </motion.h3>
 
           <div className="grid grid-cols-1 lg:grid-cols-[740px_1fr] gap-6 sm:gap-8 md:gap-10 lg:gap-14 items-start">
             <motion.div
-              className="rounded-2xl bg-[#ffde59]/55 px-4 sm:px-6 md:px-8 lg:px-10 py-5 sm:py-6 md:py-8 lg:py-0 w-full min-h-[170px] md:min-h-[200px] lg:h-[190px] lg:flex lg:items-center"
+              className="rounded-2xl bg-[#ffde59]/75 px-4 sm:px-6 md:px-8 lg:px-10 py-5 sm:py-6 md:py-8 lg:py-0 w-full min-h-[170px] md:min-h-[200px] lg:h-[190px] lg:flex lg:items-center"
               variants={fadeUp}
               initial="hidden"
               animate="visible"
-              transition={{ delay: 0.12 }}
+              transition={{ delay: 0.06 }}
             >
               <p
                 className="mx-auto w-full max-w-[620px] text-center text-[16px] sm:text-[17px] md:text-[18px] lg:text-[20px] leading-relaxed sm:leading-[1.6] md:leading-[1.65] lg:leading-[1.6] text-black [overflow-wrap:anywhere] [text-wrap:pretty]"
@@ -71,17 +72,18 @@ const AboutSection = () => {
             </motion.div>
 
             <motion.div
-              className="hidden lg:flex h-[300px] w-full max-w-[420px] justify-self-end rounded-2xl  items-center justify-center lg:-mt-36 lg: -mr-8"
+              className="hidden lg:flex h-[300px] w-full max-w-[420px] justify-self-end rounded-2xl items-center justify-center lg:-mt-36 lg:-mr-8"
               variants={fadeUp}
               initial="hidden"
               animate="visible"
-              transition={{ delay: 0.16 }}
+              transition={{ delay: 0.08 }}
             >
               {/* Placeholder para elemento visual/ícone - a ser preenchido com componente real */}
               <div className="text-center text-black/30">
                 <img
-                src={trofeu}
+                src={logo}
                 alt="Notebook"
+                loading="lazy"
                 className="h-full w-full scale-[1.08] object-contain object-left"
               />
               </div>
@@ -90,37 +92,39 @@ const AboutSection = () => {
         </div>
 
         {/* Nossa Missão e Valores Section */}
-        <div className="grid grid-cols-1 lg:grid-cols-[300px_1fr] gap-6 sm:gap-8 md:gap-10 lg:gap-14 items-start">
+        <div className="relative mt-4 ">
           <motion.div
-            className="hidden lg:flex h-[300px] w-full rounded-2xl bg-gradient-to-br from-[#F2E8A0] to-[#F0D68F] items-center justify-center"
+            className="pointer-events-none absolute left-[-8px] top-[-88px] hidden w-[460px] lg:block xl:w-[500px] lg:-ml-6 lg:-mt-1"
             variants={fadeUp}
             initial="hidden"
             animate="visible"
-            transition={{ delay: 0.24 }}
+            transition={{ delay: 0.10 }}
           >
-            {/* Placeholder para ilustração - a ser preenchido com componente real */}
-            <div className="text-center text-black/30">
-              <p className="text-sm">Ilustração aqui</p>
-            </div>
+            <img
+              src={linha}
+              alt="Linha decorativa"
+              loading="lazy"
+              className="h-auto w-full scale-[0.80] object-contain object-left"
+            />
           </motion.div>
 
-          <div className="w-full max-w-[760px] justify-self-end">
+          <div className="relative z-10 w-full max-w-[760px] justify-self-end lg:ml-auto">
             <motion.h3
-              className="text-[20px] sm:text-[24px] md:text-[28px] lg:text-[32px] font-semibold text-black mb-4 sm:mb-6 md:mb-8 lg:mb-6 text-right"
+              className="text-[20px] sm:text-[24px] md:text-[28px] lg:text-[32px] font-normal text-black mb-4 sm:mb-6 md:mb-8 lg:mb-1 lg:-mt-6 text-right"
               variants={fadeUp}
               initial="hidden"
               animate="visible"
-              transition={{ delay: 0.20 }}
+              transition={{ delay: 0.08 }}
             >
               Nossa Missão e Valores
             </motion.h3>
 
             <motion.div
-              className="rounded-2xl bg-[#F2F0A8] px-4 sm:px-6 md:px-8 lg:px-10 py-5 sm:py-6 md:py-8 lg:py-0 w-full min-h-[170px] md:min-h-[200px] lg:h-[190px] lg:flex lg:items-center"
+              className="rounded-2xl bg-[#ffde59]/75 px-4 sm:px-6 md:px-8 lg:px-10 py-5 sm:py-6 md:py-8 lg:py-0 w-full min-h-[170px] md:min-h-[200px] lg:h-[190px] lg:flex lg:items-center"
               variants={fadeUp}
               initial="hidden"
               animate="visible"
-              transition={{ delay: 0.28 }}
+              transition={{ delay: 0.12 }}
             >
               <p
                 className="mx-auto w-full max-w-[620px] text-center text-[16px] sm:text-[17px] md:text-[18px] lg:text-[20px] leading-relaxed sm:leading-[1.6] md:leading-[1.65] lg:leading-[1.6] text-black [overflow-wrap:anywhere] [text-wrap:pretty]"

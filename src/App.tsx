@@ -1,35 +1,30 @@
-import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
+import { Toaster } from "@/components/ui/sonner";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { useEffect } from "react";
+import { Suspense, lazy, useEffect } from "react";
 import Index from "./pages/Index";
-import NotFound from "./pages/NotFound";
+const NotFound = lazy(() => import("./pages/NotFound"));
 import { initializeEmailJS } from "./lib/api";
 
 const queryClient = new QueryClient();
 
 const App = () => {
   useEffect(() => {
-    // Inicializa o EmailJS quando o app carrega
-    initializeEmailJS();
+    const timer = setTimeout(() => {
+      initializeEmailJS();
+    }, 2000);
+    return () => clearTimeout(timer);
   }, []);
 
   return (
     <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        {/* ADICIONE A PROPRIEDADE basename AQUI */}
-        <BrowserRouter basename="/">
-          <Routes>
-            <Route path="/" element={<Index />} />
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
-      </TooltipProvider>
+      <Toaster />
+      <BrowserRouter basename="/">
+        <Routes>
+          <Route path="/" element={<Index />} />
+          <Route path="*" element={<Suspense fallback={<div className="flex items-center justify-center h-screen">Carregando...</div>}><NotFound /></Suspense>} />
+        </Routes>
+      </BrowserRouter>
     </QueryClientProvider>
   );
 };

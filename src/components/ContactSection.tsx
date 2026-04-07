@@ -5,10 +5,47 @@ import { Textarea } from './ui/textarea';
 import { Button } from './ui/button';
 import { Card, CardContent } from './ui/card';
 import { Mail, Phone, MapPin, Loader2, CheckCircle, AlertCircle } from 'lucide-react';
-// import RevealOnScroll from './RevealOnScroll'; // Removido, pois não é mais necessário
+
 import { useContactForm } from '../hooks/use-contact-form';
 
 const ContactSection = () => {
+  const sectionRef = useRef<HTMLElement>(null);
+  const [isSectionVisible, setIsSectionVisible] = useState(false);
+  
+  // Lazy load EmailJS when section reaches viewport
+  useEffect(() => {
+    if (!isSectionVisible) return;
+    
+    import('@emailjs/browser').then((emailjs) => {
+      if (!window.__emailjs_initialized) {
+        emailjs.init('default');
+        window.__emailjs_initialized = true;
+      }
+    });
+  }, [isSectionVisible]);
+
+  // Intersection Observer to detect when section is visible
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsSectionVisible(true);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => {
+      if (sectionRef.current) {
+        observer.unobserve(sectionRef.current);
+      }
+    };
+  }, []);
+
   const { 
     form, 
     isSubmitting, 
@@ -18,10 +55,8 @@ const ContactSection = () => {
   const { register, formState: { errors } } = form;
 
   return (
-    // Adicionado o ID para o botão "Contato"
-    <section id="contato" className="py-16 md:py-24" style={{ backgroundColor: '#F0F7F7' }}>
+    <section ref={sectionRef} id="contato" className="py-16 md:py-24" style={{ backgroundColor: '#F0F7F7' }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Título e Parágrafo - Removido RevealOnScroll */}
         <div className="text-center mb-12 md:mb-16">
           <h2 className="font-dm-sans text-4xl md:text-5xl font-extrabold text-gray-900 mb-4 tracking-tight">
             Entre em Contato Conosco
@@ -31,22 +66,15 @@ const ContactSection = () => {
           </p>
         </div>
         
-        {/* Contact Grid - Removido RevealOnScroll nos containers principais */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start">
 
-          {/* Contact Info (Lado Esquerdo) - Itens internos ainda podem usar motion.div se desejado, mas o container direto não anima em scroll */}
           <div className="space-y-10">
             <h3 className="font-dm-sans text-2xl md:text-3xl font-bold text-gray-800 mb-8">
               Canais de Atendimento
             </h3>
 
             <div className="space-y-8">
-              {/* Item de Email - Mantido motion.div para futuras animações ou transições internas, se necessário */}
-              <motion.div 
-                className="flex items-start space-x-6"
-                // Variantes removidas aqui se não houver animação de stagger controlada externamente
-                // ou se as animações forem apenas de estado interno (como hover, click)
-              >
+              <motion.div className="flex items-start space-x-6">
                 <div className="w-14 h-14 bg-indigo-50 text-indigo-600 rounded-full flex items-center justify-center shadow-md flex-shrink-0">
                   <Mail className="w-7 h-7" />
                 </div>
@@ -56,11 +84,7 @@ const ContactSection = () => {
                 </div>
               </motion.div>
 
-              {/* Item de Telefone - Mantido motion.div */}
-              <motion.div 
-                className="flex items-start space-x-6"
-                // Variantes removidas
-              >
+              <motion.div className="flex items-start space-x-6">
                 <div className="w-14 h-14 bg-emerald-50 text-emerald-600 rounded-full flex items-center justify-center shadow-md flex-shrink-0">
                   <Phone className="w-7 h-7" />
                 </div>
@@ -70,11 +94,7 @@ const ContactSection = () => {
                 </div>
               </motion.div>
 
-              {/* Item de Localização - Mantido motion.div */}
-              <motion.div 
-                className="flex items-start space-x-6"
-                // Variantes removidas
-              >
+              <motion.div className="flex items-start space-x-6">
                  <div className="w-14 h-14 bg-red-50 text-red-600 rounded-full flex items-center justify-center shadow-md flex-shrink-0">
                     <MapPin className="w-7 h-7" />
                  </div>
@@ -86,7 +106,6 @@ const ContactSection = () => {
             </div>
           </div>
 
-          {/* Contact Form (Lado Direito) - Removido RevealOnScroll */}
           <Card className="bg-white rounded-xl shadow-xl border border-gray-100 p-6 md:p-8">
             <CardContent className="p-0">
               <form onSubmit={onSubmit} className="space-y-6">
