@@ -217,9 +217,9 @@ const ColoredCardsSection = () => {
   }, [activeCardIndex, CARD_WIDTH_SELECTED, CARD_WIDTH_SIDE, CARD_HEIGHT_SELECTED, CARD_HEIGHT_SIDE, VISIBLE_GAP_BETWEEN_CARDS, VERTICAL_ALIGN_OFFSET, TOTAL_STAGE_WIDTH]);
 
   return (
-    <section id="projetos" className="py-16 bg-[#EAF3F3] flex flex-col items-center overflow-hidden">
+    <section id="projetos" className="py-16 bg-[#EAF3F3] dark:bg-[#0d1117] transition-colors duration-300 flex flex-col items-center overflow-hidden">
       <h2
-        className="text-black mb-12 mt-8 text-center"
+        className="text-black dark:text-[#c9d1d9] mb-12 mt-8 text-center"
         style={{ fontFamily: "DM Sans", fontSize: isMobile ? "42px" : "86px", marginTop: 52 }}
       >
         Nossos Projetos
@@ -229,12 +229,12 @@ const ColoredCardsSection = () => {
         <div ref={carouselRef} className="w-full overflow-x-auto px-4">
           <div className="flex gap-4">
             {presentationData.map((card) => (
-              <div key={card.id} className="flex-shrink-0 w-[90vw] h-[580px] bg-white rounded-xl shadow-xl overflow-hidden flex flex-col cursor-pointer">
+              <div key={card.id} className="flex-shrink-0 w-[90vw] h-[580px] bg-white dark:bg-[#161b22] dark:border dark:border-[#30363d] rounded-xl shadow-xl overflow-hidden flex flex-col cursor-pointer">
                 <div
                   className="w-full h-[45%] bg-cover bg-center"
                   style={{ backgroundImage: `url(${card.image})` }}
                 />
-                <div className="bg-black text-white p-4 flex flex-col justify-between h-[55%]">
+                <div className="bg-black dark:bg-[#0d1117] text-white p-4 flex flex-col justify-between h-[55%]">
                   <div>
                     <h3 className="text-lg font-bold line-clamp-2">{card.title}</h3>
                     <p className="mt-1 text-sm line-clamp-4">{card.description}</p>

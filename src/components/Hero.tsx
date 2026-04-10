@@ -19,18 +19,18 @@ const Hero = () => {
   return (
     <section
       id="hero"
-      className="relative bg-[#EAF3F3] pt-[94px] pb-10 md:pt-8 md:pb-14"
+      className="relative bg-[#EAF3F3] dark:bg-[#0d1117] pt-[94px] pb-10 md:pt-8 md:pb-14 transition-colors duration-300"
     >
       <div className="mx-auto w-full max-w-[1400px] px-4 md:px-6 lg:px-8">
         <motion.div
-          className="mx-auto mb-8 w-fit rounded-2xl border border-black/70 px-4 py-1 md:mb-5 md:px-7 md:py-2"
+          className="mx-auto mb-8 w-fit rounded-2xl border border-black/70 dark:border-[#30363d] px-4 py-1 md:mb-5 md:px-7 md:py-2"
           variants={fadeUp}
           initial="hidden"
           animate="visible"
         >
           <h1
             style={{ fontFamily: 'DM Sans' }}
-            className="text-[31px] leading-none text-black md:text-[48px]"
+            className="text-[31px] leading-none text-black dark:text-[#e2e5e9] md:text-[48px]"
           >
             Sistemas &amp; Automações
           </h1>
@@ -38,7 +38,7 @@ const Hero = () => {
 
         <motion.p
           style={{ fontFamily: 'DM Sans' }}
-          className="mb-6 text-center text-[24px] leading-none text-black md:mb-6 md:text-[28px]"
+          className="mb-6 text-center text-[24px] leading-none text-black dark:text-[#e2e5e9] md:mb-6 md:text-[28px]"
           variants={fadeUp}
           initial="hidden"
           animate="visible"
@@ -81,7 +81,7 @@ const Hero = () => {
             </div>
 
             <div className="mt-6 flex justify-center md:mt-8">
-              <ChevronDown className="h-10 w-10 text-[#e2c025] md:h-20 md:w-20" strokeWidth={2} />
+              <ChevronDown className="h-10 w-10 text-[#e2c025]  md:h-20 md:w-20" strokeWidth={2} />
             </div>
           </motion.div>
         </div>

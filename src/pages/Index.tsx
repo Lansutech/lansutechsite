@@ -9,7 +9,7 @@ import Footer from '../components/Footer';
 
 const Index = () => {
   return (
-   <div className="w-full min-h-screen bg-[#EAF3F3] overflow-x-hidden">
+  <div className="w-full min-h-screen bg-[#EAF3F3] dark:bg-[#0d1117] overflow-x-hidden transition-colors duration-300">
       <Header/>
       <Hero/>
       <AboutSection/>

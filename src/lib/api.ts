@@ -21,7 +21,9 @@ export const sendContactForm = async (formData: ContactFormData): Promise<ApiRes
   try {
     // Verifica se as configurações estão definidas
     if (EMAILJS_CONFIG.SERVICE_ID === 'YOUR_SERVICE_ID') {
-      console.warn('⚠️ EmailJS não configurado. Usando modo de desenvolvimento.');
+      if (process.env.NODE_ENV === 'development') {
+        console.warn('⚠️ EmailJS não configurado. Usando modo de desenvolvimento.');
+      }
       return await sendContactFormDev(formData);
     }
 
@@ -42,7 +44,9 @@ export const sendContactForm = async (formData: ContactFormData): Promise<ApiRes
       EMAILJS_CONFIG.PUBLIC_KEY
     );
 
-    console.log('📧 Email enviado com sucesso:', response);
+    if (process.env.NODE_ENV === 'development') {
+      console.log('[Dev] Email enviado com sucesso:', response);
+    }
     
     return {
       success: true,
@@ -51,7 +55,9 @@ export const sendContactForm = async (formData: ContactFormData): Promise<ApiRes
     };
 
   } catch (error) {
-    console.error('❌ Erro ao enviar email:', error);
+    if (process.env.NODE_ENV === 'development') {
+      console.error('[Dev] Erro ao enviar email:', error);
+    }
     
     return {
       success: false,
@@ -62,7 +68,9 @@ export const sendContactForm = async (formData: ContactFormData): Promise<ApiRes
 
 // Função de fallback para desenvolvimento
 const sendContactFormDev = async (formData: ContactFormData): Promise<ApiResponse> => {
-  console.log('📧 Formulário enviado (modo desenvolvimento):', formData);
+  if (process.env.NODE_ENV === 'development') {
+    console.log('[Dev] Formulário enviado (modo desenvolvimento):', formData);
+  }
   
   // Simula delay de rede
   await new Promise(resolve => setTimeout(resolve, 1000));

@@ -48,16 +48,22 @@ const apiServer = () => {
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
   server: {
-    host: "::",
+    host: "localhost",
     port: 8080,
+    open: true,
+  },
+  preview: {
+    host: "localhost",
+    port: 4173,
+    open: true,
   },
   plugins: [
     react(),
     mode === 'development' && componentTagger(),
     mode === 'development' && apiServer(),
-    // Plugins de otimização para produção
-    viteCompression({ algorithm: 'gzip', ext: '.gz', disable: false }),
-    viteCompression({ algorithm: 'brotliCompress', ext: '.br', disable: false }),
+    // Compressão apenas em produção
+    mode === 'production' && viteCompression({ algorithm: 'gzip', ext: '.gz', disable: false }),
+    mode === 'production' && viteCompression({ algorithm: 'brotliCompress', ext: '.br', disable: false }),
   ].filter(Boolean),
   resolve: {
     alias: {

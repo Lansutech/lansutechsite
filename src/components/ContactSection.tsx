@@ -1,50 +1,17 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { motion, AnimatePresence, Variants, useMotionValue } from 'framer-motion';
+import React, { useState, useRef } from 'react';
+import { motion, AnimatePresence, Variants } from 'framer-motion';
 import { Input } from './ui/input';
 import { Textarea } from './ui/textarea';
 import { Button } from './ui/button';
 import { Card, CardContent } from './ui/card';
 import { Mail, Phone, MapPin, Loader2, CheckCircle, AlertCircle } from 'lucide-react';
+import { useTheme } from '../hooks/use-theme';
 
 import { useContactForm } from '../hooks/use-contact-form';
 
 const ContactSection = () => {
   const sectionRef = useRef<HTMLElement>(null);
-  const [isSectionVisible, setIsSectionVisible] = useState(false);
-  
-  // Lazy load EmailJS when section reaches viewport
-  useEffect(() => {
-    if (!isSectionVisible) return;
-    
-    import('@emailjs/browser').then((emailjs) => {
-      if (!window.__emailjs_initialized) {
-        emailjs.init('default');
-        window.__emailjs_initialized = true;
-      }
-    });
-  }, [isSectionVisible]);
-
-  // Intersection Observer to detect when section is visible
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsSectionVisible(true);
-        }
-      },
-      { threshold: 0.1 }
-    );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    return () => {
-      if (sectionRef.current) {
-        observer.unobserve(sectionRef.current);
-      }
-    };
-  }, []);
+  const { theme, toggleTheme } = useTheme();
 
   const { 
     form, 
@@ -55,13 +22,13 @@ const ContactSection = () => {
   const { register, formState: { errors } } = form;
 
   return (
-    <section ref={sectionRef} id="contato" className="py-16 md:py-24" style={{ backgroundColor: '#F0F7F7' }}>
+    <section ref={sectionRef} id="contato" className="py-16 md:py-24 bg-[#F0F7F7] dark:bg-[#0f151f] transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12 md:mb-16">
-          <h2 className="font-dm-sans text-4xl md:text-5xl font-extrabold text-gray-900 mb-4 tracking-tight">
+          <h2 className="font-dm-sans text-4xl md:text-5xl font-extrabold text-gray-900 dark:text-[#c9d1d9] mb-4 tracking-tight">
             Entre em Contato Conosco
           </h2>
-          <p className="font-dm-sans text-base md:text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
+          <p className="font-dm-sans text-base md:text-lg text-gray-600 dark:text-[#8b949e] max-w-3xl mx-auto leading-relaxed">
             Estamos prontos para impulsionar a sua empresa. Preencha o formulário abaixo ou utilize nossos canais de comunicação diretos.
           </p>
         </div>
@@ -69,7 +36,7 @@ const ContactSection = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start">
 
           <div className="space-y-10">
-            <h3 className="font-dm-sans text-2xl md:text-3xl font-bold text-gray-800 mb-8">
+            <h3 className="font-dm-sans text-2xl md:text-3xl font-bold text-gray-800 dark:text-[#c9d1d9] mb-8">
               Canais de Atendimento
             </h3>
 
@@ -79,8 +46,8 @@ const ContactSection = () => {
                   <Mail className="w-7 h-7" />
                 </div>
                 <div>
-                  <h4 className="font-dm-sans font-semibold text-lg text-gray-900 mb-1">Email</h4>
-                  <p className="font-dm-sans text-gray-700 text-base break-words">lansutech@gmail.com</p>
+                  <h4 className="font-dm-sans font-semibold text-lg text-gray-900 dark:text-[#c9d1d9] mb-1">Email</h4>
+                  <p className="font-dm-sans text-gray-700 dark:text-[#8b949e] text-base break-words">lansutech@gmail.com</p>
                 </div>
               </motion.div>
 
@@ -89,8 +56,8 @@ const ContactSection = () => {
                   <Phone className="w-7 h-7" />
                 </div>
                 <div>
-                  <h4 className="font-dm-sans font-semibold text-lg text-gray-900 mb-1">Telefone / WhatsApp</h4>
-                  <p className="font-dm-sans text-gray-700 text-base">+55 (44) 99741-5544</p>
+                  <h4 className="font-dm-sans font-semibold text-lg text-gray-900 dark:text-[#c9d1d9] mb-1">Telefone / WhatsApp</h4>
+                  <p className="font-dm-sans text-gray-700 dark:text-[#8b949e] text-base">+55 (44) 99741-5544</p>
                 </div>
               </motion.div>
 
@@ -99,20 +66,20 @@ const ContactSection = () => {
                     <MapPin className="w-7 h-7" />
                  </div>
                  <div>
-                    <h4 className="font-dm-sans font-semibold text-lg text-gray-900 mb-1">Localização</h4>
-                    <p className="font-dm-sans text-gray-700 text-base">Paranavaí, Paraná - Brasil</p>
+                    <h4 className="font-dm-sans font-semibold text-lg text-gray-900 dark:text-[#c9d1d9] mb-1">Localização</h4>
+                    <p className="font-dm-sans text-gray-700 dark:text-[#8b949e] text-base">Paranavaí, Paraná - Brasil</p>
                  </div>
               </motion.div>
             </div>
           </div>
 
-          <Card className="bg-white rounded-xl shadow-xl border border-gray-100 p-6 md:p-8">
+          <Card className="bg-white dark:bg-[#161b22] rounded-xl shadow-xl border border-gray-100 dark:border-[#30363d] p-6 md:p-8">
             <CardContent className="p-0">
               <form onSubmit={onSubmit} className="space-y-6">
                 {/* Inputs do Formulário */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label htmlFor="nome" className="font-dm-sans text-sm font-medium text-gray-700 mb-2 block">
+                    <label htmlFor="nome" className="font-dm-sans text-sm font-medium text-gray-700 dark:text-[#c9d1d9] mb-2 block">
                       Nome Completo *
                     </label>
                     <Input
@@ -130,7 +97,7 @@ const ContactSection = () => {
                     )}
                   </div>
                   <div>
-                    <label htmlFor="email" className="font-dm-sans text-sm font-medium text-gray-700 mb-2 block">
+                    <label htmlFor="email" className="font-dm-sans text-sm font-medium text-gray-700 dark:text-[#c9d1d9] mb-2 block">
                       Email Profissional *
                     </label>
                     <Input
@@ -151,7 +118,7 @@ const ContactSection = () => {
                 </div>
 
                 <div>
-                  <label htmlFor="assunto" className="font-dm-sans text-sm font-medium text-gray-700 mb-2 block">
+                  <label htmlFor="assunto" className="font-dm-sans text-sm font-medium text-gray-700 dark:text-[#c9d1d9] mb-2 block">
                     Assunto *
                   </label>
                   <Input
@@ -170,7 +137,7 @@ const ContactSection = () => {
                 </div>
 
                 <div>
-                  <label htmlFor="mensagem" className="font-dm-sans text-sm font-medium text-gray-700 mb-2 block">
+                  <label htmlFor="mensagem" className="font-dm-sans text-sm font-medium text-gray-700 dark:text-[#c9d1d9] mb-2 block">
                     Sua Mensagem *
                   </label>
                   <Textarea
@@ -192,7 +159,7 @@ const ContactSection = () => {
                 <Button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full font-dm-sans bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white py-3 rounded-lg text-lg font-semibold transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:transform-none disabled:shadow-none"
+                  className="w-full font-dm-sans bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white py-3 rounded-lg text-lg font-semibold transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
                 >
                   {isSubmitting ? (
                     <>
@@ -219,10 +186,11 @@ const ContactSection = () => {
         </div>
 
         {/* Footer da seção de contato / Direitos Autorais - Removido RevealOnScroll */}
-        <div className="border-t border-gray-200 mt-16 pt-8 text-center">
-          <div className="text-sm text-gray-500 flex items-center justify-center">
-            <div className="w-7 h-7 mr-2 flex-shrink-0">
-              <img src={import.meta.env.BASE_URL + 'imgs/logolansutech.svg'} alt="Lansutech" className="w-full h-full object-contain" />
+        <div className="border-t border-gray-200 dark:border-[#ffffff] mt-16 pt-8 text-center">
+          <div className="text-sm text-gray-500 dark:text-[#7b848d] flex items-center justify-center">
+            <div className="relative w-7 h-7 mr-2 flex-shrink-0">
+              <img src={import.meta.env.BASE_URL + 'imgs/logolansutech.svg'} alt="Lansutech" className="absolute w-full h-full object-contain dark:hidden" />
+              <img src={import.meta.env.BASE_URL + 'imgs/logolansutech-white.svg'} alt="Lansutech branco" className="absolute w-full h-full object-contain hidden dark:block" />
             </div>
             © {new Date().getFullYear()} Lansutech. Todos os direitos reservados.
           </div>
