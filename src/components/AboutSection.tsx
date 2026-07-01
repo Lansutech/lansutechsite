@@ -1,7 +1,7 @@
-import React from 'react';
-import { motion, Variants } from 'framer-motion';
-import linha from '../assets/elementos_graficos/linha_sobrenos.png'
-import logo from '../assets/elementos_graficos/logo_sobrenos.png'
+import { motion } from 'framer-motion';
+import linha from '../assets/elementos_graficos/linha_sobrenos.png';
+import logoGithub from '../assets/github-icon.svg';
+import { fadeUp } from '../lib/animations';
 
 const AboutSection = () => {
   const whoWeAreText =
@@ -10,17 +10,8 @@ const AboutSection = () => {
   const missionValuesText =
     'Nossa missão é entregar valor com tecnologia prática, confiável e escalável. Trabalhamos com transparência, parceria e melhoria contínua para desenvolver produtos que reduzam retrabalho, aumentem produtividade e apoiem o crescimento sustentável dos negócios.';
 
-  const fadeUp: Variants = {
-    hidden: { opacity: 0, y: 24 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.5,
-        ease: [0.22, 1, 0.36, 1],
-      },
-    },
-  };
+  const textCardClass =
+    'rounded-2xl border border-white/35 bg-[#ffde59]/75 px-4 sm:px-6 md:px-8 lg:px-10 py-5 sm:py-6 md:py-8 lg:py-0 w-full min-h-[170px] md:min-h-[200px] lg:h-[190px] lg:flex lg:items-center shadow-[0_16px_36px_rgba(13,17,23,0.13),0_5px_16px_rgba(255,222,89,0.14)] ring-1 ring-black/5 dark:border-white/10 dark:shadow-[0_18px_42px_rgba(1,4,9,0.32),0_5px_16px_rgba(255,222,89,0.09)] dark:ring-white/10';
 
   return (
     <section
@@ -58,7 +49,7 @@ const AboutSection = () => {
 
           <div className="grid grid-cols-1 lg:grid-cols-[740px_1fr] gap-6 sm:gap-8 md:gap-10 lg:gap-14 items-start">
             <motion.div
-              className="rounded-2xl bg-[#ffde59]/75 px-4 sm:px-6 md:px-8 lg:px-10 py-5 sm:py-6 md:py-8 lg:py-0 w-full min-h-[170px] md:min-h-[200px] lg:h-[190px] lg:flex lg:items-center"
+              className={textCardClass}
               variants={fadeUp}
               initial="hidden"
               animate="visible"
@@ -79,13 +70,14 @@ const AboutSection = () => {
               transition={{ delay: 0.08 }}
             >
               {/* Placeholder para elemento visual/ícone - a ser preenchido com componente real */}
-              <div className="text-center text-black/30 dark:text-[#8b949e]">
+              <div className="text-center hover: cursor-pointer">
                 <img
-                src={logo}
-                alt="Notebook"
+                src={logoGithub}
+                alt="Logo do GitHub"
                 loading="lazy"
-                className="h-full w-full scale-[1.08] object-contain object-left"
-              />
+                className="h-full w-full scale-[0.70] object-contain object-left"
+                onClick={() => window.open('https://github.com/lansutech', '_blank')}
+                />
               </div>
             </motion.div>
           </div>
@@ -120,7 +112,7 @@ const AboutSection = () => {
             </motion.h3>
 
             <motion.div
-              className="rounded-2xl bg-[#ffde59]/75 px-4 sm:px-6 md:px-8 lg:px-10 py-5 sm:py-6 md:py-8 lg:py-0 w-full min-h-[170px] md:min-h-[200px] lg:h-[190px] lg:flex lg:items-center"
+              className={textCardClass}
               variants={fadeUp}
               initial="hidden"
               animate="visible"

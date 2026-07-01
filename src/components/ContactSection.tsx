@@ -1,18 +1,12 @@
-import React, { useState, useRef } from 'react';
-import { motion, AnimatePresence, Variants } from 'framer-motion';
 import { Input } from './ui/input';
 import { Textarea } from './ui/textarea';
 import { Button } from './ui/button';
 import { Card, CardContent } from './ui/card';
 import { Mail, Phone, MapPin, Loader2, CheckCircle, AlertCircle } from 'lucide-react';
-import { useTheme } from '../hooks/use-theme';
 
 import { useContactForm } from '../hooks/use-contact-form';
 
 const ContactSection = () => {
-  const sectionRef = useRef<HTMLElement>(null);
-  const { theme, toggleTheme } = useTheme();
-
   const { 
     form, 
     isSubmitting, 
@@ -22,7 +16,7 @@ const ContactSection = () => {
   const { register, formState: { errors } } = form;
 
   return (
-    <section ref={sectionRef} id="contato" className="py-16 md:py-24 bg-[#F0F7F7] dark:bg-[#0f151f] transition-colors duration-300">
+    <section id="contato" className="py-16 md:py-24 bg-[#F0F7F7] dark:bg-[#0f151f] transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12 md:mb-16">
           <h2 className="font-dm-sans text-4xl md:text-5xl font-extrabold text-gray-900 dark:text-[#c9d1d9] mb-4 tracking-tight">
@@ -41,7 +35,7 @@ const ContactSection = () => {
             </h3>
 
             <div className="space-y-8">
-              <motion.div className="flex items-start space-x-6">
+              <div className="flex items-start space-x-6">
                 <div className="w-14 h-14 bg-indigo-50 text-indigo-600 rounded-full flex items-center justify-center shadow-md flex-shrink-0">
                   <Mail className="w-7 h-7" />
                 </div>
@@ -49,9 +43,9 @@ const ContactSection = () => {
                   <h4 className="font-dm-sans font-semibold text-lg text-gray-900 dark:text-[#c9d1d9] mb-1">Email</h4>
                   <p className="font-dm-sans text-gray-700 dark:text-[#8b949e] text-base break-words">lansutech@gmail.com</p>
                 </div>
-              </motion.div>
+              </div>
 
-              <motion.div className="flex items-start space-x-6">
+              <div className="flex items-start space-x-6">
                 <div className="w-14 h-14 bg-emerald-50 text-emerald-600 rounded-full flex items-center justify-center shadow-md flex-shrink-0">
                   <Phone className="w-7 h-7" />
                 </div>
@@ -59,9 +53,9 @@ const ContactSection = () => {
                   <h4 className="font-dm-sans font-semibold text-lg text-gray-900 dark:text-[#c9d1d9] mb-1">Telefone / WhatsApp</h4>
                   <p className="font-dm-sans text-gray-700 dark:text-[#8b949e] text-base">+55 (44) 99741-5544</p>
                 </div>
-              </motion.div>
+              </div>
 
-              <motion.div className="flex items-start space-x-6">
+              <div className="flex items-start space-x-6">
                  <div className="w-14 h-14 bg-red-50 text-red-600 rounded-full flex items-center justify-center shadow-md flex-shrink-0">
                     <MapPin className="w-7 h-7" />
                  </div>
@@ -69,7 +63,7 @@ const ContactSection = () => {
                     <h4 className="font-dm-sans font-semibold text-lg text-gray-900 dark:text-[#c9d1d9] mb-1">Localização</h4>
                     <p className="font-dm-sans text-gray-700 dark:text-[#8b949e] text-base">Paranavaí, Paraná - Brasil</p>
                  </div>
-              </motion.div>
+              </div>
             </div>
           </div>
 

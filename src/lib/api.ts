@@ -6,7 +6,7 @@ import emailjs from '@emailjs/browser';
 export interface ApiResponse {
   success: boolean;
   message: string;
-  data?: any;
+  data?: unknown;
 }
 
 // Configuração do EmailJS

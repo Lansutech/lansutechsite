@@ -1,19 +1,11 @@
-import React from 'react';
-import { motion, Variants } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
 import heroNotebook from '../assets/elementos_graficos/hero-notebook.png';
+import { fadeUp } from '../lib/animations';
 
 const Hero = () => {
-  const fadeUp: Variants = {
-    hidden: { opacity: 0, y: 24 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.5,
-        ease: [0.22, 1, 0.36, 1],
-      },
-    },
+  const scrollToAbout = () => {
+    document.getElementById('sobre-nos')?.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
@@ -71,7 +63,7 @@ const Hero = () => {
             animate="visible"
             transition={{ delay: 0.12 }}
           >
-            <div className="flex w-full max-w-[920px] items-center rounded-2xl bg-gradient-to-r from-[#ffde59]/65 to-[#ff914d]/65 px-6 py-7 md:h-[300px] md:px-12 md:py-9 lg:h-[310px]">
+            <div className="flex w-full max-w-[920px] items-center rounded-2xl border border-white/35 bg-gradient-to-r from-[#ffde59]/85 to-[#ff914d]/80 px-6 py-7 shadow-[0_18px_42px_rgba(13,17,23,0.16),0_6px_18px_rgba(255,145,77,0.12)] ring-1 ring-black/5 md:h-[300px] md:px-12 md:py-9 lg:h-[310px] dark:border-white/10 dark:shadow-[0_20px_48px_rgba(1,4,9,0.34),0_6px_18px_rgba(255,145,77,0.10)] dark:ring-white/10">
               <p
                 style={{ fontFamily: 'DM Sans' }}
                 className="mx-auto w-full max-w-[650px] text-left text-[20px] leading-[1.45] text-black md:text-[21px] md:leading-[1.5] [text-wrap:pretty]"
@@ -80,8 +72,23 @@ const Hero = () => {
               </p>
             </div>
 
-            <div className="mt-6 flex justify-center md:mt-8">
-              <ChevronDown className="h-10 w-10 text-[#e2c025]  md:h-20 md:w-20" strokeWidth={2} />
+            <div className="mt-3 flex justify-center md:mt-4">
+              <motion.button
+                type="button"
+                onClick={scrollToAbout}
+                aria-label="Ir para a seção Sobre nós"
+                className="inline-flex h-12 w-12 items-center justify-center rounded-full text-[#e2c025] transition-colors duration-200 hover:text-[#c9aa15] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#e2c025]/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[#EAF3F3] md:h-20 md:w-20 dark:focus-visible:ring-offset-[#0d1117]"
+                animate={{ y: [0, 6, 0] }}
+                transition={{
+                  duration: 1.5,
+                  repeat: Infinity,
+                  ease: 'easeInOut',
+                }}
+                whileHover={{ y: 4, scale: 1.04 }}
+                whileTap={{ scale: 0.96 }}
+              >
+                <ChevronDown className="h-10 w-10 md:h-20 md:w-20" strokeWidth={2} />
+              </motion.button>
             </div>
           </motion.div>
         </div>

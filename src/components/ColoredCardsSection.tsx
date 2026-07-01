@@ -1,14 +1,15 @@
-import React, { useState, useEffect, useRef, useCallback, useMemo } from "react";
+import React, { useState, useCallback } from "react";
 import { motion, AnimatePresence, Variants } from "framer-motion";
-import { Github, ExternalLink } from "lucide-react";
+import type { TargetAndTransition, Transition } from "framer-motion";
+import tooling from "../assets/projetos/tooling.webp";
+import { ExternalLink } from "lucide-react";
+import { useIsMobile } from "../hooks/use-mobile";
 
 interface ProjectData {
   id: number;
   image: string;
   title: string;
   description: string;
-  tools: string[];
-  githubUrl: string;
   liveUrl: string | null;
 }
 
@@ -16,41 +17,31 @@ interface ProjectCardProps {
   card: ProjectData;
   isActive: boolean;
   onClick: () => void;
-  animate: any;
+  animate: TargetAndTransition;
   style: React.CSSProperties;
-  transition: any;
-  whileHover?: any;
+  transition: Transition;
+  whileHover?: TargetAndTransition;
 }
 
 const presentationData: ProjectData[] = [
   {
-    id: 0,
-    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070&auto=format&fit=crop",
-    title: "Dashboard Analítico",
-    description: "Plataforma de visualização de dados em tempo real para otimização de processos de negócio.",
-    tools: ["React", "TypeScript", "D3.js", "Node.js"],
-    githubUrl: "https://github.com",
-    liveUrl: "https://github.com",
-  },
-  {
     id: 1,
-    image: "https://images.unsplash.com/photo-1555099962-4199c345e541?q=80&w=2070&auto=format&fit=crop",
-    title: "E-commerce de Roupas",
-    description: "Loja virtual completa com sistema de pagamento integrado e painel administrativo.",
-    tools: ["Next.js", "Stripe", "TailwindCSS", "PostgreSQL"],
-    githubUrl: "https://github.com",
-    liveUrl: null,
+    image: tooling,
+    title: "Tooling Equipamentos Óticos",
+    description: "Loja de e-commerce com apresentação de produtos e landing page da empresa.",
+    liveUrl: "https://www.tooling.com.br/",
   },
-  {
-    id: 2,
-    image: "https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?q=80&w=2070&auto=format&fit=crop",
-    title: "Landing Page de App",
-    description: "Página de captura e apresentação para um novo aplicativo mobile, focada em conversão.",
-    tools: ["HTML5", "CSS3", "JavaScript", "Framer Motion"],
-    githubUrl: "https://github.com",
-    liveUrl: "https://github.com",
-  },
+  
 ];
+
+const CARD_WIDTH_SELECTED = 820;
+const CARD_HEIGHT_SELECTED = 460;
+const CARD_WIDTH_SIDE = 670;
+const CARD_HEIGHT_SIDE = 377;
+const VISIBLE_GAP_BETWEEN_CARDS = 24;
+const VERTICAL_ALIGN_OFFSET = (CARD_HEIGHT_SELECTED - CARD_HEIGHT_SIDE) / 2;
+const TOTAL_STAGE_WIDTH = CARD_WIDTH_SELECTED + 2 * VISIBLE_GAP_BETWEEN_CARDS + 2 * CARD_WIDTH_SIDE;
+const cardTransition = { type: "spring", stiffness: 80, damping: 18, mass: 1 } as const;
 
 const contentContainerVariants: Variants = {
   hidden: {},
@@ -84,43 +75,24 @@ const ProjectCard = React.memo<ProjectCardProps>(({ card, isActive, onClick, ...
               animate="visible"
               exit="hidden"
             >
-              <motion.h3 variants={contentItemVariants} className="text-4xl font-bold">
+              <motion.h3 variants={contentItemVariants} className="text-4xl font-semibold font-dm-sans">
                 {card.title}
               </motion.h3>
               <motion.p variants={contentItemVariants} className="mt-2 text-base text-gray-200">
                 {card.description}
               </motion.p>
-              <motion.div variants={contentItemVariants} className="flex flex-wrap gap-2 mt-4">
-                {card.tools.map((tool) => (
-                  <span
-                    key={tool}
-                    className="text-xs font-medium bg-white/20 text-white px-2 py-1 rounded-full"
-                  >
-                    {tool}
-                  </span>
-                ))}
-              </motion.div>
+
               <motion.div variants={contentItemVariants} className="flex items-center gap-4 mt-6">
-                {card.githubUrl && (
-                  <a
-                    href={card.githubUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2 px-4 py-2 bg-gray-700/80 rounded-md hover:bg-gray-600"
-                  >
-                    <Github size={18} />
-                    <span>Código</span>
-                  </a>
-                )}
+          
                 {card.liveUrl && (
                   <a
                     href={card.liveUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-2 px-4 py-2 bg-blue-600/90 rounded-md hover:bg-blue-500"
+                    className="flex items-center gap-2 px-4 py-2 bg-blue-600/90 rounded-[18px] hover:bg-blue-800"
                   >
                     <ExternalLink size={18} />
-                    <span>Ver ao Vivo</span>
+                    <span>Ver Projeto</span>
                   </a>
                 )}
               </motion.div>
@@ -135,46 +107,11 @@ const ProjectCard = React.memo<ProjectCardProps>(({ card, isActive, onClick, ...
 const ColoredCardsSection = () => {
   const initialActiveIndex = Math.floor(presentationData.length / 2);
   const [activeCardIndex, setActiveCardIndex] = useState<number>(initialActiveIndex);
-  const [isMobile, setIsMobile] = useState<boolean>(false);
-  const carouselRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth <= 768);
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
-  }, []);
-
-  const {
-    CARD_WIDTH_SELECTED,
-    CARD_HEIGHT_SELECTED,
-    CARD_WIDTH_SIDE,
-    CARD_HEIGHT_SIDE,
-    VISIBLE_GAP_BETWEEN_CARDS,
-    VERTICAL_ALIGN_OFFSET,
-    TOTAL_STAGE_WIDTH,
-  } = useMemo(() => {
-    const CARD_WIDTH_SELECTED = 820;
-    const CARD_HEIGHT_SELECTED = 460;
-    const CARD_WIDTH_SIDE = 670;
-    const CARD_HEIGHT_SIDE = 377;
-    const VISIBLE_GAP_BETWEEN_CARDS = 24;
-    const VERTICAL_ALIGN_OFFSET = (CARD_HEIGHT_SELECTED - CARD_HEIGHT_SIDE) / 2;
-    const TOTAL_STAGE_WIDTH = CARD_WIDTH_SELECTED + 2 * VISIBLE_GAP_BETWEEN_CARDS + 2 * CARD_WIDTH_SIDE;
-    return {
-      CARD_WIDTH_SELECTED,
-      CARD_HEIGHT_SELECTED,
-      CARD_WIDTH_SIDE,
-      CARD_HEIGHT_SIDE,
-      VISIBLE_GAP_BETWEEN_CARDS,
-      VERTICAL_ALIGN_OFFSET,
-      TOTAL_STAGE_WIDTH,
-    };
-  }, []);
+  const isMobile = useIsMobile();
 
   const getCardProps = useCallback((index: number) => {
     const isActive = index === activeCardIndex;
-    let cardAnimateProps: any = {};
+    let cardAnimateProps: { left: string; top: string; width: string; height: string };
     let opacity = 0;
     let zIndex = 10;
     let cursor: React.CSSProperties['cursor'] = "default";
@@ -211,10 +148,10 @@ const ColoredCardsSection = () => {
     return {
       animate: { ...cardAnimateProps, opacity, zIndex },
       style: { cursor },
-      transition: { type: "spring", stiffness: 80, damping: 18, mass: 1 },
+      transition: cardTransition,
       whileHover: !isActive ? { scale: 1.05, y: VERTICAL_ALIGN_OFFSET - 10 } : {},
     };
-  }, [activeCardIndex, CARD_WIDTH_SELECTED, CARD_WIDTH_SIDE, CARD_HEIGHT_SELECTED, CARD_HEIGHT_SIDE, VISIBLE_GAP_BETWEEN_CARDS, VERTICAL_ALIGN_OFFSET, TOTAL_STAGE_WIDTH]);
+  }, [activeCardIndex]);
 
   return (
     <section id="projetos" className="py-16 bg-[#EAF3F3] dark:bg-[#0d1117] transition-colors duration-300 flex flex-col items-center overflow-hidden">
@@ -226,7 +163,7 @@ const ColoredCardsSection = () => {
       </h2>
 
       {isMobile ? (
-        <div ref={carouselRef} className="w-full overflow-x-auto px-4">
+        <div className="w-full overflow-x-auto px-4">
           <div className="flex gap-4">
             {presentationData.map((card) => (
               <div key={card.id} className="flex-shrink-0 w-[90vw] h-[580px] bg-white dark:bg-[#161b22] dark:border dark:border-[#30363d] rounded-xl shadow-xl overflow-hidden flex flex-col cursor-pointer">
@@ -238,35 +175,18 @@ const ColoredCardsSection = () => {
                   <div>
                     <h3 className="text-lg font-bold line-clamp-2">{card.title}</h3>
                     <p className="mt-1 text-sm line-clamp-4">{card.description}</p>
-                    <div className="flex flex-wrap gap-2 mt-2">
-                      {card.tools.map((tool) => (
-                        <span key={tool} className="text-xs font-medium bg-white/20 px-2 py-1 rounded-full">
-                          {tool}
-                        </span>
-                      ))}
-                    </div>
                   </div>
                   <div className="flex items-center gap-3 mt-4">
-                    {card.githubUrl && (
-                      <a
-                        href={card.githubUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center gap-2 px-3 py-2 bg-gray-700/80 rounded-md text-xs hover:bg-gray-600 transition-colors"
-                      >
-                        <Github size={16} />
-                        <span>Código</span>
-                      </a>
-                    )}
+              
                     {card.liveUrl && (
                       <a
                         href={card.liveUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center gap-2 px-3 py-2 bg-blue-600/90 rounded-md text-xs hover:bg-blue-500 transition-colors"
+                        className="flex items-center gap-2 px-3 py-2 bg-blue-600/90 rounded-[18px] text-xs hover:bg-blue-800 transition-colors duration-050"
                       >
                         <ExternalLink size={16} />
-                        <span>Ver ao Vivo</span>
+                        <span>Ver Projeto</span>
                       </a>
                     )}
                   </div>

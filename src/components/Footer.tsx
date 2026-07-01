@@ -1,5 +1,7 @@
-import React, { useState, useEffect, useRef, useCallback, useMemo } from "react";
-import { motion, AnimatePresence, Variants, useMotionValue, MotionValue, Transition } from "framer-motion";
+import React, { useState, useRef, useCallback } from "react";
+import { motion, AnimatePresence, useMotionValue } from "framer-motion";
+import type { MotionValue, TargetAndTransition, Transition, Variants } from "framer-motion";
+import { useIsMobile } from "../hooks/use-mobile";
 
 interface ServiceData {
   id: number;
@@ -16,7 +18,7 @@ interface ServiceCardProps {
   onClick: () => void;
   isMobile: boolean;
   cardRef?: (el: HTMLDivElement | null) => void;
-  animate: any;
+  animate: TargetAndTransition;
   style?: React.CSSProperties;
   transition: Transition;
 }
@@ -71,6 +73,19 @@ const services: ServiceData[] = [
     imageUrl: 'https://images.unsplash.com/photo-1637502875124-eb4a9843a2fa?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
 ];
+
+const carouselTransition = {
+  type: "spring",
+  stiffness: 120,
+  damping: 28,
+  mass: 0.9,
+} as const;
+
+const CARD_SPACING_DESKTOP = 32;
+const LARGE_CARD_WIDTH_DESKTOP = 580;
+const SMALL_CARD_WIDTH_DESKTOP = 360;
+const CARD_HEIGHT_ACTIVE_DESKTOP = 360;
+const CARD_HEIGHT_INACTIVE_DESKTOP = CARD_HEIGHT_ACTIVE_DESKTOP * 0.8;
 
 const textContentContainerVariants: Variants = {
   hidden: { opacity: 0, y: 20 },
@@ -149,25 +164,11 @@ const ServiceCard = React.memo<ServiceCardProps>(({ service, isActive, onClick, 
 
 const ServicesSection = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [isMobile, setIsMobile] = useState(false);
+  const isMobile = useIsMobile();
   const carouselRef = useRef<HTMLDivElement>(null);
   const draggableContentRef = useRef<HTMLDivElement>(null);
   const dragX: MotionValue<number> = useMotionValue(0);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
-
-  const carouselTransition = useMemo(() => ({
-    type: "spring",
-    stiffness: 120,
-    damping: 28,
-    mass: 0.9,
-  }) as const, []);
-
-  useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth <= 768);
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
-  }, []);
 
   const getMobileCarouselTargetX = useCallback(() => {
     if (!isMobile || !carouselRef.current || !draggableContentRef.current || !cardRefs.current[currentIndex]) return 0;
@@ -194,7 +195,7 @@ const ServicesSection = () => {
     const maxDragLeft = -(draggableContentWidth - carouselViewportWidth);
     return Math.max(Math.min(targetX, 0), maxDragLeft);
 
-  }, [currentIndex, isMobile, services.length]);
+  }, [currentIndex, isMobile]);
 
   const handleDragEnd = useCallback((_event: MouseEvent | TouchEvent | PointerEvent, info: { offset: { x: number }; velocity: { x: number } }) => {
     const offset = info.offset.x;
@@ -208,32 +209,18 @@ const ServicesSection = () => {
       newIndex = Math.max(currentIndex - 1, 0);
     }
     setCurrentIndex(newIndex);
-  }, [currentIndex, services.length]);
+  }, [currentIndex]);
 
   const goToNext = useCallback(() => {
     setCurrentIndex((prev) => Math.min(prev + 1, services.length - 1));
-  }, [services.length]);
+  }, []);
 
   const goToPrev = useCallback(() => {
     setCurrentIndex((prev) => Math.max(prev - 1, 0));
-  }, [services.length]);
+  }, []);
 
   const canGoNext = currentIndex < services.length - 1;
   const canGoPrev = currentIndex > 0;
-
-  const {
-    CARD_SPACING_DESKTOP,
-    LARGE_CARD_WIDTH_DESKTOP,
-    SMALL_CARD_WIDTH_DESKTOP,
-    CARD_HEIGHT_ACTIVE_DESKTOP,
-    CARD_HEIGHT_INACTIVE_DESKTOP,
-  } = useMemo(() => ({
-    CARD_SPACING_DESKTOP: 32,
-    LARGE_CARD_WIDTH_DESKTOP: 580,
-    SMALL_CARD_WIDTH_DESKTOP: 360,
-    CARD_HEIGHT_ACTIVE_DESKTOP: 360,
-    CARD_HEIGHT_INACTIVE_DESKTOP: 360 * 0.8,
-  }), []);
 
   const calculateOffsetDesktop = useCallback(() => {
     let offset = 0;
@@ -241,7 +228,7 @@ const ServicesSection = () => {
       offset += SMALL_CARD_WIDTH_DESKTOP + CARD_SPACING_DESKTOP;
     }
     return offset;
-  }, [currentIndex, CARD_SPACING_DESKTOP, SMALL_CARD_WIDTH_DESKTOP]);
+  }, [currentIndex]);
 
   return (
     <section id="servicos" className="py-16 md:py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden">

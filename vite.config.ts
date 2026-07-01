@@ -1,4 +1,6 @@
 import { defineConfig } from "vite";
+import type { Plugin, ViteDevServer } from "vite";
+import type { IncomingMessage, ServerResponse } from "http";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
 import { componentTagger } from "lovable-tagger";
@@ -6,14 +8,14 @@ import viteCompression from 'vite-plugin-compression';
 
 
 // Servidor de API simples para desenvolvimento
-const apiServer = () => {
+const apiServer = (): Plugin => {
   return {
     name: 'api-server',
-    configureServer(server: any) {
-      server.middlewares.use('/api/contact', (req: any, res: any, next: any) => {
+    configureServer(server: ViteDevServer) {
+      server.middlewares.use('/api/contact', (req: IncomingMessage, res: ServerResponse, next: () => void) => {
         if (req.method === 'POST') {
           let body = '';
-          req.on('data', (chunk: any) => {
+          req.on('data', (chunk: Buffer | string) => {
             body += chunk.toString();
           });
           req.on('end', () => {
@@ -29,7 +31,7 @@ const apiServer = () => {
                   data: data
                 }));
               }, 1000);
-            } catch (error) {
+            } catch {
               res.writeHead(400, { 'Content-Type': 'application/json' });
               res.end(JSON.stringify({
                 success: false,
