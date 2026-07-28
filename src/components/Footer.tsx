@@ -1,6 +1,6 @@
-import React, { useState, useRef, useCallback } from "react";
-import { motion, AnimatePresence, useMotionValue } from "framer-motion";
-import type { MotionValue, TargetAndTransition, Transition, Variants } from "framer-motion";
+import React, { useState, useRef, useCallback, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import type { TargetAndTransition, Transition, Variants } from "framer-motion";
 import { useIsMobile } from "../hooks/use-mobile";
 
 interface ServiceData {
@@ -88,26 +88,24 @@ const CARD_HEIGHT_ACTIVE_DESKTOP = 360;
 const CARD_HEIGHT_INACTIVE_DESKTOP = CARD_HEIGHT_ACTIVE_DESKTOP * 0.8;
 
 const textContentContainerVariants: Variants = {
-  hidden: { opacity: 0, y: 20 },
+  hidden: {},
   visible: {
-    opacity: 1,
-    y: 0,
     transition: {
-      type: "spring",
-      stiffness: 120,
-      damping: 25,
-      mass: 0.8,
-      when: "beforeChildren",
-      staggerChildren: 0.08,
+      delayChildren: 0,
+      staggerChildren: 0.045,
     },
   },
-  exit: { opacity: 0, y: -20, transition: { duration: 0.15 } },
+  exit: { opacity: 0, y: -20, transition: { duration: 0.12 } },
 };
 
 const individualTextElementVariants: Variants = {
   hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 120, damping: 22 } },
-  exit: { opacity: 0, y: -10, transition: { duration: 0.15 } },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { type: "spring", stiffness: 220, damping: 26, mass: 0.55 },
+  },
+  exit: { opacity: 0, y: -10, transition: { duration: 0.12 } },
 };
 
 const ServiceCard = React.memo<ServiceCardProps>(({ service, isActive, onClick, isMobile, cardRef, animate, style, transition }) => {
@@ -131,7 +129,7 @@ const ServiceCard = React.memo<ServiceCardProps>(({ service, isActive, onClick, 
       ></div>
 
       <div className="p-6 text-white flex flex-col justify-end h-full relative z-10 overflow-y-auto">
-        <AnimatePresence initial={false} mode="wait">
+        <AnimatePresence initial={false}>
           {isActive && (
             <motion.div
               key={service.id}
@@ -143,14 +141,14 @@ const ServiceCard = React.memo<ServiceCardProps>(({ service, isActive, onClick, 
               <motion.h3
                 variants={individualTextElementVariants}
                 className="font-semibold text-3xl md:text-4xl lg:text-[48px] leading-tight mb-2"
-                style={{ fontFamily: 'DM Sans', textShadow: '0 1px 2px rgba(0,0,0,0.7)' }}
+                style={{ fontFamily: 'DM Sans', textShadow: '0 1px 2px rgba(0,0,0,0.7)', willChange: 'transform, opacity' }}
               >
                 {service.title}
               </motion.h3>
               <motion.p
                 variants={individualTextElementVariants}
                 className="font-semibold text-base md:text-lg lg:text-[18.26px] leading-relaxed"
-                style={{ fontFamily: 'DM Sans', textShadow: '0 1px 2px rgba(0,0,0,0.7)' }}
+                style={{ fontFamily: 'DM Sans', textShadow: '0 1px 2px rgba(0,0,0,0.7)', willChange: 'transform, opacity' }}
               >
                 {service.longDescription}
               </motion.p>
@@ -164,14 +162,25 @@ const ServiceCard = React.memo<ServiceCardProps>(({ service, isActive, onClick, 
 
 const ServicesSection = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [, setMobileCarouselLayoutVersion] = useState(0);
   const isMobile = useIsMobile();
   const carouselRef = useRef<HTMLDivElement>(null);
-  const draggableContentRef = useRef<HTMLDivElement>(null);
-  const dragX: MotionValue<number> = useMotionValue(0);
+  const mobileCarouselContentRef = useRef<HTMLDivElement>(null);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
 
+  useEffect(() => {
+    if (!isMobile || !carouselRef.current) return;
+
+    const resizeObserver = new ResizeObserver(() => {
+      setMobileCarouselLayoutVersion((version) => version + 1);
+    });
+
+    resizeObserver.observe(carouselRef.current);
+    return () => resizeObserver.disconnect();
+  }, [isMobile]);
+
   const getMobileCarouselTargetX = useCallback(() => {
-    if (!isMobile || !carouselRef.current || !draggableContentRef.current || !cardRefs.current[currentIndex]) return 0;
+    if (!isMobile || !carouselRef.current || !mobileCarouselContentRef.current || !cardRefs.current[currentIndex]) return 0;
 
     const currentCard = cardRefs.current[currentIndex];
     if (!currentCard) return 0; // Garantia de que o card existe
@@ -188,28 +197,14 @@ const ServicesSection = () => {
         cumulativeWidthBeforeActive += gapWidth;
     }
 
-    const activeCardCenterRelativeToDraggableStart = cumulativeWidthBeforeActive + currentCard.offsetWidth / 2;
+    const activeCardCenterRelativeToStart = cumulativeWidthBeforeActive + currentCard.offsetWidth / 2;
 
-    const targetX = (carouselViewportWidth / 2) - activeCardCenterRelativeToDraggableStart;
-    const draggableContentWidth = draggableContentRef.current.scrollWidth;
-    const maxDragLeft = -(draggableContentWidth - carouselViewportWidth);
+    const targetX = (carouselViewportWidth / 2) - activeCardCenterRelativeToStart;
+    const carouselContentWidth = mobileCarouselContentRef.current.scrollWidth;
+    const maxDragLeft = -(carouselContentWidth - carouselViewportWidth);
     return Math.max(Math.min(targetX, 0), maxDragLeft);
 
   }, [currentIndex, isMobile]);
-
-  const handleDragEnd = useCallback((_event: MouseEvent | TouchEvent | PointerEvent, info: { offset: { x: number }; velocity: { x: number } }) => {
-    const offset = info.offset.x;
-    const velocity = info.velocity.x;
-    const dragBuffer = 50;
-
-    let newIndex = currentIndex;
-    if (offset < -dragBuffer || velocity < -200) {
-      newIndex = Math.min(currentIndex + 1, services.length - 1);
-    } else if (offset > dragBuffer || velocity > 200) {
-      newIndex = Math.max(currentIndex - 1, 0);
-    }
-    setCurrentIndex(newIndex);
-  }, [currentIndex]);
 
   const goToNext = useCallback(() => {
     setCurrentIndex((prev) => Math.min(prev + 1, services.length - 1));
@@ -244,17 +239,12 @@ const ServicesSection = () => {
 
         <div className="border border-[#E8C532] rounded-[44px] md:rounded-[64px] px-4 sm:px-6 md:px-8 py-8 md:py-12 lg:-mt-4">
           {isMobile ? (
-            <div ref={carouselRef} className="w-full overflow-hidden"> {/* O container que esconde o overflow */}
+            <div key="services-mobile-carousel" ref={carouselRef} className="w-full overflow-hidden">
               <motion.div
-                ref={draggableContentRef}
-                className="flex gap-4 cursor-grab active:cursor-grabbing"
-                drag="x"
-                dragConstraints={carouselRef}
-                dragElastic={0.2}
-                style={{ x: dragX }}
+                ref={mobileCarouselContentRef}
+                className="flex gap-4"
                 animate={{ x: getMobileCarouselTargetX() }}
                 transition={carouselTransition}
-                onDragEnd={handleDragEnd}
               >
                 {services.map((service, index) => {
                   const isActive = index === currentIndex;
@@ -274,7 +264,7 @@ const ServicesSection = () => {
               </motion.div>
             </div>
           ) : (
-            <div className="flex items-end mb-10 relative overflow-hidden" style={{ height: CARD_HEIGHT_ACTIVE_DESKTOP + 20 }}>
+            <div key="services-desktop-carousel" className="flex items-end mb-10 relative overflow-hidden" style={{ height: CARD_HEIGHT_ACTIVE_DESKTOP + 20 }}>
               <motion.div
                 className="flex flex-nowrap items-end"
                 animate={{ x: -calculateOffsetDesktop() }}

@@ -39,24 +39,43 @@ const buttonVariants: Variants = {
 };
 
 const mobileNavVariants: Variants = {
-  hidden: { y: -50, opacity: 0 },
+  hidden: { y: -12, opacity: 0, scale: 0.985 },
   visible: {
     y: 0,
     opacity: 1,
+    scale: 1,
     transition: {
-      type: 'spring',
-      stiffness: 120,
-      damping: 25,
-      staggerChildren: 0.05
-    }
+      duration: 0.24,
+      ease: [0.22, 1, 0.36, 1],
+      delayChildren: 0.06,
+      staggerChildren: 0.055,
+    },
   },
-  exit: { y: -50, opacity: 0 },
+  exit: {
+    y: -8,
+    opacity: 0,
+    scale: 0.985,
+    transition: {
+      duration: 0.16,
+      ease: [0.4, 0, 1, 1],
+      staggerChildren: 0.025,
+      staggerDirection: -1,
+    },
+  },
 };
 
 const mobileNavItemVariants: Variants = {
-  hidden: { y: 20, opacity: 0 },
-  visible: { y: 0, opacity: 1 },
-  exit: { y: 20, opacity: 0 }
+  hidden: { y: -8, opacity: 0 },
+  visible: {
+    y: 0,
+    opacity: 1,
+    transition: { duration: 0.22, ease: [0.22, 1, 0.36, 1] },
+  },
+  exit: {
+    y: -6,
+    opacity: 0,
+    transition: { duration: 0.12, ease: [0.4, 0, 1, 1] },
+  },
 };
 
 const Header: React.FC = () => {
@@ -78,7 +97,7 @@ const Header: React.FC = () => {
           type="button"
           onClick={toggleTheme}
           aria-label={theme === 'dark' ? 'Ativar modo claro' : 'Ativar modo escuro'}
-          className="fixed right-4 top-4 md:right-6 md:top-5 z-[70] inline-flex h-10 w-10 items-center justify-center rounded-full text-[#24292f] transition-all duration-300 hover:scale-110 dark:text-[#ffd700]"
+          className="fixed right-14 top-6 md:right-6 md:top-5 z-[70] inline-flex h-6 w-6 items-center justify-center rounded-full text-[#24292f] transition-all duration-300 hover:scale-110 dark:text-[#ffd700]"
         >
           {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
         </button>
@@ -163,7 +182,14 @@ const Header: React.FC = () => {
           </div>
 
           <div className="md:hidden flex items-center">
-            <button className="text-gray-700 dark:text-[#8b949e] z-50" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
+            <button
+              type="button"
+              className="text-gray-700 dark:text-[#8b949e] z-50"
+              aria-label={isMobileMenuOpen ? 'Fechar menu' : 'Abrir menu'}
+              aria-controls="mobile-navigation"
+              aria-expanded={isMobileMenuOpen}
+              onClick={() => setIsMobileMenuOpen((isOpen) => !isOpen)}
+            >
               {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
           </div>
@@ -176,14 +202,16 @@ const Header: React.FC = () => {
           variants={lineVariants}
         />
 
-        <AnimatePresence>
+        <AnimatePresence initial={false}>
           {isMobileMenuOpen && (
             <motion.nav
+              id="mobile-navigation"
               className="md:hidden absolute top-[80px] left-4 right-4 bg-[#EAF3F3] dark:bg-[#161b22] p-4 text-center shadow-md z-40 rounded-b-xl border border-transparent dark:border-[#30363d]"
               variants={mobileNavVariants}
               initial="hidden"
               animate="visible"
               exit="exit"
+              style={{ willChange: 'transform, opacity' }}
             >
               {mobileNavItems.map((item) => (
                 <motion.button
