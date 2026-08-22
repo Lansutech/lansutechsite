@@ -1,0 +1,10 @@
+
+User-agent: *
+
+Allow: /
+
+Disallow: /node_modules/
+Disallow: /dist/
+Disallow: /.env
+
+Sitemap: https://lansutech.com.br/sitemap.xml
