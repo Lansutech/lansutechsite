@@ -2,6 +2,7 @@ import React, { useState, useCallback } from "react";
 import { motion, AnimatePresence, Variants } from "framer-motion";
 import type { TargetAndTransition, Transition } from "framer-motion";
 import tooling from "../assets/projetos/tooling.webp";
+import globalvision from "../assets/projetos/globalvision.webp";
 import { ExternalLink } from "lucide-react";
 import { useIsMobile } from "../hooks/use-mobile";
 
@@ -26,6 +27,13 @@ interface ProjectCardProps {
 const presentationData: ProjectData[] = [
   {
     id: 1,
+    image: globalvision,
+    title: "Global Vision Optical",
+    description: "E-commmerce de produtos oftalmológicos, com catálogo de produtos e landing page da empresa.",
+    liveUrl: "https://globalvisionoptical.com.br/",
+  },
+  {
+    id: 2,
     image: tooling,
     title: "Tooling Equipamentos Óticos",
     description: "Loja de e-commerce com apresentação de produtos e landing page da empresa.",
