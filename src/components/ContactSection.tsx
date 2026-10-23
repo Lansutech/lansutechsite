@@ -1,197 +1,54 @@
-import { Input } from './ui/input';
-import { Textarea } from './ui/textarea';
-import { Button } from './ui/button';
-import { Card, CardContent } from './ui/card';
-import { Mail, Phone, MapPin, Loader2, CheckCircle, AlertCircle } from 'lucide-react';
-
+import { ArrowRight, Instagram, LoaderCircle } from 'lucide-react';
 import { useContactForm } from '../hooks/use-contact-form';
+import { ColorOrbits } from './SiteElements';
 
-const ContactSection = () => {
-  const { 
-    form, 
-    isSubmitting, 
-    submitStatus, 
-    onSubmit 
-  } = useContactForm();
+export default function ContactSection() {
+  const { form, isSubmitting, submitStatus, onSubmit } = useContactForm();
   const { register, formState: { errors } } = form;
-
   return (
-    <section id="contato" className="py-16 md:py-24 bg-[#F0F7F7] dark:bg-[#0f151f] transition-colors duration-300">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12 md:mb-16">
-          <h2 className="font-dm-sans text-4xl md:text-5xl font-extrabold text-gray-900 dark:text-[#c9d1d9] mb-4 tracking-tight">
-            Entre em Contato Conosco
-          </h2>
-          <p className="font-dm-sans text-base md:text-lg text-gray-600 dark:text-[#8b949e] max-w-3xl mx-auto leading-relaxed">
-            Estamos prontos para impulsionar a sua empresa. Preencha o formulário abaixo ou utilize nossos canais de comunicação diretos.
-          </p>
+    <section id="contato" className="contact-section" aria-labelledby="contact-title">
+      <div className="contact-inner page-width">
+        <div className="contact-copy">
+          <h2 id="contact-title">Vamos simplificar<br />o próximo passo?</h2>
+          <p>Conte o que sua empresa precisa.<br />Vamos pensar na solução juntos.</p>
+          <address>
+            <a href="mailto:lansutech@gmail.com">lansutech@gmail.com</a>
+            <a href="https://wa.me/5544997415544" target="_blank" rel="noopener noreferrer" aria-label="Conversar pelo WhatsApp (abre em nova aba)">+55 (44) 99741-5544</a>
+            <a className="contact-social" href="https://www.instagram.com/lansutech/" target="_blank" rel="noopener noreferrer" aria-label="Instagram da Lansutech: @lansutech (abre em nova aba)"><Instagram size={19} aria-hidden="true" /><span>@lansutech</span></a>
+            <span>Paranavaí, Paraná — Brasil</span>
+          </address>
         </div>
-        
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start">
-
-          <div className="space-y-10">
-            <h3 className="font-dm-sans text-2xl md:text-3xl font-bold text-gray-800 dark:text-[#c9d1d9] mb-8">
-              Canais de Atendimento
-            </h3>
-
-            <div className="space-y-8">
-              <div className="flex items-start space-x-6">
-                <div className="w-14 h-14 bg-indigo-50 text-indigo-600 rounded-full flex items-center justify-center shadow-md flex-shrink-0">
-                  <Mail className="w-7 h-7" />
-                </div>
-                <div>
-                  <h4 className="font-dm-sans font-semibold text-lg text-gray-900 dark:text-[#c9d1d9] mb-1">Email</h4>
-                  <p className="font-dm-sans text-gray-700 dark:text-[#8b949e] text-base break-words">lansutech@gmail.com</p>
-                </div>
-              </div>
-
-              <div className="flex items-start space-x-6">
-                <div className="w-14 h-14 bg-emerald-50 text-emerald-600 rounded-full flex items-center justify-center shadow-md flex-shrink-0">
-                  <Phone className="w-7 h-7" />
-                </div>
-                <div>
-                  <h4 className="font-dm-sans font-semibold text-lg text-gray-900 dark:text-[#c9d1d9] mb-1">Telefone / WhatsApp</h4>
-                  <p className="font-dm-sans text-gray-700 dark:text-[#8b949e] text-base">+55 (44) 99741-5544</p>
-                </div>
-              </div>
-
-              <div className="flex items-start space-x-6">
-                 <div className="w-14 h-14 bg-red-50 text-red-600 rounded-full flex items-center justify-center shadow-md flex-shrink-0">
-                    <MapPin className="w-7 h-7" />
-                 </div>
-                 <div>
-                    <h4 className="font-dm-sans font-semibold text-lg text-gray-900 dark:text-[#c9d1d9] mb-1">Localização</h4>
-                    <p className="font-dm-sans text-gray-700 dark:text-[#8b949e] text-base">Paranavaí, Paraná - Brasil</p>
-                 </div>
-              </div>
-            </div>
+        <form className="contact-form" onSubmit={onSubmit} noValidate aria-label="Envie uma mensagem para a Lansutech" aria-busy={isSubmitting}>
+          <div className="form-field">
+            <label htmlFor="nome">Nome completo</label>
+            <input id="nome" type="text" autoComplete="name" required maxLength={100} {...register('nome')} aria-invalid={Boolean(errors.nome)} aria-describedby={errors.nome ? 'nome-error' : undefined} disabled={isSubmitting} />
+            {errors.nome && <p className="field-error" id="nome-error">{errors.nome.message}</p>}
           </div>
-
-          <Card className="bg-white dark:bg-[#161b22] rounded-xl shadow-xl border border-gray-100 dark:border-[#30363d] p-6 md:p-8">
-            <CardContent className="p-0">
-              <form onSubmit={onSubmit} className="space-y-6">
-                {/* Inputs do Formulário */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <label htmlFor="nome" className="font-dm-sans text-sm font-medium text-gray-700 dark:text-[#c9d1d9] mb-2 block">
-                      Nome Completo *
-                    </label>
-                    <Input
-                      id="nome"
-                      {...register('nome')}
-                      placeholder="Seu nome completo"
-                      className={`font-dm-sans border rounded-md px-4 py-2 text-base shadow-sm ${
-                        errors.nome 
-                          ? 'border-red-500 focus:border-red-500 focus:ring-red-500' 
-                          : 'border-gray-300 focus:border-blue-500 focus:ring-blue-500'
-                      }`}
-                    />
-                    {errors.nome && (
-                      <p className="text-red-500 text-sm mt-1 font-dm-sans">{errors.nome.message}</p>
-                    )}
-                  </div>
-                  <div>
-                    <label htmlFor="email" className="font-dm-sans text-sm font-medium text-gray-700 dark:text-[#c9d1d9] mb-2 block">
-                      Email Profissional *
-                    </label>
-                    <Input
-                      id="email"
-                      type="email"
-                      {...register('email')}
-                      placeholder="seu@empresa.com"
-                      className={`font-dm-sans border rounded-md px-4 py-2 text-base shadow-sm ${
-                        errors.email 
-                          ? 'border-red-500 focus:border-red-500 focus:ring-red-500' 
-                          : 'border-gray-300 focus:border-blue-500 focus:ring-blue-500'
-                      }`}
-                    />
-                    {errors.email && (
-                      <p className="text-red-500 text-sm mt-1 font-dm-sans">{errors.email.message}</p>
-                    )}
-                  </div>
-                </div>
-
-                <div>
-                  <label htmlFor="assunto" className="font-dm-sans text-sm font-medium text-gray-700 dark:text-[#c9d1d9] mb-2 block">
-                    Assunto *
-                  </label>
-                  <Input
-                    id="assunto"
-                    {...register('assunto')}
-                    placeholder="Assunto da mensagem"
-                    className={`font-dm-sans border rounded-md px-4 py-2 text-base shadow-sm ${
-                      errors.assunto 
-                        ? 'border-red-500 focus:border-red-500 focus:ring-red-500' 
-                        : 'border-gray-300 focus:border-blue-500 focus:ring-blue-500'
-                    }`}
-                  />
-                  {errors.assunto && (
-                    <p className="text-red-500 text-sm mt-1 font-dm-sans">{errors.assunto.message}</p>
-                  )}
-                </div>
-
-                <div>
-                  <label htmlFor="mensagem" className="font-dm-sans text-sm font-medium text-gray-700 dark:text-[#c9d1d9] mb-2 block">
-                    Sua Mensagem *
-                  </label>
-                  <Textarea
-                    id="mensagem"
-                    {...register('mensagem')}
-                    placeholder="Descreva suas necessidades ou dúvidas aqui..."
-                    rows={6}
-                    className={`font-dm-sans border rounded-md px-4 py-2 resize-y text-base shadow-sm ${
-                      errors.mensagem 
-                        ? 'border-red-500 focus:border-red-500 focus:ring-red-500' 
-                        : 'border-gray-300 focus:border-blue-500 focus:ring-blue-500'
-                    }`}
-                  />
-                  {errors.mensagem && (
-                    <p className="text-red-500 text-sm mt-1 font-dm-sans">{errors.mensagem.message}</p>
-                  )}
-                </div>
-
-                <Button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="w-full font-dm-sans bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white py-3 rounded-lg text-lg font-semibold transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-                >
-                  {isSubmitting ? (
-                    <>
-                      <Loader2 className="w-5 h-5 mr-2 animate-spin" />
-                      Enviando...
-                    </>
-                  ) : submitStatus === 'success' ? (
-                    <>
-                      <CheckCircle className="w-5 h-5 mr-2" />
-                      Mensagem Enviada!
-                    </>
-                  ) : submitStatus === 'error' ? (
-                    <>
-                      <AlertCircle className="w-5 h-5 mr-2" />
-                      Tentar Novamente
-                    </>
-                  ) : (
-                    'Enviar Mensagem'
-                  )}
-                </Button>
-              </form>
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* Footer da seção de contato / Direitos Autorais - Removido RevealOnScroll */}
-        <div className="border-t border-gray-200 dark:border-[#ffffff] mt-16 pt-8 text-center">
-          <div className="text-sm text-gray-500 dark:text-[#7b848d] flex items-center justify-center">
-            <div className="relative w-7 h-7 mr-2 flex-shrink-0">
-              <img src={import.meta.env.BASE_URL + 'imgs/logolansutech.svg'} alt="Lansutech" className="absolute w-full h-full object-contain dark:hidden" />
-              <img src={import.meta.env.BASE_URL + 'imgs/logolansutech-white.svg'} alt="Lansutech branco" className="absolute w-full h-full object-contain hidden dark:block" />
-            </div>
-            © {new Date().getFullYear()} Lansutech. Todos os direitos reservados.
+          <div className="form-field">
+            <label htmlFor="email">E-mail profissional</label>
+            <input id="email" type="email" autoComplete="email" required {...register('email')} aria-invalid={Boolean(errors.email)} aria-describedby={errors.email ? 'email-error' : undefined} disabled={isSubmitting} />
+            {errors.email && <p className="field-error" id="email-error">{errors.email.message}</p>}
           </div>
-        </div>
+          <div className="form-field">
+            <label htmlFor="assunto">Assunto</label>
+            <input id="assunto" type="text" required maxLength={200} {...register('assunto')} aria-invalid={Boolean(errors.assunto)} aria-describedby={errors.assunto ? 'assunto-error' : undefined} disabled={isSubmitting} />
+            {errors.assunto && <p className="field-error" id="assunto-error">{errors.assunto.message}</p>}
+          </div>
+          <div className="form-field form-field--message">
+            <label htmlFor="mensagem">Sua mensagem</label>
+            <textarea id="mensagem" rows={3} required maxLength={1000} {...register('mensagem')} aria-invalid={Boolean(errors.mensagem)} aria-describedby={errors.mensagem ? 'mensagem-error' : undefined} disabled={isSubmitting} />
+            {errors.mensagem && <p className="field-error" id="mensagem-error">{errors.mensagem.message}</p>}
+          </div>
+          <button type="submit" className="pill pill--gradient" disabled={isSubmitting}>
+            {isSubmitting ? <>Enviando<LoaderCircle className="spinner" size={19} aria-hidden="true" /></> : <>Enviar mensagem<ArrowRight size={19} aria-hidden="true" /></>}
+          </button>
+          <div className={`form-status form-status--${submitStatus}`} role="status" aria-live="polite">
+            {submitStatus === 'success' && 'Mensagem enviada! Entraremos em contato em breve.'}
+            {submitStatus === 'error' && <>Não foi possível enviar. Tente novamente ou <a href="mailto:lansutech@gmail.com">fale por e-mail</a>.</>}
+          </div>
+        </form>
       </div>
+      <ColorOrbits className="contact-orbits" />
     </section>
   );
-};
-
-export default ContactSection;
+}
