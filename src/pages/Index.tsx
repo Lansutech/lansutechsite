@@ -1,23 +1,26 @@
-
-import React from 'react';
 import Header from '../components/Header';
 import Hero from '../components/Hero';
 import AboutSection from '../components/AboutSection';
-import ColoredCardsSection from '../components/ColoredCardsSection';
+import ProjectsSection from '../components/ProjectsSection';
+import ServicesSection from '../components/ServicesSection';
 import ContactSection from '../components/ContactSection';
 import Footer from '../components/Footer';
+import SiteRoute from '../components/SiteRoute';
 
-const Index = () => {
+export default function Index() {
   return (
-  <div className="w-full min-h-screen bg-[#EAF3F3] dark:bg-[#0d1117] overflow-x-hidden transition-colors duration-300">
-      <Header/>
-      <Hero/>
-      <AboutSection/>
-      <ColoredCardsSection/>
+    <div id="inicio" className="site">
+      <a className="skip-link" href="#conteudo">Pular para o conteúdo</a>
+      <Header />
+      <main id="conteudo" className="site-main">
+        <SiteRoute />
+        <Hero />
+        <AboutSection />
+        <ProjectsSection />
+        <ServicesSection />
+        <ContactSection />
+      </main>
       <Footer />
-      <ContactSection />
     </div>
   );
-};
-
-export default Index;
+}

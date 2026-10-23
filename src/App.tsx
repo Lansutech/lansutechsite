@@ -4,6 +4,7 @@ import { Suspense, lazy, useEffect } from "react";
 import Index from "./pages/Index";
 const NotFound = lazy(() => import("./pages/NotFound"));
 import { initializeEmailJS } from "./lib/api";
+import { ThemeProvider } from 'next-themes';
 
 const App = () => {
   useEffect(() => {
@@ -14,7 +15,7 @@ const App = () => {
   }, []);
 
   return (
-    <>
+    <ThemeProvider attribute="class" storageKey="lansutech-theme" defaultTheme="system" enableSystem disableTransitionOnChange>
       <Toaster />
       <BrowserRouter basename="/">
         <Routes>
@@ -22,7 +23,7 @@ const App = () => {
           <Route path="*" element={<Suspense fallback={<div className="flex items-center justify-center h-screen">Carregando...</div>}><NotFound /></Suspense>} />
         </Routes>
       </BrowserRouter>
-    </>
+    </ThemeProvider>
   );
 };
 
